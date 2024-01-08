@@ -19,8 +19,9 @@
 
 > [!example] Sass file extension:
 >
-> > [!bug]`.sass`:old syntax (indentation based)
+> > [!bug] `.sass`:old syntax (indentation based)
 > > no semicolons or curly braces
+> 
 > > [!success] `.scss` :scoping
 > > variables, mixins, nesting, inheritance, etc.
 
@@ -29,12 +30,12 @@
 > [!tip] compass-app
 >
 > watch for changes to the scss file and automatically compile it to css
-> [!success] steps:
-> create compass project: create project folder structure
-> sass folder - stylesheets folder
-> compass watch: watch for changes to the scss file and automatically compile it to corresponding css file
-> creating new scss file: will automatically create a corresponding css file and compile scss to css
-> added scss code will automatically be compiled to css
+>> [!success] steps:
+> -  create compass project: create project folder structure
+> -  sass folder - stylesheets folder
+>  - compass watch: watch for changes to the scss file and automatically compile it to corresponding css file
+> -  creating new scss file: will automatically create a corresponding css file and compile scss to css
+> -  added scss code will automatically be compiled to css
 
 > [!success] any valid css is valid scss
 >
@@ -263,7 +264,8 @@ $networks: (fackbook, blue) (twitter, lightblue) (instagram, red); //map
 > transform : scale(1) //scale the element by 1.5
 > width: 100px;
 > every browser has its own way to use transform
-> [!success] prefixes: -webkit- -moz- -ms- -o-
+> 
+> >[!success] prefixes: -webkit- -moz- -ms- -o-
 > repeat the same code with different prefixes to guarantee compatibility
 > -webkit-transform: scale(1);
 > -moz-transform: scale(1);
@@ -277,6 +279,7 @@ $networks: (fackbook, blue) (twitter, lightblue) (instagram, red); //map
 > [!info] mixins
 >
 > > [!success] mixins are like functions
+> 
 > > [!tip] steps:
 > > 1- declare mixin
 > > 2- use mixin `@include`
@@ -327,7 +330,7 @@ p {
 
 > extra small screen => 12 columns classes
 > small screen => 12 columns classes
-> ...
+> ...etc for every screen size
 > `col-(1 : 12)` `col-sm-(1 : 12)` `col-md-(1 : 12)` `col-lg-(1 : 12)` `col-xl-(1 : 12)` `col-xxl-(1 : 12)`
 
 ```scss
@@ -478,7 +481,7 @@ p {
 
 > [!info] 7 folders and 1 file
 > https://sass-guidelin.es/#architecture
-> 7 folders:(placeholder files:start with _) base, components, layout, pages, themes, abstracts, vendors
+> 7 folders:(placeholder files:start with `_`) base, components, layout, pages, themes, abstracts, vendors
 > 1 file: `main.scss` => import all the files in the folders
 > placeholders files: files starting with `_`and ending with`.scss`
 
@@ -580,6 +583,7 @@ $btndark: #000;
 ---
 >[!info] link main.css to index.html
 >   >[!danger] link main.css not main.scss
+>  
 >  >[!success] main.css is generated from main.scss
 ```html
 <link rel="stylesheet" href="css/main.css" />
@@ -596,3 +600,16 @@ $btndark: #000;
 
 ---
 # #lab-RWD1
+
+
+|  |  |  |  |  |  |  |  |  |  |  |  |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
