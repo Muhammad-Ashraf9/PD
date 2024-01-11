@@ -67,7 +67,6 @@
 div p {
   color: red;
 }
-/* any p within any container  */
 /* asks every container if the first element is p element  */
 /* if it was the first p in the container but not the first CHILD then won't be  */
 p:nth-child(1) {
@@ -75,16 +74,16 @@ p:nth-child(1) {
   color: red;
 }
 div > p:nth-child(1) {
-  /* asks only divs if the first element is p element  */
+  /* asks only divs if the first element (Direct Child) is p element  */
   color: red;
 }
 /* first-of-type: used to select the first element of its type in a container*/
 div > p:first-of-type {
-  /* this selects the first p in the div */
+  /* this selects the first p in the div (Only Direct Child) */
 }
 /* last-of-type: used to select the last element of its type in a container*/
 div > p:last-of-type {
-  /* this selects the last p in the div */
+  /* this selects the last p in the div (Only Direct Child) */
 }
 
 /* first-child: used to select the first element in a container*/
@@ -115,7 +114,7 @@ P:nth-child(2n) {
   /* selects all even elements */
   color: red;
 }
-/* p thats that from second to last
+/* p from second to last
  */
 p:nth-last-child(n + 2) {
   color: red;
@@ -138,7 +137,7 @@ p:nth-child(n + 2):nth-child(-n + 8) {
 
 > [!tip] layout is the way we arrange the elements in the page
 
-> [!tip] Responsive : the page should be displayed well on different widths with only horizontal scrolling
+> [!tip] Responsive : the page should be displayed well on different widths with only vertical scrolling
 
 > [Info] Fixed : the page display is fixed and does not change according to the width of the screen
 
@@ -170,7 +169,7 @@ p:nth-child(n + 2):nth-child(-n + 8) {
   margin: 0 auto;
   /* center the page */
 }
-/* without box sizing you have to calculate element dimesion by the adding the width and padding and margin */
+/* without box sizing you have to calculate element dimension by the adding the width and padding and margin */
 /* fixed layout can't be resized on different screens when the screen width is less than 960px the page will be cut and there will be a horizontal scroll bar */
 /* we need to convert the fixed layout to be more flexible */
 ```
