@@ -497,7 +497,7 @@ li::after {
     width: 100%; */
   height: 10px;
   background-color: red;
-  /* redline under evry li */
+  /* redline under every li */
   /* to make it only appear on hover */
   display: none;
   width: 100%;
@@ -522,7 +522,9 @@ li:hover ::after {
 > > `gap:  `: define the gap between columns and rows
 >
 > > [!tip] child properties
-> > `
+> > `grid-area`
+> > `grid-row`
+> > `grid-column`
 
 > gridmethodone.html
 
@@ -568,7 +570,7 @@ li:hover ::after {
     border: 1px solid black;
 }
 #mainheader{
-        grid-row: 1/2;
+    grid-row: 1/2;
     /* 1/2: from row 1 to row 2 */
     grid-column: 1/3;
     /* 1/3: from column 1 to column 3 */
