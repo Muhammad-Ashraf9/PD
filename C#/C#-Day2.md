@@ -25,8 +25,8 @@
 >
 > - overhead data in heap
 > - depend on machine architecture (32 bit or 64 bit)
-> - 32 bit: 4 bytes
-> - 64 bit: 8 bytes
+> - 32 bit: 4 bytes * 2 vars (2 variables each one 4 bytes)
+> - 64 bit: 8 bytes * 2 vars (2 vars (2 variables each one 8 bytes)
 
 > [!warning] to create value type we use:
 >
@@ -313,7 +313,7 @@ namespace Demo1{
 > int[] arr3 = (int[])arr2.Clone();
 > Console.WriteLine(arr1.GetHashCode()); // 46104728
 > Console.WriteLine(arr2.GetHashCode()); // 46104567
-> Console.WriteLine(arr3.GetHashCode()); // 46104567
+> Console.WriteLine(arr3.GetHashCode()); // 46104577
 > //different hash code as they are different objects
 > //same state but different identity
 > ```
@@ -371,7 +371,7 @@ int [,,,,]//5D array
 > [!warning] jagged array vs Rectangular Array
 >
 > - jagged array: number of columns is not fixed
-> - multidimensional array: number of columns has to be fixed
+> - Rectangular multidimensional array: number of columns has to be fixed
 > - jagged array is not contigous in memory as it creates new object for each row
 > - Rectangular Array is contigous in memory
 
@@ -381,7 +381,7 @@ int [,,,,]//5D array
 
 ```cs
 int[] arr = [5,77,2,12,7,4]
-Array.Sort(arr);// what algorithm is used?
+Array.Sort(arr);// what algorithm is used?  -> introspective sort(quicksort, heapsort, and insertion sort)
 for(int i = 0; i < arr.Length; i++){
     Console.WriteLine(arr[i]);
 }
@@ -398,6 +398,7 @@ int x = 10;
 x = "hello"; // error
 // but we can use var keyword
 //let the compiler infer the type of the variable from the initial value
+//MUST initialize
 var y = 10;
 Console.WriteLine(y.GetType()); // System.Int32
 var z = 5.5;
