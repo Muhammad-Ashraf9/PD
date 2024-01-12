@@ -15,7 +15,7 @@
 > compass transpiler
 > vscode live sass compiler
 
-> [!warning] Edit only in the scss file, not in the css file. The css file is generated from the scss file. If you edit the css file, your changes will be overwritten when the scss file is compiled.
+> [!warning] Edit only in the scss file, not in the css file. The css file is generated from the scss file. If you edit the css file, your changes will be overwritten when the scss file is transpiled.
 
 > [!example] Sass file extension:
 >
@@ -115,7 +115,7 @@ p {
 
 ---
 
-> [!info] placeholder: container for styles that we want to reuse
+> [!info] placeholder: container for styles that we want to reuse(not transpiled)
 >
 > - like inheritance
 
