@@ -111,14 +111,18 @@ window.addEventListener("load", function () {
     video.volume = e.target.value;
   }
   //mute -
-  function mutefun(){
-    if()
+function mutefun() {
+  if (myvideo.muted) {
+      myvideo.muted = false;
+  } else {
+      myvideo.muted = true;
   }
+}
 //change currentTime
 
 function seekBar(){
   // we need seek bar to change with video
-  // event fires everytime the video
+  // event fires everytime the video seekBar dealed with by User.
 
 }
 });
@@ -224,7 +228,7 @@ function drop(e) {
   ///////////browser prevent drop by default
   ///////////////////////prevent default in  all events to make it work
   e.preventDefault();
-  left.innerHTML = e.dataTransfer.getData("img");
+  left.innerHTML += e.dataTransfer.getData("img");
 }
 function dragover(e) {
   e.preventDefault();
@@ -265,7 +269,7 @@ DragEvent; //{dataTransfer:DataTransfer, ...}
 > [!info] cookie vs local storage vs session storage
 >
 > - cookie => 4kb
-> - local storage => 5mb
+> - local storage => 5mb - 10mb >> session Storage
 > - session storage => 5mb
 > - cookie => sent to server with every request
 
@@ -338,42 +342,42 @@ function changeColor(e) {
 
 ```js
 window.addEventListener("load", function () {
+        function getloactionfun() {
+            // 1- check exience
+            if (navigator.geolocation) {
+                // exist
+                // 2- get permission  : using method getCurrentPosition(successCallback,errorcallback);
+                navigator.geolocation.getCurrentPosition(getposition, errorhandler);
+            } else {
+                //not exist
+                mymap.innerText = "Update Your Browser And Try Again !";
+            }
+        }
+        function getposition(position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+
+           /* google steps 
+            * 1- create location object with lat lon values which getted from geolocation     using google constructor
+            * 2- determine specs of map : center : created location obejcts  : zoom
+            * 3- display map
+            */
+            var location = new google.maps.LatLng(lat, lon);
+            //2- specify specs of map : zoom : , center
+            var specs = { zoom: 17, center: location };
+            // 3 retrive map and display map
+            new google.maps.Map(mymap, specs);
+
+        }
+        function errorhandler() {
+            alert("Error");
+        }
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(success, fail);
   } else {
     alert("Browser does not support geolocation");
   }
 });
-function getlocation() {
-  //1. check if the browser supports geolocation
-  // if true => ask for permission
-  // if false => messege
-  if (navigator.geolocation) {
-    //exist
-    //2. ask for permission
-    //navigator.geolocation.getCurrentPosition(successCallback,failCallback,options)
-    navigator.geolocation.getCurrentPosition(getPosition, errorHandler);
-  } else {
-    alert("Browser does not support geolocation");
-  }
-}
-function getPosition(e) {
-  console.log(e); //GeolocationPosition{coords:GeolocationCoordinates,timestamp:}
-  console.log(e.coords); //GeolocationCoordinates{latitude: ,longitude: ,accuracy: ,altitude: ,altitudeAccuracy: ,heading: ,speed: }
-  console.log(e.coords.latitude); //latitude
-  console.log(e.timestamp); //timestamp in milliseconds changes everytime we call the function partially different
-  console.log(new Date(e.timestamp)); //date and time
-  var lat = e.coords.latitude;
-  var long = e.coords.longitude;
-  myMap.innerHTML = `Latitude: ${lat} <br> Longitude: ${long}`;
-  alert("success");
-  // added to trusted domains in browser won't ask for permission again it will work directly
-  // we have to clear it from browser
-  // or we can add it to blocked domains won't ask for permission again it will fail directly
-}
-function errorHandler(e) {
-  alert("fail");
-}
 ```
 
 > [!tip] we can use google maps api to display the location on map
@@ -385,10 +389,6 @@ function errorHandler(e) {
 > [!example] google maps api
 > 1.create object from google maps latlon (lat,lon)=>location
 > 2.specs for the map:{zoom: 17,center: location}
-
-```js
-
-```
 
 ```js
 function getPosition(e) {
