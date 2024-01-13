@@ -258,7 +258,7 @@ $networks: (fackbook, blue) (twitter, lightblue) (instagram, red); //map
 
 ---
 
-> [!tip] maximum
+> [!tip] maximum 
 
 > [!danger] difference between browsers compatibility with properties of css3
 > transform : scale(1) //scale the element by 1.5
