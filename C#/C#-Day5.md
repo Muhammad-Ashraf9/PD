@@ -208,7 +208,7 @@ Console.WriteLine("End of program");
 > - Finally block
 > - End of program
 
-> [!tip] there is difference between the code in finally block and the code after the try-catch block
+> [!tip] there is difference between the code in finally block and the code after the try-catch block => Code After try-catch => will run only when no Error occurs.
 >
 > - if we had a statement that needs to be executed if we have an exception or not, we need to put it in the finally block ()
 
@@ -778,15 +778,18 @@ namespace Demo1
 
 > [!tip] public vs internal vs protected vs private vs private protected vs internal protected
 >
-> - public: can be accessed anywhere
-> - internal: can be accessed in the same project (assembly)
-> -
+> - public: can be accessed anywhere.
+> - internal: can be accessed in the same project (assembly).
+> - Protected: can be accessed in class or its children only.
+> - private: can be accessed inside class only.
+> - internal Protected: Allows access to the declared member within the same assembly and by derived classes in any assembly.
+> - private Protected: It allows access to the declared member within the same assembly and only by derived classes.
 
 ###### Available Access Modifiers for classes
 
-> [!tip] public vs internal vs private
+> [!tip] public vs internal
 
-> [!warning] struct in namespace can have only public or internal access modifier
+> [!warning] struct in namespace can have only public, internal or private access modifier
 >
 > > [!bug] inside a class, struct can have any access modifier as it is a member of the class()
 
