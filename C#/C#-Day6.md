@@ -429,11 +429,10 @@ Console.WriteLine(s1.CalculateArea());//100
 //use CalculateArea() method of Triangle class
 ```
 
-
 ###### sealed class
 
->[!warning] sealed class: can not be inherited from
->like String class: `public sealed class String`
+> [!warning] sealed class: can not be inherited from
+> like String class: `public sealed class String`
 
 ```cs
 //sealed class
@@ -444,9 +443,9 @@ class Abc: String
     }
 ```
 
->[!tip] sealed method: can not be overriden
-> has to be with override keyword 
->like ToString() method in String class: `public sealed override string ToString()`
+> [!tip] sealed method: can not be overriden
+> has to be with override keyword
+> like ToString() method in String class: `public sealed override string ToString()`
 
 ```cs
 //sealed method
@@ -458,6 +457,392 @@ public sealed override void print()
             Console.Write("Triangle");
         }
 ```
->[!tip] sealed vs new vs new virtual  vs override
+
+> [!tip] sealed vs new vs new virtual vs override
+
+---
+
+# Break
+
+---
 
 ```cs
+public static void Main(string[] args)
+        {
+            // Reference of base class can refer to object of derived class
+            // but the opposite is not true
+            Rectangle r1 = new Rectangle(10, 20);
+            Triangle t1 = new Triangle();
+            Shape s1 = t1;//works fine
+            s1.print();
+            s1 = r1;
+            s1.print();//works fine
+            s1 = t1;
+
+            r1 = (Rectangle)s1;//Error: InvalidCastException: Unable to cast object of type 'Demo1.Triangle' to type 'Demo1.Rectangle'.
+// triangle and rectangle has the same base class but we can not cast triangle to rectangle or vice versa
+            s1 = r1;
+            t1 = (Triangle)s1;//Error:
+
+        //we can cast the reference of base class to object of derived class
+        ABC abc = new ABC();
+        t1 = (Triangle)abc;
+        t1 =
+        XYZ xyz = (XYZ)t1;
+        }
+
+        //is operator
+        //checks if the object is of specific type
+        //returns true or false
+        if(s1 is Triangle)
+        // if s1 is Triangle or derived from Triangle(Abc, XYZ)
+
+        {
+            Triangle t2 = (Triangle)s1;
+        }
+        else
+        {
+            Console.WriteLine("s1 is not Triangle");
+        }
+        //as operator
+        //if the object is of specific type it will cast it to that type and return it
+        //if not it will return null
+        s1 = new XYZ();
+        Triangle t3 = s1 as Triangle;
+        if(t3 == null)
+        {
+            Console.WriteLine("s1 is not Triangle");
+        }
+        else
+        {
+            Console.WriteLine("s1 is Triangle");
+        }
+
+        //to cast there has to be a relation between the types
+        //we can not cast Triangle to string
+        Triangle t4 = new Triangle();
+        string s2 = t4 as string;//Error: Cannot convert type 'Demo1.Triangle' to 'string'
+
+        int a = 10;
+        int b = 20;
+        float c = 30;
+        a = z as int;//Error:
+
+        //but if they were nullable types we can cast them
+        int? x = 10;
+        int? y = 20;
+        float? z = 30;
+        a = z as int?;//works fine
+```
+
+###### Equals() method
+
+> [!tip] Equals() method
+
+```cs
+//main
+public static void Main(string[] args)
+        {
+            Rectangle r1 = new Rectangle(10, 20);
+            Rectangle r1 = new Rectangle(10, 20);
+
+            Console.WriteLine(r1.Equals(r2));//False
+            //object class Equals() method compares the references
+            //we need to override it in Rectangle class to compare the values
+
+
+        }
+```
+
+> [!tip] override Equals() method
+
+```cs
+//Rectangle class
+public override bool Equals(object? obj)
+        {
+            Rectangle r = obj as Rectangle;
+            if (r == null)
+            {
+                return false;
+            }
+            return Dim1 == r.Dim1 && Dim2 == r.Dim2;
+        }
+```
+
+> [!info] try it in main
+
+```cs
+//main
+public static void Main(string[] args)
+        {
+            Rectangle r1 = new Rectangle(10, 20);
+            Rectangle r1 = new Rectangle(10, 20);
+
+            Console.WriteLine(r1.Equals(r2));//True
+            if(r1.Equals(r2))
+            {
+                Console.WriteLine("r1 and r2 are equal");
+            }
+            else
+            {
+                Console.WriteLine("r1 and r2 are not equal");
+            }
+          if (r1.Equals(null))
+            {
+                Console.WriteLine("r1 and r2 are equal");
+            }
+            else
+            {
+                Console.WriteLine("r1 and r2 are not equal");
+            }
+
+            if (r1.Equals("abc"))
+            {
+                Console.WriteLine("r1 and r2 are equal");
+            }
+            else
+            {
+                Console.WriteLine("r1 and r2 are not equal");
+            }
+
+          Triangle t1 = new Triangle();
+          Triangle t2 = new Triangle();
+          Console.WriteLine(t1.Equals(t2));//false
+          //we need to override Equals() method in Triangle class
+          if(t1.Equals(t2))
+          {
+              Console.WriteLine("t1 and t2 are equal");
+          }
+          else
+          {
+              Console.WriteLine("t1 and t2 are not equal");
+          }
+        }
+```
+
+> [!tip] override Equals() method in Triangle class
+
+```cs
+//Triangle class
+public override bool Equals(object? obj)
+       {
+           Triangle t = obj as Triangle;
+           if (t == null)
+           {
+               return false;
+           }
+           return Dim1 == t.Dim1 && Dim2 == t.Dim2;
+       }
+```
+
+```cs
+//main
+public static void Main(string[] args)
+        {
+          Triangle t1 = new Triangle();
+          Triangle t2 = new Triangle();
+          Console.WriteLine(t1.Equals(t2));//true
+
+          if(t1.Equals(t2))
+          {
+              Console.WriteLine("t1 and t2 are equal");
+          }
+          else
+          {
+              Console.WriteLine("t1 and t2 are not equal");
+          }
+          XYZ xyz = new XYZ();
+            Console.WriteLine(t1.Equals(xyz));//true
+            //but this is wrong as XYZ is not a Triangle
+            // we need to check if the object is of type Triangle
+
+        }
+```
+
+> [!tip] add extra check in Equals() method in Triangle class
+>
+> - check if the object is null
+
+```cs
+//Triangle class
+public override bool Equals(object? obj)
+        {
+            //we want to check if the object is null
+            // as it throws an exception in (obj.GetType() )
+            if(obj == null)
+            {
+                return false;
+            }
+            if(this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+            //can't use is operator as it checks if the object is of specific type or (derived) from it  so it will return true for XYZ
+
+                Triangle t = obj as Triangle;
+                if (t == null)
+                {
+                    return false;
+                }
+                return Dim1 == t.Dim1 && Dim2 == t.Dim2;
+
+            return false;
+        }
+```
+
+```cs
+//main
+public static void Main(string[] args)
+        {
+          Triangle t1 = new Triangle();
+            Triangle t2 = new Triangle();
+            Console.WriteLine(object.ReferenceEquals(t1, t2));//false
+            Console.WriteLine(t1.GetHashCode());//-1521134295
+            Console.WriteLine(t2.GetHashCode());//-1521134888
+            //not the same hash code
+            t2 = t1;//reference equality
+            Console.WriteLine(object.ReferenceEquals(t1, t2));//true
+            Console.WriteLine(t1.GetHashCode());//1521134295
+            Console.WriteLine(t2.GetHashCode());//1521134295
+            //the same hash code
+            //object.Equals()
+            Triangle t3 = new Triangle();
+            Triangle t4 = new Triangle();
+            Console.WriteLine(object.Equals(t3, t4));// true
+
+
+```
+
+> [!done] object.Equals()
+>
+> - this calls the Equals() method of the instance => the equals we override (state equality)
+> - if it was not overriden it will call the Equals() method of object class (reference equality)
+
+---
+
+#### Stack class
+
+```cs
+    class Stack
+    {
+        int[] arr;
+        int size;
+        int tos;
+        public Stack(int _size = 5)
+        {
+            size = _size;
+            arr = new int[size];
+            tos = -1;
+        }
+        public int Size { get=>size; }
+        public bool IsFull()
+        {
+            return tos == size - 1;
+        }
+        public bool IsEmpty()
+        {
+            return tos == -1;
+        }
+        public void Push(int x)
+        {
+            if (IsFull())
+            {
+                // Console.WriteLine("Stack is full");
+                // return;
+
+                //create exception for stack overflow
+                //StackFullException
+                //has to inherit from Exception class
+                throw new StackFullException(size);
+                //developer can handle the exception try catch
+                //or check if the stack is full before pushing
+            }
+            tos++;
+            arr[tos] = x;
+        }
+        public int Pop()
+        {
+            if (IsEmpty())
+            {
+                // Console.WriteLine("Stack is empty");
+                // return -1;//but it can be a valid value in the stack
+
+                //create exception for stack underflow
+                //StackEmptyException
+                //has to inherit from Exception class
+                throw new StackEmptyException();
+                //developer can handle the exception try catch
+                //or check if the stack is empty before popping
+            }
+            int x = arr[tos];
+            tos--;
+            return x;
+        }
+    }
+```
+
+> [!tip] StackFullException class
+
+```cs
+class StackFullException : Exception
+    {
+        public StackFullException(int size) : base($"Stack is full, size: {size}")
+        {
+
+        }
+
+    }
+```
+
+> [!tip] StackEmptyException class
+
+```cs
+class StackEmptyException : Exception
+    {
+        public StackEmptyException() : base("Stack is empty")
+        {
+
+        }
+
+    }
+```
+
+```cs
+//main
+public static void Main(string[] args)
+        {
+            Stack s1 = new Stack();
+            //we use protective programming to avoid throwing exceptions
+            if(!s1.IsEmpty())
+            {
+                Console.WriteLine(s1.Pop());
+            }
+
+            try{
+                s1.Pop();
+            }catch(StackFullException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            s1.Push(10);
+            s1.Push(20);
+            s1.Push(30);
+            s1.Push(40);
+            s1.Push(50);
+            s1.Push(60);//StackFullException: Stack is full, size: 5
+            Console.WriteLine(s1.Pop());//50
+            Console.WriteLine(s1.Pop());//40
+            Console.WriteLine(s1.Pop());//30
+            Console.WriteLine(s1.Pop());//20
+            Console.WriteLine(s1.Pop());//10
+            Console.WriteLine(s1.Pop());//StackEmptyException: Stack is empty
+        }
+```
+
+---
+
+#### #lab-6
+
+- stack
+- queue
+- shape
