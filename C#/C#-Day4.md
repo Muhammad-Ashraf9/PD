@@ -67,7 +67,7 @@ namespace Demo1
 
 ---
 
-> [!warning] we can use properties directly without fields
+> [!warning] Automatic Properties -> we can use properties directly without fields
 > and fields will be created automatically by compiler `k__BackingField`
 > and setters and getters will be created automatically by compiler
 >
@@ -168,7 +168,7 @@ namespace Demo1
     }
    static void Main(string[] args)
     {
-        //can't instace methods without object
+        //can't call instance methods without object
         //fun1();//error
         //so we use static methods
         fun2();//fun2
@@ -319,7 +319,7 @@ public static void Main(string[] args)
 > }
 > ```
 
-> [!done] use out keyword
+> [!done] 
 >
 > - no need to initialize the variable
 > - output only
@@ -711,7 +711,7 @@ namespace Demo3
     {
         static void Main(string[] args)
         {
-            Complex c1 = new Complex(1, 2);
+	        Complex c1 = new Complex(1, 2);
            Complex c2 = new Complex(){Real = 30,Img =   20};
            Complex c3 = new Complex();
             c3 = c1 + c2;
@@ -734,7 +734,7 @@ namespace Demo3
 
 > [!danger] can't overload = operator EVER
 
-> [!example] we can check if two objects are refering to the same object in heap using ReferenceEquals() method
+> [!example] we can check if two references are refering to the same object in heap using ReferenceEquals() method
 ><br>
 > ```cs
 > Complex c1 = new Complex(1, 2);

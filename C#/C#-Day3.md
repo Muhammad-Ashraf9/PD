@@ -337,7 +337,7 @@ foreach (var item in z)
 > enum dayOfWeek : byte
 > {
 >    Saturday = 10 , sunday = 30, Monday = 40, Tuesday = 50, Wednesday = 60, Thursday, Friday =255//255 is max value for byte
-> }
+> } //if we didn't assign value for sunday it will be 11 and so on...
 > ```
 
 > [!done] ITIBrances
@@ -360,6 +360,7 @@ foreach (var item in z)
 > Console.WriteLine($"{branch}");//Aswan
 > Console.WriteLine($"{(int)branch}");//500
 > Console.ForegroundColor = ConsoleColor.Red;//ConsoleColor is enum
+> //As you see if we have a code for each branch → it will be useful to refer to that branch by code or name.
 > ```
 
 ---
@@ -514,7 +515,7 @@ foreach (var item in z)
 > > Console.WriteLine($"{c2.real}");//5
 > > ```
 
-> [!example]we can create 1 parameter constructor for struct
+> [!example] we can create 1 parameter constructor for struct
 >
 > ```cs
 > struct Complex
@@ -608,7 +609,8 @@ foreach (var item in z)
 >we can make property private / protected /public
 >we can make setter private / protected /public
 >we can make getter private / protected /public
-> but at least one of them has to match the property access modifier
+>but at least one of them has to match the property access modifier
+>Also, inner access modifiers should be higher security or equal with outer. 
 >```cs
 > public int Real {get=>real;private set=>real = value;}
 >```
