@@ -37,18 +37,26 @@
 > >
 > > ```csharp
 > >  class OddSeries{
+> > 	 int n = 1;
 > >      public void GetNextOddNumber()//return 1,3,5
 > >      {
 > >          //code
+> >          int i = n;
+> >          n += 2;
+> >          return i;
 > >      }
 > >  }
 > >  class EvenSeries{
+> > 	 int n = 0;
 > >      public void GetNextEvenNumber()//return 2,4,6
 > >      {
+> > 	     int i = n;
+> > 	     n += 2;
+> > 	     return i;
 > >          //code
 > >      }
 > >  }
-> > clas Series{
+> > class Series{
 > >      public void  printSeries(OddSeries o)//we can only pass OddSeries object we can't pass EvenSeries object
 > >      {
 > >          //code
@@ -499,7 +507,7 @@ static void Main(string[] args)
     }
     IComparable obj = new Complex();//error because Complex class does not implement IComparable interface
     ///even with casting
-    IComparable obj = (IComparable)new Complex();//
+    IComparable obj = (IComparable)new Complex();//Error
 
 }
 ```
@@ -970,13 +978,13 @@ public static void Swap<T>(ref T x, ref T y)
 
 > [!bug] we can add constraints to generic type
 >
-> - we can only use data types that implement IComparable interface
+> - we can only use data types that implement IComparable interface -> secondary constraint(can be more than one condition)
 
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable
 ```
 
-- ##### we can add multiple constraints
+- ##### we can add multiple constraints(secondary constraint only)
 
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
@@ -984,7 +992,7 @@ public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
 
 ---
 
-> [!warning] we can add class constraint
+> [!warning] we can add class constraint -> primary type (Only one condition)
 >
 > - now we can assign null to x and y
 > - we can use ==operator
@@ -1032,7 +1040,7 @@ public static void Swap<T>(ref T x, ref T y) where T : Complex, IComparable, ICl
 public static void Swap<Complex>(ref Complex x, ref Complex y) where Complex : IComparable, ICloneable
 ```
 
-> [!tip] we can add new() constraint
+> [!tip] we can add new() constraint(third Constraint)
 >
 > - have to have parameterless constructor
 > - we can create object of T using new operator `T obj = new T();`
@@ -1052,7 +1060,7 @@ public static void Swap<T>(ref T x, ref T y) where T :class, new(), IComparable,
 ```cs
 //array list
 //not fixed size like array
-// we can add any number of elements
+//we can add any number of elements
 //we can add any type of elements (no type safety)
 
 ArrayList arr = new ArrayList();
@@ -1076,7 +1084,7 @@ foreach (int i in arr)
     Console.WriteLine(i);
 }
 //not type safe
-
+//reduced performance due to boxing and unboxing
 //to get length
 Console.WriteLine(arr.Count);
 ```
@@ -1206,7 +1214,7 @@ Console.WriteLine(s1.Pop());//error:invaild operation exception
 s1.Clear();//make tos = -1 or 0 (depends on implementation)
 ```
 
->[!bug]LAB: build stack using list
+>[!bug] LAB: build stack using list
 
 
 ###### Queue
