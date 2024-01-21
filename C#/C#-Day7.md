@@ -984,7 +984,7 @@ public static void Swap<T>(ref T x, ref T y)
 public static void Swap<T>(ref T x, ref T y) where T : IComparable
 ```
 
-- ##### we can add multiple constraints(secondary type only)
+- ##### we can add multiple constraints(secondary constraint only)
 
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
