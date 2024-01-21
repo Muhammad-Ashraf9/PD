@@ -440,8 +440,11 @@ namespace Demo1Interface
 > - TRY making different objects of different interfaces and call the method
 
 ---
+
 ### Break
+
 ---
+
 ```csharp
 //main
 static void Main(string[] args)
@@ -917,6 +920,7 @@ static void Main(string[] args)
 > ```
 
 > [!tip] create stack of Complex
+
 ```csharp
 Stack<Complex> s1 = new Stack<Complex>(10);
 Copmlex c1 = new Complex() { Real = 10, Imaginary = 52 };
@@ -927,6 +931,7 @@ Console.WriteLine(s1.Pop());//34 64
 ```
 
 ---
+
 ###### Generic Swap
 
 ```csharp
@@ -966,11 +971,10 @@ public static void Swap<T>(ref T x, ref T y)
 > [!bug] we can add constraints to generic type
 >
 > - we can only use data types that implement IComparable interface
+
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable
 ```
-
-
 
 - ##### we can add multiple constraints
 
@@ -980,23 +984,29 @@ public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
 
 ---
 
->[!warning] we can add class constraint
+> [!warning] we can add class constraint
+>
 > - now we can assign null to x and y
->- we can use ==operator
+> - we can use ==operator
+
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : class, IComparable, ICloneable
 ```
 
->[!bug] we can add struct constraint
->- now we can't assign null to x and y
->- we can't use ==operator
+> [!bug] we can add struct constraint
+>
+> - now we can't assign null to x and y
+> - we can't use ==operator
+
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : struct, IComparable, ICloneable
 ```
 
 > [!tip] default
+>
 > - default is constraint by class, struct
-```csharp
+
+````csharp
  public static void Swap<T>(ref T x, ref T y) where T : struct,class,IComparable, ICloneable{
  } ```
 
@@ -1004,29 +1014,250 @@ public static void Swap<T>(ref T x, ref T y) where T : struct, IComparable, IClo
 > [!done]  is the same as
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
-```
+````
 
->[!warning] we can add class like Complex constraint
+> [!warning] we can add class like Complex constraint
+>
 > - this will make it only for Complex class and its derived classes
+
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : Complex, IComparable, ICloneable
 ```
 
->[!danger] NOT the same as changing the ref of parameter to Complex
+> [!danger] NOT the same as changing the ref of parameter to Complex
+>
 > - this will make it only for Complex class
+
 ```csharp
 public static void Swap<Complex>(ref Complex x, ref Complex y) where Complex : IComparable, ICloneable
 ```
 
 > [!tip] we can add new() constraint
+>
 > - have to have parameterless constructor
 > - we can create object of T using new operator `T obj = new T();`
+
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T :class, new(), IComparable, ICloneable
 ```
 
-----
+---
 
-### Break
+### Break BS
 
 ---
+
+###### Array List
+
+```cs
+//array list
+//not fixed size like array
+// we can add any number of elements
+//we can add any type of elements (no type safety)
+
+ArrayList arr = new ArrayList();
+arr.Add(10);
+arr.Add(100);
+arr.Add(10);
+arr.Add(1000);
+arr.Add(10000);
+foreach (int i in arr)
+{
+    Console.WriteLine(i);
+}
+arr.Remove(10); //remove first occurence of 10
+
+arr.Add("abc");
+arr.Add(true);
+arr.Add(10.5f);
+foreach (int i in arr)
+//will throw exception because we can't cast string to int
+{
+    Console.WriteLine(i);
+}
+//not type safe
+
+//to get length
+Console.WriteLine(arr.Count);
+```
+
+###### Generic List
+
+```cs
+//generic list
+//we can add any number of elements
+
+List<int> arr = new List<int>();
+arr.Add(10);
+arr.Add(20);
+arr.Add(10);
+// arr.Add("abc");//error: can't convert string to int
+foreach (var i in arr)
+{
+    Console.WriteLine(i);
+}
+
+//to get length
+Console.WriteLine(arr.Count);
+
+//to remove element
+arr.Remove(10);//remove first occurence of 10
+
+
+List<string> names = new List<string>();
+names.Add("abc");
+names.Add("xyz");
+names.Add("abc");
+names.Add("pqr");
+Console.WriteLine(names.Count);//3
+foreach (string i in names)
+{
+    Console.WriteLine(i);//abc xyz abc pqr
+}
+names.Remove("abc");//remove first occurence of "abc"
+foreach (string i in names)
+{
+    Console.WriteLine(i);//xyz abc pqr
+
+}
+//we can use index to access or update elements but we can't use index to add elements
+names[0] = "mno";//ok => replace "xyz" with "mno"
+Console.WriteLine(names[0]);//ok => mno
+names[4] = "mno";//error => index out of range
+
+
+//sort
+names.Sort();//generic type has to implement IComparable interface
+//string implements IComparable interface
+
+
+```
+
+> [!tip] what happen when creating and adding in List
+>
+> - `List<int> arr = new List<int>();` this create array of size 4 each can hold int
+> - `arr.Add(10);` this add 10 to first element in array
+> - `arr.Add(20);` this add 20 to second element in array
+> - `arr.Add(10);` this add 10 to third element in array
+> - `arr.Add(20);` this add 20 to fourth element in array
+> - once we add fifth element it will create new array of size 8 and copy all elements from old array to new array and add fifth element to new array
+> - this will happen every time we add element and array is ==full==
+
+```cs
+//capacity
+//we can get capacity of list
+//capacity is the size of array that list is using
+//capacity is always >= count
+//on first add it will create array of size 4
+
+List<int> arr = new List<int>();
+Console.WriteLine(arr.Capacity);//4
+Console.WriteLine(arr.Count);//0
+arr.Add(10);
+Console.WriteLine(arr.Count);//1
+Console.WriteLine(arr.Capacity);//4
+arr.Add(20);
+Console.WriteLine(arr.Count);//2
+Console.WriteLine(arr.Capacity);//4
+arr.Add(30);
+Console.WriteLine(arr.Count);//3
+Console.WriteLine(arr.Capacity);//4
+arr.Add(40);
+Console.WriteLine(arr.Count);//4
+Console.WriteLine(arr.Capacity);//4
+arr.Add(50);
+Console.WriteLine(arr.Count);//5
+Console.WriteLine(arr.Capacity);//8
+
+//we can set initial capacity
+List<int> arr = new List<int>(10);//initial capacity is 10
+Console.WriteLine(arr.Capacity);//10
+//when adding 11th element it will create new array of size double the old array size (20)
+Console.WriteLine(arr.Count);//11
+Console.WriteLine(arr.Capacity);//20
+
+//TrimExcess
+//we can use TrimExcess to remove extra space
+names.TrimExcess();//remove extra space
+Console.WriteLine(names.Count);//3
+Console.WriteLine(names.Capacity);//3
+```
+---
+
+###### Stack
+
+```cs
+//stack (not generic)
+Stack s1 = new Stack();
+s1.Push(10);
+//not type safe
+// we use the generic version
+
+Stack<int> s1 = new Stack<int>();
+s1.Push(10);
+s1.Push(20);
+s1.Push(30);
+Console.WriteLine(s1.Pop());//30
+Console.WriteLine(s1.Pop());//20
+Console.WriteLine(s1.Pop());//10
+Console.WriteLine(s1.Pop());//error:invaild operation exception
+
+//to clear stack
+s1.Clear();//make tos = -1 or 0 (depends on implementation)
+```
+
+>[!bug]LAB: build stack using list
+
+
+###### Queue
+
+```cs
+//same as stack
+```
+
+>[!warning] SEARCH: HashSet vs SortedSet vs SortedList 
+
+
+###### Dictionary
+
+>[!tip] Dictionary
+> 
+> - key value pair
+> - key has to be unique
+> - key can be any type even Dictionary
+```cs
+//main
+static void Main(string[] args)
+{
+    Dictionary<int, string> names = new Dictionary<int, string>();
+    // key => int , value => string
+    //all keys have to be unique
+    
+    names.Add(1, "abc");
+    names.Add(2, "xyz");
+    names.Add(3, "pqr");
+    names.Add(4, "mno");
+
+    //to print all data
+    //Dictionary has indexer 
+    //Dictionary[key] => value
+    Console.WriteLine(names[1]);//abc
+
+    // foreach (var i in names)
+    //i not int or string it is KeyValuePair<int,string>
+    foreach (KeyValuePair<int, string> i in names)
+    {
+        Console.WriteLine(i.Key + " " + i.Value);
+        //1 abc 
+        //2 xyz
+        //3 pqr
+        //4 mno
+    }
+    //Count
+    Console.WriteLine(names.Count);//4
+
+    names.Add(1, "abc");//error: key already exists System.ArgumentException: 'An item with the same key has already been added. Key: 1'
+
+    //to check if key exists (complex data type) it uses GetHashCode() and Equals()
+}
+```
