@@ -117,11 +117,102 @@ namespace Demo2
             myDelegate += print;
             myDelegate.Invoke();//print2 print
             //call will be in order of adding functions to delegate
+           
             //invokation list
+            myDelegate.GetInvocationList();//return array of functions
+            Console.WriteLine(myDelegate.GetInvocationList().Length);//2: 2 functions in delegate
         }
     }
 }
 ```
 >[!tip] multicast delegate
-> - Trace
+> - Trace:
 > - myDelegate => Non-Public members => _invocationList,_methodPtr:has address of last function added
+> - in dll: myDelegate extends MulticastDelegate
+
+
+>[!tip] pass delegate as parameter
+
+```csharp
+public static void myFun(MyDelegate myDelegate)
+//pass delegate as parameter
+{
+    
+    myDelegate.Invoke();//call functions in delegate
+}
+```
+```csharp
+//main
+myFun(myDelegate);
+
+```
+
+
+```csharp
+//main
+List<int> list = [10,5,32,6,8,9,7,4,3,2,1];//C# 12
+//list.FindAll(delegate(int x){return bool;});
+//accept delegate as parameter : its return type is bool and it has one parameter
+//to get numbers > 30 ...etc we need to pass function to delegate 
+
+var res = list.FindAll(isGreaterThan30);//
+foreach (var item in res)
+{
+    Console.WriteLine(item);//32
+}
+//we can pass any function with same signature as delegate
+
+res = list.FindAll(isLessThan20);
+foreach (var item in res)
+{
+    Console.WriteLine(item);//10 5 6 8 9 7 4 3 2 1
+}
+
+```
+```csharp
+//condition function
+public static bool isGreaterThan30(int x)
+{
+    return x > 30;
+}
+ 
+ //less than 20
+    public static bool isLessThan20(int x)
+    {
+        return x < 20;
+    }
+
+```
+
+
+---
+```csharp
+//condition function
+//length of string > 3
+public static bool isGreaterThan3(string x)
+{
+    return x.Length > 3;
+}
+public static bool startWithA(string x)
+{
+    return x.StartsWith("a");
+}
+```
+
+```csharp
+//main
+List<string> names = ["ahmed","ali","mohamed","mahmoud","mohamed","ahmed","ali","mohamed","mahmoud","mohamed"];
+
+var res = names.FindAll(isGreaterThan3);
+foreach (var item in res)
+{
+    Console.WriteLine(item);//ahmed mohamed mahmoud mohamed ahmed mohamed mahmoud mohamed
+}
+
+res = names.FindAll(startWithA);
+foreach (var item in res)
+{
+    Console.WriteLine(item);//ahmed ali ahmed ali
+}
+```
+
