@@ -1183,6 +1183,7 @@ names.TrimExcess();//remove extra space
 Console.WriteLine(names.Count);//3
 Console.WriteLine(names.Capacity);//3
 ```
+
 ---
 
 ###### Stack
@@ -1207,8 +1208,7 @@ Console.WriteLine(s1.Pop());//error:invaild operation exception
 s1.Clear();//make tos = -1 or 0 (depends on implementation)
 ```
 
->[!bug]LAB: build stack using list
-
+> [!bug]LAB: build stack using list
 
 ###### Queue
 
@@ -1216,16 +1216,16 @@ s1.Clear();//make tos = -1 or 0 (depends on implementation)
 //same as stack
 ```
 
->[!warning] SEARCH: HashSet vs SortedSet vs SortedList 
-
+> [!warning] SEARCH: HashSet vs SortedSet vs SortedList
 
 ###### Dictionary
 
->[!tip] Dictionary
-> 
+> [!tip] Dictionary
+>
 > - key value pair
 > - key has to be unique
 > - key can be any type even Dictionary
+
 ```cs
 //main
 static void Main(string[] args)
@@ -1233,14 +1233,14 @@ static void Main(string[] args)
     Dictionary<int, string> names = new Dictionary<int, string>();
     // key => int , value => string
     //all keys have to be unique
-    
+
     names.Add(1, "abc");
     names.Add(2, "xyz");
     names.Add(3, "pqr");
     names.Add(4, "mno");
 
     //to print all data
-    //Dictionary has indexer 
+    //Dictionary has indexer
     //Dictionary[key] => value
     Console.WriteLine(names[1]);//abc
 
@@ -1249,7 +1249,7 @@ static void Main(string[] args)
     foreach (KeyValuePair<int, string> i in names)
     {
         Console.WriteLine(i.Key + " " + i.Value);
-        //1 abc 
+        //1 abc
         //2 xyz
         //3 pqr
         //4 mno
@@ -1266,3 +1266,41 @@ static void Main(string[] args)
 ---
 
 # #Lab7-C#
+
+- data type like List => add in memory,file (search how to add in file)
+
+```cs
+// class newList: List<string>
+
+class NewList<t> : List<t>
+{
+    // public void override Add()//Error =>not virtual
+    // public void  Add()
+    public new void Add(t x)//new keyword
+    {
+        //write to file
+        Console.WriteLine("write to file");
+        base.Add(x);//call base class method
+    }
+    {
+
+    }
+
+}
+//main
+static void Main(string[] args)
+{
+    NewList<int> arr = new NewList<int>();
+    arr.Add(10);
+    arr.Add(20);
+    arr.Add(30);
+    arr.AddToFile("path");
+    List<int> arr2 =  arr;//reference from base class to object of derived class
+    arr2.Add(40);//will call base class method
+    //to call derived class method we need to 
+}
+```
+
+```
+
+```
