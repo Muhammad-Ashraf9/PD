@@ -16,7 +16,7 @@ namespace Demo1
          int dim1;
          int dim2;
          public Dim1 {get=>dim1; set=>dim1=value;}
-            public Dim2 {get=>dim2; set=>dim2=value;}
+         public Dim2 {get=>dim2; set=>dim2=value;}
 
         public Shape(int _dim1, int _dim2)
         {
@@ -135,7 +135,7 @@ namespace Demo1
 
 > [!danger] if we didn't create a constructor for Rectangle class it will call the ==default constructor== of Shape class by default
 >
-> - if it was no paramterless constructor in base class it will throw an error:
+> - if it was no parameterless constructor in base class it will throw an error.
 
 > [!example] in case of 2 parameters constructor in Rectangle class
 >
@@ -267,7 +267,7 @@ public static void Main(string[] args)
 
 
             object o1 = t1;
-            //if we have the ovveride
+            //if we have the override
             o1.ToString();//Triangle Dim1: 1 Dim2: 1
             //no override
             //calls object class ToString() method
@@ -396,7 +396,7 @@ class Rectangle : Shape
         public override float CalculateArea()
         //we have to override the abstract method from base class
         //otherwise Rectangle class will be abstract
-        //we need to add abstract to Rectangle class
+        //we will need to add abstract to Rectangle class
 
         {
             return Dim1 * Dim2;
