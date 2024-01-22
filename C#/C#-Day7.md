@@ -157,6 +157,7 @@
         // struct FibonacciSeries : ISeries
         //struct had problem => search (boxing and unboxing)
         //we need to make FibonacciSeries implement ISeries interface
+        //every time 
         class FibonacciSeries : ISeries
         {
             int current;
