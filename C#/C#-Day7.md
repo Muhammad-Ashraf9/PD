@@ -157,7 +157,7 @@
         // struct FibonacciSeries : ISeries
         //struct had problem => search (boxing and unboxing)
         //we need to make FibonacciSeries implement ISeries interface
-        //every time 
+        //every time struct is passed to method it is copied (boxing) to heap and on changing current it does not change the original struct in stack
         class FibonacciSeries : ISeries
         {
             int current;
