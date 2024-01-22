@@ -308,3 +308,43 @@ sort(arr, myDelegate);
 ```
 
 >[!tip] in delegate we don't care about function name ulike interface and CompareTo method
+
+---
+# Break
+---
+>[!example] if the function is used one place or one time
+> - we can use anonymous function
+> - we can use lambda expression
+
+
+```csharp
+//main
+
+//anonymous function
+MyDelegate myDelegate  = delegate(int x, int y)
+{
+    return x > y;
+}; 
+// this will create function in memory and save its address in myDelegate
+//we only need to cast it to delegate type(no name or return type needed)
+
+
+//lambda expression
+MyDelegate myDelegate2 = (int x, int y) =>
+{
+    return x > y;
+};
+//we can omit curly braces and return keyword
+MyDelegate myDelegate2 = (int x, int y) => x > y;
+//we can omit data type
+MyDelegate myDelegate3 = (x, y) => x > y;//x and y are int from delegate type
+
+//we pass lambda expression to sort function
+sort(arr, (x, y) => x > y);//if it was more than one line we need to use curly braces
+
+names.FindAll((x) => x.StartsWith("a"));
+//we can omit round brackets if we have only one parameter
+names.FindAll(x => x.StartsWith("a"));
+
+```
+
