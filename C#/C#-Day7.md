@@ -1007,20 +1007,19 @@ public static void Swap<T>(ref T x, ref T y) where T : struct, IComparable, IClo
 >
 > - default is constraint by class, struct
 
-````csharp
+```csharp
  public static void Swap<T>(ref T x, ref T y) where T : struct,class,IComparable, ICloneable{
- } ```
-
-
+ } 
+ ```
 > [!done]  is the same as
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : IComparable, ICloneable
 ````
 
+
 > [!warning] we can add class like Complex constraint
 >
 > - this will make it only for Complex class and its derived classes
-
 ```csharp
 public static void Swap<T>(ref T x, ref T y) where T : Complex, IComparable, ICloneable
 ```
