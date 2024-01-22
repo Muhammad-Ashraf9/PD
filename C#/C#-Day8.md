@@ -117,7 +117,7 @@ namespace Demo2
             myDelegate += print;
             myDelegate.Invoke();//print2 print
             //call will be in order of adding functions to delegate
-           
+
             //invokation list
             myDelegate.GetInvocationList();//return array of functions
             Console.WriteLine(myDelegate.GetInvocationList().Length);//2: 2 functions in delegate
@@ -125,35 +125,36 @@ namespace Demo2
     }
 }
 ```
->[!tip] multicast delegate
+
+> [!tip] multicast delegate
+>
 > - Trace:
-> - myDelegate => Non-Public members => _invocationList,_methodPtr:has address of last function added
+> - myDelegate => Non-Public members => \_invocationList,\_methodPtr:has address of last function added
 > - in dll: myDelegate extends MulticastDelegate
 
-
->[!tip] pass delegate as parameter
+> [!tip] pass delegate as parameter
 
 ```csharp
 public static void myFun(MyDelegate myDelegate)
 //pass delegate as parameter
 {
-    
+
     myDelegate.Invoke();//call functions in delegate
 }
 ```
+
 ```csharp
 //main
 myFun(myDelegate);
 
 ```
 
-
 ```csharp
 //main
 List<int> list = [10,5,32,6,8,9,7,4,3,2,1];//C# 12
 //list.FindAll(delegate(int x){return bool;});
 //accept delegate as parameter : its return type is bool and it has one parameter
-//to get numbers > 30 ...etc we need to pass function to delegate 
+//to get numbers > 30 ...etc we need to pass function to delegate
 
 var res = list.FindAll(isGreaterThan30);//
 foreach (var item in res)
@@ -169,13 +170,14 @@ foreach (var item in res)
 }
 
 ```
+
 ```csharp
 //condition function
 public static bool isGreaterThan30(int x)
 {
     return x > 30;
 }
- 
+
  //less than 20
     public static bool isLessThan20(int x)
     {
@@ -184,8 +186,8 @@ public static bool isGreaterThan30(int x)
 
 ```
 
-
 ---
+
 ```csharp
 //condition function
 //length of string > 3
@@ -216,8 +218,8 @@ foreach (var item in res)
 }
 ```
 
+> [!tip] sortAscending function
 
->[!tip] sortAscending function
 ```csharp
 public static void sortAscending(int x, int y)
 {
@@ -263,7 +265,6 @@ public static bool condition2Ascending(int x, int y)
 }
 ```
 
-
 ```csharp
 public delegate bool MyDelegate(int x, int y);
 
@@ -303,19 +304,22 @@ myDelegate += condition1Ascending;
 sort(arr, myDelegate);
 
 
-//in case of instace method we pass obj.functionName 
+//in case of instace method we pass obj.functionName
 //unlike static method we pass only functionName
 ```
 
->[!tip] in delegate we don't care about function name ulike interface and CompareTo method
+> [!tip] in delegate we don't care about function name ulike interface and CompareTo method
 
 ---
+
 # Break
+
 ---
->[!example] if the function is used one place or one time
+
+> [!example] if the function is used one place or one time
+>
 > - we can use anonymous function
 > - we can use lambda expression
-
 
 ```csharp
 //main
@@ -324,7 +328,7 @@ sort(arr, myDelegate);
 MyDelegate myDelegate  = delegate(int x, int y)
 {
     return x > y;
-}; 
+};
 // this will create function in memory and save its address in myDelegate
 //we only need to cast it to delegate type(no name or return type needed)
 
@@ -346,5 +350,42 @@ names.FindAll((x) => x.StartsWith("a"));
 //we can omit round brackets if we have only one parameter
 names.FindAll(x => x.StartsWith("a"));
 
+//no parameters: we use empty round brackets
+MyDelegate myDelegate4 = () => Console.WriteLine("hello");
 ```
 
+---
+
+```csharp
+namespace Demo5
+{
+    delegate void MyDelegate(int x);
+    internal class Program
+    {
+        public static void print1(int x)
+        {
+            Console.WriteLine($"print1 {x}");
+        }
+        public static void print2(int x)
+        {
+            Console.WriteLine($"print2 {x}");
+        }
+        static void Main(string[] args)
+        {
+            MyDelegate myDelegate = print1;
+            myDelegate += print2;
+            myDelegate.Invoke(10);//print1 10 print2 10
+            //we can add lambda expression to delegate
+            myDelegate += (x) => Console.WriteLine($"lambda {x}");
+            myDelegate.Invoke(10);//print1 10 print2 10 lambda 10
+            //we can add anonymous function to delegate
+            myDelegate += delegate(int x)
+            {
+                Console.WriteLine($"anonymous {x}");
+            };
+            myDelegate.Invoke(10);//print1 10 print2 10 lambda 10 anonymous 10
+        }
+    }
+
+}
+```
