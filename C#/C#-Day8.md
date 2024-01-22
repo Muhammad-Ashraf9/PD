@@ -389,3 +389,54 @@ namespace Demo5
 
 }
 ```
+>[!tip] add & subtract delegate
+
+```csharp
+delegate void MyDelegate2(int x, int y);
+
+public static void Add(int x, int y)
+{
+    Console.WriteLine($"Add {x + y}");
+    return x + y;
+}
+public static void Sub(int x, int y)
+{
+    Console.WriteLine($"Sub {x - y}");
+    return x - y;
+}
+static void Main(string[] args)
+{
+    MyDelegate2 myDelegate2 = new MyDelegate2(Add);
+    //or
+    myDelegate2 = Add;//more common
+    myDelegate2 += Sub;
+    int z = myDelegate2.Invoke(10, 20);//store last function return value
+    //Add 30    Sub -10
+    Console.WriteLine(z);//-10
+
+    myDelegate2 += delegate(int x, int y)
+    {
+        Console.WriteLine($"anonymous Mul{x * y}");
+        return x * y;
+    };
+
+    z = myDelegate2.Invoke(10, 20);
+    //Add 30    Sub -10    anonymous Mul200
+    Console.WriteLine(z);//200
+    myDelegate2 += (x, y) =>
+    {
+        Console.WriteLine($"lambda Div{x / y}");
+        return x / y;
+    };
+    z = myDelegate2.Invoke(20, 10);
+    //Add 30    Sub 10    anonymous Mul200    lambda Div2
+
+    Console.WriteLine(z);//2
+
+    //we can create new delegate void return type and no parameters
+    //as function has to same signature as delegate
+
+    
+    
+
+```
