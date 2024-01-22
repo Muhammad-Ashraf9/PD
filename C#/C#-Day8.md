@@ -265,7 +265,6 @@ public static bool condition2Ascending(int x, int y)
 
 
 ```csharp
-//main
 public delegate bool MyDelegate(int x, int y);
 
 //sort function only one function for ascending and descending
@@ -283,6 +282,7 @@ public static void sort(int[] arr, MyDelegate myDelegate)
     }
 }
 
+//main
 int[] arr = [10,5,32,6,8,9,7,4,3,2,1];
 MyDelegate myDelegate = condition1Ascending;
 sort(arr, myDelegate);
@@ -306,3 +306,5 @@ sort(arr, myDelegate);
 //in case of instace method we pass obj.functionName 
 //unlike static method we pass only functionName
 ```
+
+>[!tip] in delegate we don't care about function name ulike interface and CompareTo method
