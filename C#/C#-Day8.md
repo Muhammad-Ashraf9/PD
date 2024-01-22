@@ -123,3 +123,5 @@ namespace Demo2
 }
 ```
 >[!tip] multicast delegate
+> - Trace
+> - myDelegate => Non-Public members => _invocationList,_methodPtr:has address of last function added
