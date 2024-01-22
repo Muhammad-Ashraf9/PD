@@ -389,10 +389,18 @@ namespace Demo5
 
 }
 ```
->[!tip] add & subtract delegate
+
+> [!tip] add & subtract delegate
 
 ```csharp
 delegate void MyDelegate2(int x, int y);
+
+//delegate return type is void and it has 0 parameters
+delegate void MyDelegate3();
+// delegate return type is double and it has 2 parameters (double x, double y)
+delegate double MyDelegate4(double x, double y);
+
+
 
 public static void Add(int x, int y)
 {
@@ -403,6 +411,15 @@ public static void Sub(int x, int y)
 {
     Console.WriteLine($"Sub {x - y}");
     return x - y;
+}
+public static void print1()
+{
+    Console.WriteLine($"print1 ");
+}
+public static double Add(double x, double y)
+{
+    Console.WriteLine($"Add {x + y}");
+    return x + y;
 }
 static void Main(string[] args)
 {
@@ -436,7 +453,137 @@ static void Main(string[] args)
     //we can create new delegate void return type and no parameters
     //as function has to same signature as delegate
 
-    
-    
+    MyDelegate3 myDelegate3 = print1;
+    myDelegate3.Invoke();//print1
+    myDelegate3 += () => Console.WriteLine("lambda print2");
+    myDelegate3.Invoke();//print1 lambda print2
+
+    //we can remove function from delegate
+    myDelegate3 -= print1;
+    myDelegate3.Invoke();//lambda print2
+
+//double delegate
+
+}
+```
+
+> [!danger] instead of having similar delegates with different data types
+>
+> > [!done] we can use generic delegate
+
+```csharp
+delegate T MyDelegate<T>(T x, T y);
+// repacling  int , double functions with one delegate
+
+
+delegate T MyDelegate2<T1, T2, T3>(T1 x, T2 y);
+//this replace all delegates with 2 parameters it takes 3 data types (can be same or different)
+//but we has to state the 3 data types when creating delegate
+
+
+
+
+public static void Add(int x, int y)
+{
+    Console.WriteLine($"Add {x + y}");
+    return x + y;
+}
+public static void Sub(int x, int y)
+{
+    Console.WriteLine($"Sub {x - y}");
+    return x - y;
+}
+
+public static void Mul(int x, int y)
+{
+    Console.WriteLine($"Mul {x * y}");
+    return x * y;
+}
+public static void Div(int x, int y)
+{
+    Console.WriteLine($"Div {x / y}");
+    return x / y;
+}
+
+public static double AddDouble(double x, double y)
+{
+    Console.WriteLine($"Add {x + y}");
+    return x + y;
+}
+public static int MyFun(int x, float y)
+{
+    Console.WriteLine($"MyFun {x + y}");
+    return x + y;
+}
+static void Main(string[] args)
+{
+    MyDelegate<int> myDelegate = Add;
+    myDelegate += Sub;
+    myDelegate += Mul;
+    myDelegate += Div;
+    myDelegate.Invoke(10, 20);
+    //Add 30    Sub -10    Mul 200    Div 0.5
+    MyDelegate<double> myDelegate2 = AddDouble;
+
+    //we has to state the 3 data types when creating delegate
+    MyDelegate2<int, int, int> myDelegate3 = Add;
+
+    MyDelegate2<int, int, double> myDelegate4 = Add;
+
+    MyDelegate2<int, float, int> myDelegate5 = MyFun;
+}
+```
+
+> [!danger] we can constrain on generic delegate (in, out)
+
+```csharp
+delegate T3 MyDelegate2<in T1,in T2,out T3>(T1 x, T2 y);
+// delegate T1 MyDelegate2<in T1,in T2,out T3>(T1 x, T2 y);//error: T1 is input
+// delegate T3 MyDelegate2<in T1,in T2,out T3>(T1 x, T3 y);//error: T3 is output
+
+//if we have 3 parameters function we have to create delegate with 3 parameters
+delegate T4 MyDelegate2<in T1,in T2,in T3,out T4>(T1 x, T2 y, T3 z);
+//..and so on with 4,5,6,7,8,9,10 parameters
+```
+
+> [!warning] Func
+>
+> - `System.Func<T1, T2, T3, T4, T5, T6, T7, T8, T9,...16,out TResult>`
+> - takes any number of parameters of any data type
+> - only when we have function with more than 16 parameters we use delegate
+>   -used when we have return type => TResult
+
+> [!tip] Action
+>
+> - `System.Action<T1, T2, T3, T4, T5, T6, T7, T8, T9,...16>`
+> - takes any number of parameters of any data type
+> - return type is ==void==
+
+> [!example] Predicate
+>
+> - `System.Predicate<T>`
+> - return type is ==bool==
+
+> [!warning] EventHandler
+>
+> - `System.EventHandler<TEventArgs>`
+> - `System.EventHandler
+> - takes 2 parameters (object , TEventArgs )
+
+
+>[!done] we can use (Func, Action, Predicate, EventHandler) instead of creating delegate
+```csharp
+//main
+
+//return type is not void
+Func<int, int,int> myDelegate = Add;
+Func<int, float,double> myDelegate2 = MyFun;
+
+
+//return type is void
+Action<int> myDelegate3 = Print1;
 
 ```
+
+---
+## #lab-8
