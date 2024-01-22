@@ -1262,3 +1262,7 @@ static void Main(string[] args)
     //to check if key exists (complex data type) it uses GetHashCode() and Equals()
 }
 ```
+
+---
+
+# #Lab7-C#
