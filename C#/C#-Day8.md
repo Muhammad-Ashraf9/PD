@@ -216,3 +216,93 @@ foreach (var item in res)
 }
 ```
 
+
+>[!tip] sortAscending function
+```csharp
+public static void sortAscending(int x, int y)
+{
+    for (int i = 0; i < x.Length; i++)
+    {
+        for (int j = 0; j < y.Length; j++)
+        {
+            if (x[j] > y[j + 1])
+            {
+                swap(x[j], y[j + 1]);
+            }
+        }
+    }
+}
+public static void sortDescending(int x, int y)
+{
+    for (int i = 0; i < x.Length; i++)
+    {
+        for (int j = 0; j < y.Length; j++)
+        {
+            if (x[j] < y[j + 1])
+            {
+                swap(x[j], y[j + 1]);
+            }
+        }
+    }
+}
+```
+
+```csharp
+//descending is the same but the only change is if (x[j] < y[j + 1])
+//we can pass this function to Sort function ascending or descending
+
+//condition1: x[j] > y[j + 1]
+//condition2: x[j] < y[j + 1]
+public static bool condition1Ascending(int x, int y)
+{
+    return x > y;
+}
+public static bool condition2Ascending(int x, int y)
+{
+    return x < y;
+}
+```
+
+
+```csharp
+//main
+public delegate bool MyDelegate(int x, int y);
+
+//sort function only one function for ascending and descending
+public static void sort(int[] arr, MyDelegate myDelegate)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = 0; j < arr.Length; j++)
+        {
+            if (myDelegate(arr[j], arr[j + 1]))
+            {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+int[] arr = [10,5,32,6,8,9,7,4,3,2,1];
+MyDelegate myDelegate = condition1Ascending;
+sort(arr, myDelegate);
+foreach (var item in arr)
+{
+    Console.WriteLine(item);//1 2 3 4 5 6 7 8 9 10 32
+}
+myDelegate = condition2Descending;
+sort(arr, myDelegate);
+foreach (var item in arr)
+{
+    Console.WriteLine(item);//32 10 9 8 7 6 5 4 3 2 1
+}
+
+//we can add multiple functions to delegate
+myDelegate += condition1Ascending;
+//the last function added to delegate will be evaluated last in sort function
+sort(arr, myDelegate);
+
+
+//in case of instace method we pass obj.functionName 
+//unlike static method we pass only functionName
+```
