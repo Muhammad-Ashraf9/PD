@@ -209,7 +209,7 @@ foreach (var item in res)
     Console.WriteLine(item);//ahmed mohamed mahmoud mohamed ahmed mohamed mahmoud mohamed
 }
 
-res = names.FindAll(startWithA);
+res = names.FindAll(startWithA);//we pass function name to FindAll which accept delegate as parameter
 foreach (var item in res)
 {
     Console.WriteLine(item);//ahmed ali ahmed ali
