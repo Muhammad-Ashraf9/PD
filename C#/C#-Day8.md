@@ -115,7 +115,7 @@ namespace Demo2
         //add function to delegate so we can call both functions
 
             myDelegate += print;
-            myDelegate.Invoke();//print2 print
+            myDelegate.Invoke();//print2 print then print 
             //call will be in order of adding functions to delegate
 
             //invokation list
@@ -153,7 +153,7 @@ myFun(myDelegate);
 //main
 List<int> list = [10,5,32,6,8,9,7,4,3,2,1];//C# 12
 //list.FindAll(delegate(int x){return bool;});
-//accept delegate as parameter : its return type is bool and it has one parameter
+//accept delegate as parameter : its return type is bool and it has one parameter(Predicate)
 //to get numbers > 30 ...etc we need to pass function to delegate
 
 var res = list.FindAll(isGreaterThan30);//
@@ -308,7 +308,7 @@ sort(arr, myDelegate);
 //unlike static method we pass only functionName
 ```
 
-> [!tip] in delegate we don't care about function name ulike interface and CompareTo method
+> [!tip] in delegate we don't care about function name unlike interface and CompareTo method
 
 ---
 
@@ -325,7 +325,7 @@ sort(arr, myDelegate);
 //main
 
 //anonymous function
-MyDelegate myDelegate  = delegate(int x, int y)
+MyDelegate myDelegate1  = delegate(int x, int y)
 {
     return x > y;
 };
@@ -476,7 +476,7 @@ delegate T MyDelegate<T>(T x, T y);
 // repacling  int , double functions with one delegate
 
 
-delegate T MyDelegate2<T1, T2, T3>(T1 x, T2 y);
+delegate T3 MyDelegate2<T1, T2, T3>(T1 x, T2 y);
 //this replace all delegates with 2 parameters it takes 3 data types (can be same or different)
 //but we has to state the 3 data types when creating delegate
 
