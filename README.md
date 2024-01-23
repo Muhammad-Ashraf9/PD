@@ -6,10 +6,11 @@
 
 - [Git](https://git-scm.com/downloads)
 - First time setup :
+
   ```bash
       git config --global user.name "Your Name"
       git config --global user.email "email@email.com"
-  ```
+    ```
 
 2. Clone the repository to local machine
 
@@ -28,7 +29,8 @@
 4.  Best way to view the files is to use [obsidian](https://obsidian.md/)
 
 5.  Open the folder in obsidian as vault
-    ![Alt text](image.png)
+
+![Alt text](image.png)
 
 6.  Open the file you want to view in obsidian
 
@@ -40,10 +42,10 @@
 7.  Install obsidian git plugin From Community plugins
 
 - settings -> community plugins -> turn on safe mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
-  ![Alt text](image-1.png)
+![Alt text](image-1.png)
 
-  - set obsidian-git plugin settings (auto pull x minutes)
-    ![Alt text](image-2.png)
+- set obsidian-git plugin settings (auto pull x minutes)
+![Alt text](image-2.png)
 
 ---
 
