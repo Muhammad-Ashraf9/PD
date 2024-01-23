@@ -125,7 +125,7 @@ internal class Program
 >
 > - `Func` is used when the method returns a value
 > - `Action` is used when the method does not return a value
-> - `Predicate` is used when the method returns a boolean value
+> - `Predicate` is used when the method returns a boolean value and take exactly one value
 
 ```cs
 //main
@@ -465,7 +465,7 @@ namespace ITIDataTypes
                 absentDays += value;
                 if (absentDays > 5)
                 {
-                    // fire the
+                    // fire the handler
                     StudentAbsent.Invoke(this);
                     //if we call it before the event is registered with (event handlers => functions)we will get NullReferenceException
 
@@ -646,7 +646,7 @@ namespace Day9
 >
 > - we can send additional data to the event handler so we use `EventHandler` instead of `Action`
 >
-> > [!done] EventHndler
+> > [!done] EventHandler
 > >
 > > - `public event EventHandler studentAbsent;`
 > > - `void EventHandler(object sender, EventArgs e);`
@@ -687,7 +687,7 @@ namespace Day9
 
 > [!tip] Desktop app is waiting for event otherwise it does nothing
 >
-> -
+
 
 > [!tip] Windows Forms Application
 >
