@@ -45,6 +45,8 @@
 ![Alt text](image-1.png)
 
 - set obsidian-git plugin settings (auto pull x minutes)
+
+
 ![Alt text](image-2.png)
 
 ---
