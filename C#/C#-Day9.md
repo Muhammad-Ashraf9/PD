@@ -3,7 +3,7 @@
 ```cs
 namespace Day9{
 // 1.Delegate declaration
- delegate int Delegate1(int a, int b);
+public delegate int Delegate1(int a, int b);
  //2.instance member
    public int Add(int a, int b)
     {
