@@ -1,6 +1,6 @@
-# PD
+# PD Lecture Notes
 
-> [!tip] To get latest updates for lectures notes
+## To Get The latest updates for lecture notes
 
 1. Install Git on local machine
 
@@ -23,7 +23,7 @@
    git pull
 ```
 
-### Files are in .md format
+### Files are in .md format (Obsidian)
 
 4.  Best way to view the files is to use [obsidian](https://obsidian.md/)
 
