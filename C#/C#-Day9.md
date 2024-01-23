@@ -436,29 +436,6 @@ public void conditionDesc(int a, int b)
 
 ---
 
-> [!example] Student in ITI Example (Event handling model)
->
-> - we want to kick out students who have have absences more than 3 days
-> - we create an event on the student class(absenceMoreThan3Days)
->
->   > [!bug] Student class
->   >
->   > - `public event Func<Student,void> absenceMoreThan3Days;` (event)
->
-> - (that will be fired when the student has more than 3 absences)
-> - we can add event handlers to the event in the main(all the fuctions that we want to happen when the event is fired=>kick out the student)
-> - the event (student has more than 3 absences)
-> - the event handler (kick out the student)maybe.. (send an email to the parents)
->   > [!bug] Departement class
->   >
->   > - we have students list in the departement class
->   > - we have kickStudent(Student s) method in the departement class
->   > - we have SendEmailToHisFather(Student s) method in the departement class
->
-> > [!warning]Main
-> >
-> > - we have to register the event handler (kickStudent) from the departement class to the event ()
-
 ---
 
 > [!tip] ITIDataTypes Class Library
@@ -686,4 +663,147 @@ namespace Day9
 > > }
 > > ```
 
+---
 
+# Break
+
+---
+
+### #lab-9
+
+- 1.try all lecture code
+- 2.
+- class Book
+  - ISBN
+  - Title
+  - `[]` Authors
+- class BookFunctions
+
+- class LibraryEngine
+
+---
+
+### 2z2za Desktop Application
+
+> [!tip] Desktop app is waiting for event otherwise it does nothing
+>
+> -
+
+> [!tip] Windows Forms Application
+>
+> - windows forms application(.NET Framework): not the same as windows forms(.NET Core)
+> - only for windows as it uses windows components that are not available in other OS
+> - there is other applications that are cross platform (can run on different OS)
+
+> [!info] create a windows forms application
+>
+> - to create a new project
+> - we need this dependency :
+>   - Microsoft.NETCore.App
+>   - Microsoft.WindowsDesktop.App
+
+> [!warning] `partial`keyword
+>
+> - we can split the class into multiple files
+> - we can use partial keyword to do that
+>   > [!bug] as we can't have 2 classes with the same name in the same namespace
+
+> [!tip] we can change properties of the form in the designer or in the code or in the properties window
+>
+> - select object => f4:to open properties:=>change properties of the form will reflect on code
+
+```cs
+public partial class Form1 : Form
+{
+    public Form1()
+    {
+        Width = 500; // if it was before InitializeComponent() it will be overwritten
+        InitializeComponent();
+        Width = 500;// if it was after InitializeComponent() it will be applied
+    }
+}
+```
+
+> [!tip] toolbox
+>
+> - we can drag and drop components from the toolbox to the form
+> - it will be added to the code automatically
+
+> [!example] adding event handler to button (click)
+>
+> - this will create a method that takes 2 parameters `(object sender, EventArgs e)`
+> - we can change the name of the method
+>
+> ```cs
+> private void button1_Click(object sender, EventArgs e)
+> {
+>     MessageBox.Show("Hello World");//show a message box with the text "Hello World"
+> }
+> ```
+
+> [!example] adding close button to the form
+>
+> - we can add a button to the form
+> - we can change the text of the button to be "Close"
+> - we can change the name of the button to be "btnClose"
+>
+> ```cs
+> private void btnClose_Click(object sender, EventArgs e)
+> {
+>    this. Close();//close the form
+> }
+> ```
+
+> [!tip] we can create a button from the code
+>
+> - on click on close button we want to create a button
+>
+> ```cs
+> Button btn;//not created yet
+> private void btnClose_Click(object sender, EventArgs e)
+> {
+> Button btn = new Button();//created but not added to the form
+> btn.Text = "OK";//change the text of the button
+> width = 100;
+> height = 50;
+> btn.Location = new Point(100, 100);//change the location of the button
+> btn.Click += btnOK_Click;//add event handler to the button=> create a method btnOK_Click
+> Controls.Add(btn);//add the button to the form
+> }
+> ```
+
+> [!example] ` btnOK_Click`
+>
+> - create message box with the text string in the textbox
+>
+> ```cs
+> private void btnOK_Click(object sender, EventArgs e)
+> {
+>     MessageBox.Show(textBox1.Text);
+>     MessageBox.Show(textBox1.Text, "Caption");//add caption to the message box
+>     MessageBox.Show(textBox1.Text, "Caption", MessageBoxButtons.OKCancel);//add buttons to the message box
+>
+> Text = textBox1.Text;//change the title of the form
+> //MessageBox returns DialogResult => OK or Cancel we can use it to check the result
+>     if (MessageBox.Show(textBox1.Text, "Caption", MessageBoxButtons.OKCancel) == DialogResult.OK)
+>     {
+>         Text = textBox1.Text;
+>     }//change the title of the form if the user clicked OK
+> }
+> ```
+
+> [!tip] form has event Load that is fired when the form is loaded
+>
+> - form can subscribe to its own event
+>
+> ```cs
+> private void Form1_Load(object sender, EventArgs e)
+> {
+>
+> }
+> ```
+
+> [!bug] Controls
+>
+> - Controls is a property of the form
+> - we must add the controls to the form by using `Controls.Add(control)`
