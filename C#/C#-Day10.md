@@ -374,7 +374,6 @@ private void FrmPaint_MouseMove(object sender, MouseEventArgs e)
 > - listen for paint event
 > - `PaintEventArgs` has information about the paint event
 > - `e.Graphics` has the object of `Graphics` class
-
 > > [!warning] Timer
 > >
 > > - Control => no visual representation(works in the background)
