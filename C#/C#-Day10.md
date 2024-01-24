@@ -213,7 +213,9 @@ private void btnNumber_Click(object sender, EventArgs e)
 > [!tip] `+` & `-` & `=`
 >
 > - `+`: save the number in `txtResult` in `firstNumber` and clear `txtResult`
-> - `=`:
+
+> - `=`: save the number in `txtResult` in `secondNumber` and replace text in `txtResult` with result of operation(+ or -)
+
 
 ```cs
 string op = "";
@@ -372,6 +374,12 @@ private void FrmPaint_MouseMove(object sender, MouseEventArgs e)
 > - listen for paint event
 > - `PaintEventArgs` has information about the paint event
 > - `e.Graphics` has the object of `Graphics` class
+
+
+> [!warning] Timer
+>
+>  - Control => no visual representation(works in the background)
+>  - Timer => fire an event after a specific time interval(Tick event)
 
 > > [!warning] Timer
 > >
