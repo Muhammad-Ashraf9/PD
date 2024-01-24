@@ -41,7 +41,7 @@
 
 7.  Install obsidian git plugin From Community plugins
 
-- settings -> community plugins -> turn on safe mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
+- settings -> community plugins -> turn off Restricted mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
 ![Alt text](image-1.png)
 
 - set obsidian-git plugin settings (auto pull x minutes)
