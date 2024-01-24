@@ -112,7 +112,9 @@ static class Program
 > ```
 
 > [!tip] make button show => show text in textbox in MessageBox
->
+> 
+> <br>
+> 
 > ```csharp
 > private void btnShow_Click(object sender, EventArgs e)
 > {
