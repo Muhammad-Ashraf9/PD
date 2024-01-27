@@ -259,6 +259,7 @@ class Calc4 : ICalc<int>, ICalc<float>, IComparable<calc4>//ToCompare parameter(
 > - windows form application output => exe
 
 > [!example] project settings
+
 ```xml
 <NulLable>enable</NulLable>
 <!-- to give warning instead of error -->
@@ -272,6 +273,7 @@ class Calc4 : ICalc<int>, ICalc<float>, IComparable<calc4>//ToCompare parameter(
 > [!faq] why `NulLable`?
 >
 > - as reference type can be null
+
 ```csharp
     //main
     static void Main(string[] args)
@@ -323,19 +325,22 @@ class Calc4 : ICalc<int>, ICalc<float>, IComparable<calc4>//ToCompare parameter(
 > - application root: has a reference to all the objects that are used in the application
 > - `obj1=null;` => obj1 is not referenced by the application root anymore
 >   > [!danger] Mark and Compact
->   > -  when new object is created and no space is available in the heap
->   > -  GC will run and check application root to see if there is any unreferenced object
->   > -  add any refernced objects to ==Graph==
+>   >
+>   > - when new object is created and no space is available in the heap
+>   > - GC will run and check application root to see if there is any unreferenced object
+>   > - add any refernced objects to ==Graph==
 > - any object that is referenced by the application root will not be collected by the GC
 
->[!tip] Compaction
+> [!tip] Compaction
+>
 > - when the GC frees the memory of the unreferenced objects
 > - GC will move the objects to the beginning of the heap to make the memory contiguous and update the next object pointer
 > - GC will stop the application from running while it is moving the objects
 
->[!tip] in c++ we use free() to free the memory of the object
+> [!tip] in c++ we use free() to free the memory of the object
+>
 > - if we forget to free the memory of the objects we will have space allocated in memory that is not used
-> - in c# GC is responsible for freeing the memory of  unreferenced objects
+> - in c# GC is responsible for freeing the memory of unreferenced objects
 
 ---
 
@@ -362,15 +367,17 @@ internal class Program
     }
 }
 ```
->[!tip] Performance Profiler
-> - Check .NET Counters =>  start
+
+> [!tip] Performance Profiler
+>
+> - Check .NET Counters => start
 > - `GC Heap Size` => the size of the heap
 > - graph is going up and down as the GC is freeing the memory of the unreferenced objects
 
->[!tip] add list to have reference to the objects
+> [!tip] add list to have reference to the objects
+>
 > - the GC won't free the memory of the objects as they are referenced by the list
 > - the graph will go up as the GC won't free the memory of the objects
-
 
 ```csharp
 internal class Program
@@ -392,11 +399,274 @@ internal class Program
 }
 ```
 
->[!danger] `GC.Collect()` to force the GC to run
+> [!danger] `GC.Collect()` to force the GC to run
+>
 > - Not recommended
 > - recommended to let CLR decide when to run the GC
 
-
->[!tip] Revise from powerpoint
+> [!tip] Revise from powerpoint
 
 ---
+
+### Destructor (Finalizer)
+
+> [!tip] Destructor(Finalizer)
+>
+> - is called when the object is destroyed
+
+> [!warning] Finalizer Queue
+>
+> - is a queue that contains the objects that have a destructor
+
+> [!example] Application Root
+>
+> - application root: has a reference to all the objects that are used in the application
+
+> [!danger] before the GC frees the memory of the object it will check if the object has a destructor or not (if it is in the finalizer queue or not)
+>
+> - if the object has a destructor it will add its reference to the Freachable queue and won't free the memory of the object
+
+> [!tip] Freachable queue
+>
+> - rooted queue: object referenced in this queue will not be freed by the GC
+> - is a queue that contains the reference to object that have a destructor
+> - after GC finishes another thread (GC) will check the Freachable queue and call the destructor of the objects in the queue
+> - the destructor will remove the reference of the object from the Freachable queue
+> - in the next GC round the object will be freed as it is not in the Freachable queue or Finalizer Q anymore
+>   > [!bug] thats how destructor affects the performance of the application
+>   >
+>   > - in allocation it will add the object to the finalizer queue
+>   > - in deallocation it will add the object to the Freachable queue
+>   > - call the destructor
+>   > - in the next GC round it will free the memory of the object
+
+> [!example] Examples: Look up the code in the powerpoint
+
+```csharp
+    class SomeClass
+    {
+        public int X { get; set; }
+        ~SomeClass()
+        {
+            Console.WriteLine("Destructor");
+        }
+
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            SomeClass s1 = new SomeClass();
+            s1.X = 10;
+            Console.WriteLine(s1.X);
+            s1 = null;
+            GC.Collect();
+            Console.WriteLine("End of Main");
+            //10
+            //End of Main
+            //destructor is not called
+
+        }
+
+    }
+
+
+```
+
+```cs
+//string list
+//add in memory and file
+class StringList:list<string>
+{
+    StreamWriter sw;//unmanaged object
+    public StringList()
+    {
+        sw = new StreamWriter(@"d:\temp\gc.txt",true);
+    }
+    public void Add(string s)
+    {
+        Console.WriteLine(s);
+        base.Add(s);
+
+    }
+    public void AddRange(List<string> list)
+    {
+        foreach (string item in list)
+        {
+            Console.WriteLine(item);
+
+        }
+        base.AddRange(list);
+    }
+
+}
+```
+
+```cs
+    static void MyFun(){
+        StringList list = new StringList();
+        list.Add("hello");
+        list.Add("world");
+        List<string> list2 = new List<string>(){ "hello", "world" };
+        list.AddRange(list2);
+        foreach (string item in list)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    //main
+    static void Main(string[] args)
+    {
+        StringList list = new StringList();
+        list.Add("hello");
+        list.Add("world");
+        list.Remove("hello");
+        list = null;
+        GC.Collect();
+        Console.WriteLine("End of Main");
+        //End of Main
+        //destructor is not called
+
+
+///////////////////////////////////////
+        myFun();
+        Console.WriteLine("after myFun");
+        //can't access the file as it is still used by application  ConsoleApplication1
+        //need to close the application to access the file
+        //or use destructor to close the file
+
+        //better
+        //pattern IDisposable
+
+    }
+```
+
+> [!tip] IDisposable
+>
+> - Dispose(): is called explicitly by the developer unlike destructor
+> - we need to have destructor and IDisposable(if we forget to call Dispose() the destructor will be called)
+> - GC.SuppressFinalize(this): to remove the object from the finalizer queue(won't call the destructor - as we are calling Dispose() explicitly)
+
+```cs
+    class StringList:list<string>,IDisposable
+    {
+        StreamWriter sw;//unmanaged object
+        public StringList()
+        {
+            sw = new StreamWriter(@"d:\temp\gc.txt",true);
+            //@: to ignore the escape sequence
+            //same as d:\\temp\\gc.txt
+        }
+        public void Add(string s)
+        {
+            Console.WriteLine(s);
+            base.Add(s);
+
+        }
+        public void AddRange(List<string> list)
+        {
+            foreach (string item in list)
+            {
+                Console.WriteLine(item);
+            }
+            base.AddRange(list);
+        }
+        bool disposed = false;
+        public void Dispose()
+        {
+            sw.Dispose();
+            if (disposed ==false)
+            {
+            GC.SuppressFinalize(this);//to remove the object from the finalizer queue(won't call the destructor - as we are calling Dispose() explicitly)
+            }
+        }
+        ~StringList()
+        {
+            Console.WriteLine("Destructor");
+            disposed = true;
+            Dispose();//no need to call GC.SuppressFinalize(this) as we are calling the destructor so we create a flag to avoid calling it
+        }
+
+    }
+    static void MyFun(){
+        StringList list = new StringList();
+        list.Add("hello");
+        list.Add("world");
+        List<string> list2 = new List<string>(){ "hello", "world" };
+        list.AddRange(list2);
+        foreach (string item in list)
+        {
+            Console.WriteLine(item);
+        }
+        list.Dispose();
+    }
+```
+
+> [!tip] using
+>
+> - using: is used to call Dispose() automatically
+> - object has to implement IDisposable
+> - try finally => in dll
+
+```cs
+    static void MyFun(){
+        using(StringList list = new StringList())
+        {
+            list.Add("hello");
+            list.Add("world");
+            List<string> list2 = new List<string>(){ "hello", "world" };
+            list.AddRange(list2);
+            foreach (string item in list)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+
+```
+
+> [!bug] In .NET we don't guarantee that the destructor will be called
+
+> [!example] REVIVE OBJECT
+>
+> - add reference to the object in the destructor
+
+> [!tip] GC works faster in smaller memory size
+>
+> - gen0(256kb), gen1(2mb), gen2(10mb: rest), LOH (large object heap )
+> - LOH: is used to store large objects (more than 85kb) no compaction as it affects the performance
+> - object created together are deleted together
+> - first time created object is stored in gen0
+> - when the GC runs it will check gen0 if there is no space available it will move the object that still used to gen1
+> - object that survived the GC round are moved to gen1
+> - it will do the same until gen1 is full aswell then it will move the object to gen2
+> - gen2: is last generation
+>   > [!done] to get generation of the object
+>   >
+>   > - `GC.GetGeneration(obj)`
+>   >
+>   > ```cs
+>   >   static void Main(string[] args)
+>   > {
+>   >     SomeClass s1 = new SomeClass();
+>   >     Console.WriteLine(GC.GetGeneration(s1));//0
+>   >     GC.Collect();
+>   >     Console.WriteLine(GC.GetGeneration(s1));//0
+>   >     GC.Collect();
+>   >     Console.WriteLine(GC.GetGeneration(s1));//1
+>   >     GC.Collect();
+>   >     Console.WriteLine(GC.GetGeneration(s1));//2
+>   >     GC.Collect();
+>   >     Console.WriteLine(GC.GetGeneration(s1));//2
+>   > }
+>   > ```
+
+
+>[!tip] performance profiler
+> - check heap size , gen0, gen1, gen2
+---
+
+ >[!danger] Look up ==selmy== File
+#### #Lab-csharp-11
+
+- newList  string implement Dispose
