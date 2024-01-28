@@ -156,7 +156,7 @@ class Complex
 
 > [!danger] dynamic vs object vs var
 >
-> - both are used to store any type of data
+> - All are used to store any type of data
 > - (can store different types of data at runtime) unlike `var` > `var`: used to store only one type of data once it is assigned
 > - `object` has only the properties of the `object` class (`GetType()`, `ToString()`, `Equals()`, `GetHashCode()`)
 > - the ==compiler== checks the object at compile time(throws exception if the property does not exist)
@@ -262,12 +262,12 @@ class Calc4 : ICalc<int>, ICalc<float>, IComparable<calc4>//ToCompare parameter(
 
 ```xml
 <NulLable>enable</NulLable>
-<!-- to give warning instead of error -->
+<!-- to give warning when null is assigned -->
 ```
 
 ```xml
 <NulLable>disable</NulLable>
-<!-- to give error instead of warning -->
+<!-- to not give warning when null assigned -->
 ```
 
 > [!faq] why `NulLable`?
