@@ -248,9 +248,10 @@
 
 > [!danger] Not allowed characters in tag names:
 > all letters are allowed a-z A-Z,\_,.,-,digits 0-9
+>
 > - you can start with a letter or `_` and continue with any of the allowed characters.
 > - you cannot start with a digit or `-` or `.`
-> space,!,$
+>   space,!,$
 
 ```xml
 <!-- iti.xml -->
@@ -259,3 +260,242 @@
 
 </iti>
 ```
+
+---
+
+### Break
+
+---
+
+### DTD
+
+> [!tip] DTD: Document Type Definition
+> elements(tags)
+>
+> - naming, content, repaeting number for tags ,attributes,
+
+> [!example] Tags(Elements declaration)in DTD
+> use Directive `<!ELEMENT>` to declare elements
+>
+> - `<!ELEMENT tagName (content)>`
+>
+> ```xml
+> <!ELEMENT student (id,name)> <!-- we have to specify the content of the tag we don't lnow anything about id ,name-->
+> <!ELEMENT id (#PCDATA)> <!-- PCDATA: plain text -->
+> <!ELEMENT name (#PCDATA)>
+> ```
+>
+> - id and name need to be declared before student. (order matters)
+>   to be id or name (use `|` or)
+>
+> ```xml
+> <!ELEMENT student (id|name)>
+> ```
+
+> [!bug]
+>
+> - grammar: is content of the tag
+> - #PCDATA: parsed character data (for tags not for attributes)
+> - `>` and `<` has meaning in XML so we cannot use them in the content of the tag. we use `&gt;` and `&lt;` instead. like HTML.
+> - #CDATA: character data (for attributes not for tags)
+
+> [!example] Existance or Repaeting for elements
+>
+> - `,` and keep sequence
+> - `|` or
+> - `?` zero or one
+> - `*` zero or more
+> - `+` one or more
+
+```dtd
+<!ELEMENT student (id,phone+)>
+<!-- phone is required and can be more than one -->
+<!ELEMENT student (id,phone?)>
+<!-- phone is optional -->
+<!ELEMENT Person (id,Phone)+>
+<!-- Person can have one or more id and Phone -->
+```
+
+---
+
+```dtd
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT students ( student )>
+<!ELEMENT student ( id,name,email )>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+```
+
+> [!tip] connect DTD to XML file
+
+```xml
+<!-- iti.xml -->
+<!-- well formed but not valid -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE students SYSTEM "c:\iti.dtd">
+<students>
+    <student>
+        <id>1</id>
+        <name>John</name>
+        <email>
+        as@asd.as
+        </email>
+    </student>
+    <student>
+        <id>2</id>
+        <name>Smith</name>
+        <email>
+        as@asd.as
+        </email>
+        <email>
+        as@asd.as
+        </email>
+    </student>
+    <student>
+        <id>2</id>
+        <name>Smith</name>
+    </student>
+</students>
+```
+
+> [!done] solve errors by editing DTD
+
+```dtd
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT students ( student+ )>
+<!-- multiple students -->
+<!ELEMENT student ( id,name,email* )>
+<!-- zero or more emails -->
+```
+
+> [!bug] `,` and keep sequence
+>
+> - cannot have email before id
+
+> [!example] attributes
+>
+> - adding attributes to tags without adding them to DTD will throw error.
+> - once we connect DTD to XML file we have to declare all tags and attributes in DTD.
+> - `<!ATTLIST tagName attributeName attributeType exist(#REQUIRED) | #IMPLIED>`
+
+> [!tip]
+>
+> 1. CDATA:
+>
+> - character data
+> - allow any character inside value of the attribute (disallowed characters: `&` `<` `>` `'` `"`)
+> - "i$i % mansoura"
+>
+> 1. NMTOKEN:
+>
+> - name token
+> - allow only letters, digits, `_`, `.`, `-` =>"iti"
+>
+> 3.  NMTOKENS:
+>
+> - name tokens
+> - allow only letters, digits, `_`, `.`, `-`, and space => "20 years old"
+>
+> 4.  ENUMERATION:
+>
+> - like enum in C#
+>
+> - only allow the values specified in the attribute declaration.
+> - `<!ATTLIST tagName attributeName (value1 | value2 | value3) >`
+
+```xml
+<!-- iti.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE students SYSTEM "c:\iti.dtd">
+<students branch="mansoura">
+    <student track="pd">
+        <id>1</id>
+        <name>John</name>
+        <email>
+```
+
+```dtd
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT students ( student+ )>
+<!ELEMENT student ( id,name,email* )>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ATTLIST students branch CDATA #REQUIRED>
+<!-- CDATA: character data can write anything -->
+<!ATTList students branch NMTOKEN #REQUIRED>
+<!-- NMTOKEN: name token -->
+<!ATTList students branch NMTOKENS #REQUIRED>
+<!-- NMTOKENS: name tokens -->
+
+
+<!ATTLIST student track CDATA #IMPLIED>
+<!-- #IMPLIED: optional -->
+
+<!ATTLIST student track (pd | os| ai) >
+<!-- (pd | os| ai): enumeration default required-->
+<!-- enumeration: only allow the values specified in the attribute declaration. -->
+<!ATTLIST student track (pd | os| ai) "pd" >
+<!-- "pd": default value if not specified -->
+
+
+<!ATTLIST student grade CDATA #IMPLIED>
+
+<!-- we can list all the attributes in one line -->
+
+<!ATTLIST student track (pd | os| ai) "pd" grade CDATA #IMPLIED>
+```
+
+> [!tip] to display data styled
+>
+> - we need to put it in ==tags== not attributes.
+
+```css
+students {
+  display: block;
+  border: 1px solid black;
+  width: 200px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+student {
+  display: block;
+  border: 1px solid black;
+  width: 200px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+id,
+name,
+email {
+  display: block;
+  border: 1px solid black;
+  width: 200px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+```
+
+> [!tip] link css to xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="style.css"?>
+```
+
+> [!warning] DO NOT USE mixed content elements
+>
+> - not recommended
+```xml
+ <students>
+ iti students
+ <student>
+ </student>
+ </students>
+```
+
+### #lab1
