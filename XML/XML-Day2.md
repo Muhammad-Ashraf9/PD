@@ -57,6 +57,16 @@
 > - `all` => unordered
 > - `choice` => one of them
 
+```xsd
+      <xs:choice>
+
+                    <xs:element name="city"/>
+
+                    <xs:element name="state"/>
+
+       </xs:choice>
+```
+
 > [!warning] minOccurs vs maxOccurs
 >
 > - minOccurs: minimum number of occurrences
