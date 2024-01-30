@@ -283,15 +283,15 @@
     </bookstore> 
 ```
 >[!warning] Make Bookstrore self closing tag
-> -  
+
+
+
 
 >[!tip] repaeatable elements
 > - tightly coupled => loosly coupled
 > - we define it in global scope
 > - we already defined it so we refer to it (ref)
-```xsd
 
-```
 
 >[!tip] group
 
