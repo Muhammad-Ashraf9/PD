@@ -161,3 +161,216 @@ module1();
 >
 > - default export should come first as it overwrites the previous exports
 > - should use module.exports not exports
+
+---
+
+# Break
+
+---
+
+### Node Modules
+
+> [!tip] `fs` module
+>
+> - file system module : to read, write, update, delete files
+
+```js
+//app.js
+
+// 1- folder
+let module1 = require("./modules/module1");
+
+// 2- nodejs modules || nodejs packages
+
+const fs = require("fs"); // we don't need to write .js or path if it is a built-in module as it is in node_modules folder
+
+//http
+const http = require("http");
+
+console.log(http.STATUS_CODES); //status codes: 200, 404, 500, 400, 300
+
+// 3- third-party modules
+const express = require("express");
+```
+
+> [!warning] not all the modules are built-in, some are third-party modules
+>
+> - npm (node package manager) is used to install third-party modules
+> - [npmjs.com](https://www.npmjs.com/) is the official website to search for third-party modules
+> - like: express,...etc
+
+> [!tip] installing third-party modules
+>
+> - `npm install <module-name>`: `npm i <module-name>`
+> - this will create a folder `node_modules` and install the module in it (if it is not present)
+> - it will also create a file `package.json` (if it is not present)
+> - `package.json` contains information about the project and the third-party modules used in the project
+
+```bash
+# on cmd (in the directory where the project is present)
+npm i express
+```
+
+> [!tip] `package.json`
+>
+> - when installing a module, it will download the module and its dependencies, and its dependencies' dependencies, and so on
+> - we use `package.json` to install all the dependencies of the (modules used in the project)
+
+```js
+//app.js
+const fs = require("fs"); //this will look for the module in node_modules folder if it is not present it will look for built-in modules
+```
+
+> [!danger] `^` vs `~` in `package.json` package version
+>
+> - Search
+> - `^` : it will install the latest version of the package (major version)
+> - `~` : it will install the latest version of the package (minor version)
+
+> [!tip] `npm install` vs `npm i`
+>
+> - `npm install` is used to install all the dependencies of the project in `package.json`
+> - `npm i` is used to install all the dependencies of the project
+
+> [!tip] installing multiple modules
+>
+> - `npm i express mongoose` : to install multiple modules at once
+
+> [!done] installing specific version of a module
+>
+> - `npm i xxxxxxx@x.xx.xx : to install a specific version of a module
+
+> [!done] uninstalling a module
+>
+> - `npm uninstall <module-name>` : to uninstall a module
+>   > [!bug] Don't remove the module folder manually, it will not remove the module from `package.json`
+
+> [!warning]
+>
+> - Its recommended to start the project with `npm init` to create `package.json` file
+> - `npm init -y` : to create `package.json` file with default values
+> - naming convention project name: `kebab-case` (small letters, separated by hyphen)
+
+```json
+//package.json
+{
+  "name": "nodejs-day1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+
+> [!done] `npm install express`
+
+```json
+//package.json
+{
+  "name": "nodejs-day1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
+```
+
+> [!danger] `devDependencies` vs `dependencies`
+>
+> - `dependencies` : modules that are required to run the project
+> - `devDependencies` : modules that are required to develop the project (like: testing, ...etc)
+> - `npm i <module-name> --save-dev` : to install a module as a dev dependency
+> - `npm i` : to install all the dependencies (both `dependencies` and `devDependencies`)
+> - `npm i --production` : to install only `dependencies` (not `devDependencies`)
+
+> [!tip] `npm i -g nodemon`
+>
+> - `npm i -g <module-name>` : to install a module globally
+> - installed modules globally can be used in any project(installed in the system)
+
+### setup project steps
+
+```bash
+# project init
+npm init -y
+# install
+npm i express mongoose
+# uninstall
+npm uninstall express
+# install as dev dependency
+npm i nodemon --save-dev
+
+# global install
+npm i -g nodemon
+
+# production: d
+npm i --production
+
+# install all the dependencies
+npm i
+```
+
+> [!warning] `scripts` in `package.json`
+>
+> - `scripts` is used to run commands
+> - `start` : to run the project "node app"
+> - to run the project: `npm start`
+
+```bash
+npm start
+# is the same as
+node app
+```
+
+> [!example] `nodemon`
+>
+> - `npm i nodemon --save-dev` : to install nodemon as a dev dependency
+> - `nodemon` is used to run the project and restart the server on any change in the project
+> - instead of `nodemon app` we can use `npm test` (in script) to run the project
+
+```json
+//package.json
+{
+  "name": "nodejs-day1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app",
+    "test": "nodemon app",
+    "deploy": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
+```
+
+> [!warning] 
+> - we need to use `run` with `npm` to run the script if the script name is not `start` or `test`
+> - `npm run <script-name>` : to run the script
+> - `npm run deploy` : to run the deploy script
+```bash
+npm run deploy
+```
+
+# #Nodejs-lab1
