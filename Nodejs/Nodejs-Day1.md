@@ -238,7 +238,7 @@ const fs = require("fs"); //this will look for the module in node_modules folder
 
 > [!done] installing specific version of a module
 >
-> - `npm i xxxxxxx@x.xx.xx : to install a specific version of a module
+> - `npm i xxxxxxx@x.xx.xx `: to install a specific version of a module
 
 > [!done] uninstalling a module
 >
@@ -326,6 +326,7 @@ npm i
 > [!warning] `scripts` in `package.json`
 >
 > - `scripts` is used to run commands
+> - it's like alias name for specific code that will be repeated and you want to save it.
 > - `start` : to run the project "node app"
 > - to run the project: `npm start`
 
