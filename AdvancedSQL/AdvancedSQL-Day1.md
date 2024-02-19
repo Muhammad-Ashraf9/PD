@@ -21,13 +21,13 @@
 >   > [!bug] `age as getdate() - birthdate` is not allowed as getdate() is changing
 > - sparse: store only non-null values (useful for columns with many null values) yes: don't store null values, no: store null values
 
-> [!warning] we dont add values in identity column, it is auto incremented or computed column
+> [!warning] we don't add values in identity column, it is auto incremented or computed column
 
 > [!done] INSERT And DELETE Specifications
 >
 > - `delete: set null`: set null in foreign key when primary key is deleted (delete department, set null in employee)
 > - `update`: `cascade` : update foreign key when primary key is updated (update department, update department in employee)
-> - `delete`: `cascade`: delete foreign key when primary key is deleted (delete department, delete employee)
+> - `delete`: `cascade`: delete foreign key when primary key is deleted (delete department, delete employee, commonly used with weak entity)
 > - `delete`: `no action`: don't delete foreign key when primary key is `deleted` (delete department, Error if employee has department)
 > - `delete`: `set default`: set default value in foreign key when primary key is deleted (delete department, set default in employee)
 >   > [!bug] we define default value in foreign key column (has to be one of the values in primary key column)
