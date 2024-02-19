@@ -410,6 +410,8 @@ module.exports = router;
 > - we will use `JWT` for now
 >   Link: [JWT](https://jwt.io/)
 
+![[Pasted image 20240219101045.png]]
+
 > [!danger] steps to create a token
 >
 > - client sends request `/login` with username and password
