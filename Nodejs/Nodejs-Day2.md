@@ -218,6 +218,7 @@ server.use((request, response, next) => {
 > 1. authorization middleware
 > 1. routes
 > 1. not found middleware
+> 2. error middleware
 
 > [!tip] `use` vs `get`, `post`, `patch`, `delete`
 >

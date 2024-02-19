@@ -6,7 +6,7 @@
 > - ODM: Object Document Mapper (use with NoSQL databases)
 > - Mongoose is an ODM for MongoDB
 
-> [!warning] steps to connect to MongoDB (Mongoose)\
+> [!warning] steps to connect to MongoDB (Mongoose)
 >
 > 1.  intialize the connection to db server (connectionString,url, port, DB name) one time
 > 2.  Model (Schema for each entity)
@@ -34,7 +34,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://mongodb://127.0.0.1:27017/pdDB") //returns a promise
+  .connect("mongodb://127.0.0.1:27017/pdDB") //returns a promise
   .then(() => {
     console.log("Connected to the database");
     //listen to the server only after connecting to the database has been successful
@@ -265,7 +265,7 @@ module.exports = mongoose.model("students", Schema);
 ```js
 //routes/studentRoute.js
 const express = require("express");
-const { body, param, qury } = require("express-validator");
+const { body, param, query } = require("express-validator");
 const studentController = require("../controller/studentController");
 
 const router = express.Router();
@@ -476,7 +476,7 @@ exports.login = (req, res, next) => {
 > [!bug] add route to the app.js
 >
 > - order of the middleware and routes matters
-> -
+> 
 
 ```js
 //app.js
@@ -581,7 +581,7 @@ router
 // ,studentController.getStudentById);//XXXXXXXXXXXXXXXX DONT USE IT XXXXXXXXXXXXXXXXX we need to add isAdminAndStudent middleware as (those isAdmin and isStudent will stop each other)
 ```
 
-> [!danger] edit the Error middleware to handle differnet status codes
+> [!danger] edit the Error middleware to handle different status codes
 
 ```js
 //app.js

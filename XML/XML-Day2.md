@@ -45,7 +45,7 @@
 >
 > 1. pairs or couple tags `<name>John</name>` (simple element)
 > 2. Mono: self closing | empty tag `<person name="John"/>` (complex element: has attributes but no child elements)
-> 3. tree: nested elements `<person name="John"> <age>20</age> </person>`` (complex element: has attributes and child elements)
+> 3. tree: nested elements `<person name="John"> <age>20</age> </person>` (complex element: has attributes and child elements)
 
 > [!done] Complex element
 >
@@ -143,7 +143,7 @@
 
 ```
 
-> [!example] to decalre user defined simple type
+> [!example] to declare user defined simple type
 >
 > - declaration in XML Schema scope
 

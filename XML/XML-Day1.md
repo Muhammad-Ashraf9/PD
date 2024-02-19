@@ -280,12 +280,12 @@
 > - `<!ELEMENT tagName (content)>`
 >
 > ```xml
-> <!ELEMENT student (id,name)> <!-- we have to specify the content of the tag we don't lnow anything about id ,name-->
+> <!ELEMENT student (id,name)> <!-- we have to specify the content of the tag we don't know anything about id ,name-->
 > <!ELEMENT id (#PCDATA)> <!-- PCDATA: plain text -->
 > <!ELEMENT name (#PCDATA)>
 > ```
 >
-> - id and name need to be declared before student. (order matters)
+> - id and name need to be declared after student. (order matters)
 >   to be id or name (use `|` or)
 >
 > ```xml
