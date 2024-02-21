@@ -89,10 +89,10 @@ drop synonym Emp
 
 > [!done] defult databases
 >
-> - `master`: system database :this is the database that records the system level information for SQL Server
-> - `model`: system database :this is the database that is used as the template when a new database is created
+> - `master`: system database :this is the database that records the system level information for SQL Server(all data needed to connect to server)
+> - `model`: system database :this is the database that is used as the template when a new database is created(if you want to change template of every created DB)
 > - `msdb`: system database :this is the database that is used by SQL Server Agent for scheduling alerts and jobs
-> - `tempdb`: system database :this is the database that is used to store temporary objects and temporary data
+> - `tempdb`: system database :this is the database that is used to store temporary objects and temporary data(like sub query)
 
 > [!example] sql server agent
 >
