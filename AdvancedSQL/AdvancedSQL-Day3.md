@@ -28,7 +28,7 @@
 >   > select * from table where primary_key = 1
 >   > ```
 
-![Binary tree](image.png)
+![[binaryTree.png]]
 
 > [!warning] when searching for a record without primary key (or any other column)
 >
@@ -46,9 +46,10 @@
 >   >   -we can create multiple non-clustered indexes on the same table
 >
 > > [!danger] only one clustered index can be created on a table
-> > ![non-cluster index](image.png)
 
-> [warning] indexes is good for `select` statements but bad for `insert`, `update`, and `delete` statements
+![[non-clustersd-index.png]]
+
+> [!warning] indexes is good for `select` statements but bad for `insert`, `update`, and `delete` statements
 
 > [!example] if we had clusterd index on column `A` and then we add primary key on column `B`
 >
@@ -106,6 +107,8 @@ create  index i7 on Student(st_age) --non-clustered index
 >
 > - check file for examples
 
+#### rollup
+
 ```sql
 select ProductID,SalesmanName,quantity
 from sales
@@ -150,15 +153,25 @@ from sales
 group by rollup(ProductID,SalesmanName)
 -- this will give us the total quantity for each product for each salesman
 -- 15 rows : rollup works on the first column only(product id)
+-- +1: is sum of all the quantities
+-- +3: is the sum of the quantities for each product
+-- +1: is the sum of the quantities for each product for each salesman
 
 
 select SalesmanName,ProductID,sum(quantity) as "Quantities"
 from sales
 group by rollup(SalesmanName,ProductID)
 
+
+-- to make rollup on both columns we use cube
+-- cube: it is like result of 4 queries
 select ProductID,SalesmanName,sum(quantity) as "Quantities"
 from sales
 group by cube(ProductID,SalesmanName)
+-- 1. total for each product for each salesman
+--2. total for each product
+--3. total for each salesman
+-- 4. total for all
 
 --order by ProductID,SalesmanName
 
@@ -174,6 +187,13 @@ group by cube(ProductID,SalesmanName)
 
 ```sql
 --grouping sets
+-- this  will cancel the group by 
+-- only rollup on the specified columns
+select ProductID,SalesmanName,sum(quantity) as "Quantities"
+from sales
+group by grouping sets(ProductID,SalesmanName)
+order by SalesmanName
+
 ---
 
 ---
@@ -184,7 +204,8 @@ group by cube(ProductID,SalesmanName)
 > [!done] `pivot` is used to change how the data is displayed
 >
 > - used to group by 2 columns and display the aggregate of a third column (X,Y, aggregate)
->   ![pivot](image.png)
+
+![[pivot.png]]
 
 ```sql
 --if u have the result of the previouse query
@@ -256,7 +277,7 @@ go
 > - Explicit transaction: `begin transaction` -> `commit` or `rollback`
 >   > [!danger] if no `commit` or `rollback` is used, the transaction will be implicitly rolled back when Error occurs
 
-![transaction](image-1.png)
+![[transaction.png]]
 
 ```sql
 create table parent(
@@ -318,7 +339,7 @@ end catch
 
 ### Views
 
-![views](image-4.png)
+![[views.png]]
 
 > [!done] View
 >
@@ -478,31 +499,27 @@ as
 >
 > - update the last transaction with the daily transaction
 >   > [!done] `Merge`
-> > - we can use it to compare 2 tables and update the target table based on the source table
-> > - can compare between table and subquery
-
-![Merge](image-4.png)
-![Merge](image-5.png)
+>   >
+>   > - we can use it to compare 2 tables and update the target table based on the source table
+>   > - can compare between table and subquery
 
 ```sql
 MERGE INTO last_transaction AS Target -- target table (has to be a TABLE)
 USING daily_transaction AS Source -- source table
 -- source can be subquery
-ON Target.st_id = Source.st_id
--- WHEN MATCHED  and Source.dvalue > Target.lvalue then
---this is different business logic as it is biigest transaction
+ON Target.lid = Source.did
 WHEN MATCHED THEN
     UPDATE SET Target.lvalue = Source.dvalue
     -- no need to specify the updated column it is always target column
 WHEN NOT MATCHED THEN
     INSERT
-    VALUES (Source.st_id,Source.st_name)
+    VALUES (Source.did,Source.dname,Source.dvalue)
     -- no need to specify the inserted column it is always target column
 ```
 
 > [!tip] other ways to write `merge`
 
-> [!example]
+![[merge.png]]
 
 ```sql
 -- create table last
@@ -546,4 +563,3 @@ when matched then
 when not matched then
 -- decide what action to make
 ```
-
