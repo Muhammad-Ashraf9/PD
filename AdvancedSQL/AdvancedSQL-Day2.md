@@ -74,7 +74,7 @@ select @x -- display
 -- select either display or assign value
 declare @x int
 select @x = age from Employee where EmployeeID = 1
-select @x
+select @x = age, name from Employee --Error -> display or assign only, not both.
 ```
 
 ```sql
@@ -150,7 +150,7 @@ declare @col varchar(50)  = '*', @t varchar(50) = 'Employee', @where varchar(50)
 exec('select ' + @col + ' from ' + @t + ' where ' + @where)
 ```
 
-> [!bug] varchar(10) will take only 10 characters, if we assign more than 10 characters.
+> [!bug] varchar(10) will take only 10 characters, if we assign more than 10 characters it will cut them to length of 10 chars.
 
 ---
 
@@ -202,12 +202,12 @@ select @@IDENTITY -- null
 declare @x int
 update Student set st_age += 1
 select @x = @@rowcount
-if @x > 0
+if (@x > 0)
     select 'multiple rows affected'
 else
     select 'no rows affected'
 -- same as ordinary if statement instead of {} we use(optional) begin...end if we have multiple statements (mandatory)
-if @x > 0
+if (@x > 0)
     begin
         select 'multiple rows affected'
         select 'multiple rows affected'
@@ -243,13 +243,13 @@ else
 delete from Topic where top_id = 1
 -- this will give error and stop database and will give details about the error (security issue)
 
-if not exists (select top_id from Topic where top_id = 1)
+if exists (select top_id from Topic where top_id = 1)
     delete from Topic where top_id = 1
 else
-    select 'table has relation with other tables'
+    select "Id can't be found"
 
 -- begin try...end try   begin catch...end catch
--- if i dont know where th
+-- if i dont know where the error will occur
 -- like try catch in c#
 
 begin try
@@ -286,7 +286,6 @@ while @x <= 20
 select ins_name,
     case
         when salary <= 3000 then 'low'
-        when salary > 3000 then 'high'
         else 'high'
     end as new_crt
 from Instructor
@@ -335,7 +334,7 @@ select ins_name, salary,
 
     -- but it could be in other subject
 
-    -- partision by to get the next value, the previous value for each subject for each student
+    -- partition by to get the next value, the previous value for each subject for each student
     select st_name, grade, c_name,
     lead(st_name) over (partition by c_name order by grade) as  next_st_name,
     lag(st_name) over (partition by c_name order by grade) as  prev_st_name
@@ -607,7 +606,7 @@ end
 
 ```sql
 -- inline function (return table)
---function takes id did and return table of instructors in the department
+--function takes did and return table of instructors in the department
 
 create function getinst(@did int)
 returns table
@@ -670,7 +669,7 @@ select * from getstuds('last')
 select * from getstuds('fullname')
 
 
---why DML qury in the function (insert into @t)
+--why DML query in the function (insert into @t)
 -- as we are using it on variable (in memory) not on the table (in the database)
 
 

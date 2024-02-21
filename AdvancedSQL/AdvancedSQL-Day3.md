@@ -20,7 +20,7 @@
 >
 > - data is sorted (clustered) based on the primary key
 > - primary key constraint creates a clustered index
-> - Binary tree is used to store the data (created automatically by the database engine)
+> - B+ tree is used to store the data (created automatically by the database engine)
 > - turns the table scan into a page scan (much faster)
 >   > [!tip] that's why searching with primary key is much faster
 >   >
@@ -36,7 +36,7 @@
 >   > [!tip] to solve this problem
 >   >
 >   > ```sql
->   > create non-clustered index i2 on table(column)
+>   > create nonclustered index i2 on table(column)
 >   > ```
 >   >
 >   > - create a non-clustered index on the column
@@ -208,7 +208,7 @@ order by SalesmanName
 ![[pivot.png]]
 
 ```sql
---if u have the result of the previouse query
+--if u have the result of the previous query
 select ProductID,SalesmanName,sum(quantity) as "Quantities"
 from sales
 group by SalesmanName,ProductID
@@ -229,7 +229,7 @@ PIVOT (SUM(Quantity) FOR productID IN ([1],[2],[3])) as PVT
 
 ```
 
-> [!example] `batch` vs
+> [!example] `batch` vs `script`
 >
 > - `batch` is a group of `sql` statements that are executed together
 > - ==indpendent== as they are executed one by one even if one of them fails (the rest will be executed)
