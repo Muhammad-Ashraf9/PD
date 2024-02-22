@@ -30,7 +30,7 @@
 
 5.  Open the folder in obsidian as vault
 
-![Alt text](image.png)
+![Alt text](open-folder-as-vault.png)
 
 6.  Open the file you want to view in obsidian
 
@@ -42,12 +42,12 @@
 7.  Install obsidian git plugin From Community plugins
 
 - settings -> community plugins -> turn off Restricted mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
-![Alt text](image-1.png)
+![Alt text](community-plugins.png)
 
 - set obsidian-git plugin settings (auto pull x minutes)
 
 
-![Alt text](image-2.png)
+![Alt text](auto-pull-interval.png)
 
 ---
 
@@ -81,3 +81,9 @@
 6. Create a pull request from github website
 
 ---
+### Contributors
+
+<a href="https://github.com/Muhammad-Ashraf9/PD/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Muhammad-Ashraf9/PD" />
+</a>
+

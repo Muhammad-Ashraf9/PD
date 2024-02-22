@@ -410,7 +410,7 @@ module.exports = router;
 > - we will use `JWT` for now
 >   Link: [JWT](https://jwt.io/)
 
-![[Pasted image 20240219101045.png]]
+![[nodejs-auth-jwt.png]]
 
 > [!danger] steps to create a token
 >
