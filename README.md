@@ -29,9 +29,7 @@
 4.  Best way to view the files is to use [obsidian](https://obsidian.md/)
 
 5.  Open the folder in obsidian as vault
-
-![Open folder as vault](./assets/open-folder-as-vault.png)
-
+![Open folder as vault](assets/open-folder-as-vault.png)
 6.  Open the file you want to view in obsidian
 
 - you can search in all files
@@ -42,12 +40,12 @@
 7.  Install obsidian git plugin From Community plugins
 
 - settings -> community plugins -> turn off Restricted mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
-![Community Plugins](./assets/community-plugins.png)
 
+![community plugins](assets/community-plugins.png)
 - set obsidian-git plugin settings (auto pull x minutes)
 
 
-![auto-pull-interval](./assets/auto-pull-interval.png)
+![auto-pull-interval](assets/auto-pull-interval.png)
 
 ---
 
