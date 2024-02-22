@@ -42,7 +42,8 @@
 > - and thats good for security as we hide the metadata coming from the database
 
 > [!tip] summary
-> ![stored precedures](image.png)
+
+![stored precedures](image.png)
 
 ```sql
 use ITI;
@@ -196,7 +197,7 @@ select @x;
 
 ---
 
-![diff](image-1.png)
+![diff](differenceBetween2Proc.png)
 
 > [!tip] `where` is excuted before `select` so we used the variable before it is changed
 
@@ -444,7 +445,7 @@ select * from update_log;
 
 ---
 
-> [warning] Run Time Triggers
+> [!warning] Run Time Triggers
 >
 > - `output`: used to get info about the query that it is used in
 
@@ -475,25 +476,47 @@ output db_name() --- database name
 , suser_name() --- user name that executed the update
 where id = 1;
 ```
+
 ---
->[!danger] Common Type Expression (CTE)
-> - Common Type Expression (CTE)  (🔌)
+
+> [!danger] Common Type Expression (CTE) is missing
+>
+> - connectivity issue
 > - will update the file later
 > - you can get the updated file from the [github](https://github.com/Muhammad-Ashraf9/PD)
 
 ```sql
 --self join
-select *
+select  X.st_Fname as StudentName, Y.st_Fname as LeaderName
 from Student X, Student Y
-on  X.sid  = Y.fid;
--- (parent: who has the primary key) (child: who has the foreign key)
+on  Y.st_id = X.st_leader;
+-- (Y parent:  has the primary key) (X child: has the foreign key)
+-- this went to the hard disk 2 times to get the data despite the fact that the data is in the memory (same table)
 
 
 --Common Type Expression (CTE)
+with cte1
+as
+(select * from Student)
+
+-- not object creation
+-- it is like query and its result saved in the memory
+-- copy from hard disk to memory
+
+select  X.st_Fname as StudentName, Y.st_Fname as LeaderName
+    from cte1 X, cte1 Y
+    where Y.st_id = X.st_leader;
+    where Y.st_id = X.st_leader;
+-- this have better performance than the self join as it is in the memory
+-- it is like decalring a variable and using it in the query
+-- CTE is local to the query (batch) that it is used in
 ```
+
 ---
+
 ### XML
->[!tip] XML
+
+> [!tip] XML
 >
 > - Extensible Markup Language
 > - text based format way to store and transport data
@@ -503,9 +526,11 @@ on  X.sid  = Y.fid;
 > - hard to write same queries in different databases engines(oracle, sql server, mysql)
 > - so we can use to XML to store the data and then use it in different databases
 
->[!warning] XML => data table and data table => XML
+> [!warning] XML => data table and data table => XML
+>
 > - `open XML` to convert XML to data table
-> - `for XML`  `[auto, raw, explicit, path]` to convert data table to XML
+> - `for XML` `[auto, raw, explicit, path]` to convert data table to XML
+
 ```sql
 select * from student for xml raw;
 -- this will return the data in XML format
@@ -536,29 +561,32 @@ select * from student for xml raw('student'), elements, root('ITI');
 
 ```
 
->[!danger] check file xml `xml.sql`
+> [!danger] check file xml `xml.sql`
 
->[!warning] `for xml raw`
-> -  can't understand joins (instead of listing all coruses under on topic it will repeat the topic for each course)
+> [!warning] `for xml raw`
+>
+> - can't understand joins (instead of listing all coruses under on topic it will repeat the topic for each course)
 > - it is either all elements or all attributes
-> -  can't make mix of elements and attributes
-
->[!danger] `for xml auto`
-> - solved the problem of `for xml raw` by listing all courses under one topic (Joins)
-> - can understan Join 
-> - but still have the problem of either all elements or all attributes 
 > - can't make mix of elements and attributes
 
->[!danger] `for xml path`
+> [!danger] `for xml auto`
+>
+> - solved the problem of `for xml raw` by listing all courses under one topic (Joins)
+> - can understan Join
+> - but still have the problem of either all elements or all attributes
+> - can't make mix of elements and attributes
+
+> [!danger] `for xml path`
+>
 > - use alias name to make mix of elements and attributes
 > - `@sid` to make attribute
 > - `st_fname "studentName/@firstName"` to make mix of elements and attributes
-> - `st_lname "studentName/lname"` 
+> - `st_lname "studentName/lname"`
 > - `address "address"`
 
-
 ---
->[!tip] xml => data table
+
+> [!tip] xml => data table
 >
 > - `openXML` to convert XML to data table
 > - this will create runtime table to save it we use `insert` or `select into`
@@ -592,15 +620,13 @@ Exec sp_xml_preparedocument @hdocs output, @docs
 --4)process document 'read tree from memory'
 --OPENXML Creates Result set from XML Document
 
-SELECT * 
+SELECT *
 FROM OPENXML (@hdocs, '//Student')  --levels  XPATH Code
 WITH (StudentID int '@StudentID',
-	  Address varchar(10) 'Address', 
+	  Address varchar(10) 'Address',
 	  StudentFirst varchar(10) 'StudentName/First',
 	  StudentSECOND varchar(10) 'StudentName/Second'
 	  )
 --5)remove memory tree
 Exec sp_xml_removedocument @hdocs
 ```
-
-
