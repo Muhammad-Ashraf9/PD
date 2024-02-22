@@ -30,7 +30,7 @@
 
 5.  Open the folder in obsidian as vault
 
-![Alt text](open-folder-as-vault.png)
+![Open folder as vault](./assets/open-folder-as-vault.png)
 
 6.  Open the file you want to view in obsidian
 
@@ -42,12 +42,12 @@
 7.  Install obsidian git plugin From Community plugins
 
 - settings -> community plugins -> turn off Restricted mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
-![Alt text](community-plugins.png)
+![Community Plugins](./assets/community-plugins.png)
 
 - set obsidian-git plugin settings (auto pull x minutes)
 
 
-![Alt text](auto-pull-interval.png)
+![auto-pull-interval](./assets/auto-pull-interval.png)
 
 ---
 
