@@ -18,7 +18,7 @@
    git clone https://github.com/Muhammad-Ashraf9/PD.git
 ```
 
-3. Pull the latest changes every time before viewing the files
+3. Pull the latest changes every time ==before== viewing the files
 
 ```bash
    git pull
@@ -37,16 +37,21 @@
 
 ### To Get latest updates for lectures notes Automatically
 
-7.  Install obsidian git plugin From Community plugins
+7.  Install  `Git`  plugin From Community plugins
 
-- settings -> community plugins -> turn off Restricted mode -> 
+- settings => community plugins => turn off Restricted mode  
 ![](assets/steps-community-plugins.png)
-- Browse  
-- search for git -> install obsidian-git plugin -> enable plugin
+
+- Browse  community plugins
 
 ![community plugins](assets/community-plugins.png)
-- set obsidian-git plugin settings (auto pull x minutes)
+- search for  `Git`  => install  `Git` plugin -> ==enable== plugin
 
+![](assets/search-git.png)
+- set `Git` plugin `options` 
+
+![](assets/obsidian-git-options.png)
+- auto pull X  ( up to you )  minutes
 
 ![auto-pull-interval](assets/auto-pull-interval.png)
 
@@ -60,7 +65,7 @@
    git checkout -b <branch-name>
 ```
 
-2. Make changes to the files
+2. Make ==changes== to the files
 3. Add the changes to staging area
 
 ```bash
@@ -79,7 +84,7 @@
    git push origin <branch-name>
 ```
 
-6. Create a pull request from github website
+6. Create a ==pull request== from `Github` website
 
 ---
 ### Contributors
