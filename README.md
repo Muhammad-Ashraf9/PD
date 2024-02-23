@@ -2,26 +2,25 @@
 
 ## To Get The latest updates for lecture notes
 
-1. Install Git on local machine
+1. Install Git on local machine (If you don't have `Git` installed)
+	- Download [Git](https://git-scm.com/downloads)
+	- First time setup :
 
-- [Git](https://git-scm.com/downloads)
-- First time setup :
-
-  ```bash
-      git config --global user.name "Your Name"
-      git config --global user.email "email@email.com"
-    ```
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "email@email.com"
+```
 
 2. Clone the repository to local machine
 
 ```bash
-   git clone https://github.com/Muhammad-Ashraf9/PD.git
+git clone https://github.com/Muhammad-Ashraf9/PD.git
 ```
 
 3. Pull the latest changes every time ==before== viewing the files
 
 ```bash
-   git pull
+git pull
 ```
 
 ### Files are in .md format (Obsidian)
