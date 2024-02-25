@@ -88,3 +88,26 @@ insert into #temp (id, name) values (next value for mySequence, 'Ahmed') -- 4
 > - the less the time between the backup and restore the more the synchronization between the primary and secondary servers
 > - in case of failover, the secondary server becomes the primary server
 > - this used to have replicates of the primary server
+> - transaction log is not stopping the primary server from working
+> - only one full backup and the rest are transaction log backups
+> - the transaction log backups are faster to backup and restore
+
+
+>[!tip] restore with recovery vs restore with no recovery vs restore with standby
+> - restore with recovery(default): the database is available for use after the restore
+> - restore with no recovery: the database is not available for use after the restore (can only select not insert, update, delete)
+> - restore with standby: the database is available for use after the restore but in read-only mode
+> - when restoring the transaction log, the database should be in no recovery mode or standby mode (to keep the database in sync with the primary server)
+> - we use recovery mode only when making the secondary server the primary server
+
+
+---
+
+>[!tip] create multiple servers
+> `.\cairo` , `.\alex` , `.\giza`
+> - create db on main server `ITIDB1`
+> - run sql server agent on all servers (to run the jobs)
+> - shared folder for main server to store the backup files `ITIDataShared` make it shared on network can be accessed by all servers
+> - local folder for secondary servers to copy the backup files
+> - create the jobs on the main server to backup the database and copy the backup files to the shared folder
+> - add secondary servers to the main server
