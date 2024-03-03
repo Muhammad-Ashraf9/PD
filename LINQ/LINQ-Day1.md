@@ -269,11 +269,12 @@ namespace Demo1
 > - to take parameters use `Action<T>` where `T` is the type of the parameter
 > - this doesn't return anything only used to print
 >
-> ```csharp
-> Action<int> a = (x) => Console.WriteLine(x);
-> a.Invoke(10);//10
-> ```
 >
+```csharp
+ Action<int> a = (x) => Console.WriteLine(x);> a.Invoke(10);//10
+ ```
+
+>[!example]
 > - to take multiple parameters use `Action<T1,T2,...,Tn>` where `T1,T2,...,Tn` are the types of the parameters up to 16 parameters(more than 16 declare a delegate)
 >
 > ```csharp
@@ -295,9 +296,11 @@ namespace Demo1
 > [!tip] predicate
 >
 > - reference to a method that takes a parameter and returns a boolean value
->
-> ```csharp
-> Predicate<int> p = (x) => x>10;
+
+ ```csharp
+ Predicate<int> p = (x) => x>10;
+ 
+
 > Console.WriteLine(p.Invoke(20));//true
 > Console.WriteLine(p.Invoke(5));//false
 > ```
@@ -366,9 +369,350 @@ List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 var res = numbers.Where(x => x > 5).ToList();//immediate execution: the query is executed immediately in this line
 Console.WriteLine(res.GetType());//System.Collections.Generic.List`1[System.Int32]
 numbers.Add(100);//the result will not contain 100
+//fluent syntax
 
 foreach (var item in res)
 {
     Console.WriteLine(item);//6,7,8,9,10
 }
 ```
+
+---
+
+# Break
+
+---
+
+#### query expression
+
+```csharp
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+var res = from n in numbers
+          where n > 5
+          select n;//any query has to end with select.
+var res = from n in numbers
+          where n > 5; //error
+          //any query has to end with select or group by
+
+foreach (var item in res)
+{
+    Console.WriteLine(item);//6,7,8,9,10
+}
+
+//all of this will be converted to the previous Enumerable.Method
+```
+
+---
+
+> [!important]
+>
+> 1. class Customer, Order, Product implement IComparable interface (given in lab)
+
+```csharp
+using static Demo1.ListGenerators;//to use static methods in the ListGenerators class directly without the class name
+//same with linq
+using System.Linq;//implicit using => not necessary to use it
+```
+
+```csharp
+// get products that are in stock
+var res = ProductList.Where(p => p.UnitsInStock > 0);
+foreach (var item in res)
+{
+    Console.WriteLine(item.ProductName);// all products that are in stock
+}
+
+// get products that are out of stock
+var res = ProductList.Where(p => p.UnitsInStock == 0);
+foreach (var item in res)
+{
+    Console.WriteLine(item.ProductName);// all products that are out of stock
+}
+// display only product name
+var res = ProductList.Where(p => p.UnitsInStock > 0).Select(p =>  p.ProductName);
+foreach (var item in res)
+{
+    Console.WriteLine(item);//  all products that are in stock with only the product name
+}
+
+// display only product name and ID
+var res = ProductList.Where(p => p.UnitsInStock > 0).Select(p => new { p.ProductName, p.ProductID });
+
+// display only product name and ID with alias
+var res = ProductList.Where(p => p.UnitsInStock > 0).Select(p => new { Name = p.ProductName, ID = p.ProductID });
+
+// display id + name concatenated
+var res = ProductList.Where(p => p.UnitsInStock > 0).Select(p => new { data = p.ProductID + " " + p.ProductName });
+
+// select all product
+var res = ProductList.Where( p => p.UnitsInStock > 0).Select(p => p);
+
+//Query Expression
+//display all products that are in stock
+var res = from p in ProductList
+          where p.UnitsInStock > 0
+        //   select p;//all products details
+        //   select p.ProductName;//all products names
+        //   select new { p.ProductName, p.ProductID };//all products names and ids
+        //   select new { Name = p.ProductName, ID = p.ProductID };//all products names and ids with alias
+
+/////////////// order by (ascending)
+var res = ProductList.Where(p => p.UnitsInStock > 0)
+.OrderBy(p => p.UnitPrice)
+.Select(p => new { p.ProductName, p.UnitPrice });
+
+/////////////// then by
+var res = ProductList.Where(p => p.UnitsInStock > 0)
+.OrderBy(p => p.UnitPrice)//if the unit price is the same then order by product id
+.ThenBy(p => p.ProductID)
+.Select(p => new { p.ProductName, p.UnitPrice, p.ProductID });
+
+//we can add properties to the anonymous type
+var res = ProductList.Where(p => p.UnitsInStock > 0)
+.OrderBy(p => p.UnitPrice)
+.ThenBy(p => p.ProductID)
+.Select(p => new { p.ProductName, p.UnitPrice, p.ProductID, l = p.ProductName.Length });
+
+///////////////// ThenByDescending
+var res = ProductList.Where(p => p.UnitsInStock > 0)
+.OrderBy(p => p.UnitPrice)
+.ThenByDescending(p => p.ProductID)
+.Select(p => new { p.ProductName, p.UnitPrice, p.ProductID });
+// we can use multiple ThenBy
+
+var res = from p in ProductList
+          where p.UnitsInStock > 0
+          orderby p.UnitPrice, p.ProductID //will order by unit price and if the unit price is the same then order by product id
+          orderby p.UnitPrice, p.ProductID descending//will order by unit price and if the unit price is the same then order by product id descending
+          orderby p.UnitPrice descending, p.ProductID descending//will order by unit price descending and if the unit price is the same then order by product id descending
+          select new { p.ProductName, p.UnitPrice, p.ProductID };//has to end with select
+```
+
+---
+
+###### indexed query
+
+```csharp
+//indexed query
+var res = ProductList.Where((p, index) => p.UnitsInStock > 0 && index > 10);
+//will return the products that are in stock and the index is greater than 10
+var res = ProductList.Where((p, index) => p.UnitsInStock > 0 && index >= 10 && index <= 15);
+//will return the products that are in stock and the index is between 10 and 15
+//can be used with fluent syntax not with query expression
+
+var res = ProductList.Where((p, index) => p.UnitsInStock > 0 && index > 10).Select((p, index) => new { p.ProductName, p.UnitPrice, index });
+```
+
+> [!example] Neutral order operator
+>
+> - `skip` and `take` methods
+> - `SkipWhile` and `TakeWhile` methods
+
+```csharp
+//skip and take
+//take 5 products that are in stock
+var res = ProductList.Where(p => p.UnitsInStock > 0).Take(5);
+//skip 5 products that are in stock and display the rest
+var res = ProductList.Where(p => p.UnitsInStock > 0).Skip(5);
+//skip 5 products that are in stock and take 5 products
+var res = ProductList.Where(p => p.UnitsInStock > 0).OrderBy(p => p.UnitPrice).Skip(5).Take(5);
+
+int i = 5;
+var res = ProductList.Where(p => p.UnitsInStock > 0).OrderBy(p => p.UnitPrice).Skip(i*5).Take(5);
+
+//Count property of list vs Count extension method from Enumerable
+int size = ProductList.Count/5;//get the number of 5s in the list
+for (int i = 0; i < size + 1; i++)
+{
+    var res = ProductList.Where(p => p.UnitsInStock > 0).OrderBy(p => p.UnitPrice).Skip(i*5).Take(5);
+    foreach (var item in res)
+    {
+        Console.WriteLine(item.ProductName);
+    }
+    Console.ReadLine();
+    Console.Clear();
+}
+//only 75 products will be displayed have to add 1 to the size
+```
+---
+```csharp
+List<int> arr = [1,2,3,4,5,6,7,8,9,10];
+arr.SkipWhile(x => x < 5);//6,7,8,9,10
+//skip the elements until the condition is false
+
+arr.TakeWhile(x => x < 5);//1,2,3,4
+//take the elements until the condition is false
+```
+
+---
+
+>[!important] `First` and `Last` methods
+> - operators that return only one element from the sequence
+> - `First` returns the first element from the sequence
+> - `Last` returns the last element from the sequence
+
+```csharp
+//first and last
+List<int> arr = [1,2,3,4,5,6,7,8,9,10];
+var res = arr.First();//1
+var res = arr.Last();//10
+
+var res = arr.First(x => x > 5);//get the first element that is greater than 5
+var res = arr.Last(x => x > 5);//get the last element that is greater than 5
+
+var res = arr.First(x => x > 10);//error no element satisfies the condition
+//System.InvalidOperationException: 'Sequence contains no matching element'
+
+//FirstOrDefault and LastOrDefault methods
+// instead of throwing an exception if no element satisfies the condition it will return the default value of the type
+var res = arr.FirstOrDefault(x => x > 10);//0
+var res = arr.LastOrDefault(x => x > 10);//0
+
+//Single and SingleOrDefault methods
+// has to be only one element that satisfies the condition otherwise it will throw an exception
+var res = arr.Single(x => x == 5);//5
+var res = arr.Single(x => x > 5);//error :InvalidOperationException: Sequence contains more than one matching element
+
+//SingleOrDefault
+//Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
+var res = arr.SingleOrDefault(x => x > 5);//error :InvalidOperationException: Sequence contains more than one matching element
+
+var res = arr.SingleOrDefault(x => x > 10);//0
+
+var res = arr.SingleOrDefault(x => x == 5);//5
+```
+
+---
+```csharp
+//ElementAt 
+//returns the element at a specified index in a sequence
+var res = arr.ElementAt(5);//6
+var res = arr.ElementAt(99);//error: ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+
+```
+>[!important] Aggregation methods
+> - `Count` returns the number of elements in the sequence
+> - `Sum` returns the sum of the elements in the sequence
+> - `Average` returns the average of the elements in the sequence
+
+```csharp
+//aggregation methods
+List<int> arr = [1,2,3,4,5,6,7,8,9,10];
+var res = arr.Count();//10
+var res = arr.Count(x => x > 5);//5
+
+//Min and Max methods 
+// has to be a sequence of comparable elements (implement IComparable interface)
+
+var res = arr.Min();//1
+var res = arr.Max();//10
+
+Var res = ProductList.Min(p => p.UnitPrice);//get the minimum unit price
+
+//Query Expression
+var res = (from p in ProductList
+          where p.UnitsInStock > 0
+          select p.UnitPrice).Min();//get the minimum unit price
+
+//sum and average
+var res = ProductList.Sum(p => p.UnitPrice);//get the sum of the unit prices
+var res = ProductList.Average(p => p.UnitPrice);//get the average of the unit prices
+```
+
+>[!important] Generation methods
+> - has to be called by the `Enumerable` class
+> - `Range` returns a sequence of numbers within a specified range
+> - `Repeat` returns a sequence that contains one repeated value
+> - `Empty` returns an empty sequence
+```csharp
+//generation methods
+var res = Enumerable.Range(1, 10);//1,2,3,4,5,6,7,8,9,10
+
+var res = Enumerable.Repeat("hello", 5);//hello,hello,hello,hello,hello
+var res = Enumerable.Repeat(ProductList.First(), 5);//repeat the first product 5 times
+
+var res = Enumerable.Empty<int>();//empty sequence
+```
+
+>[!warning] SelectMany method
+> - the only method that returns a sequence of sequences
+
+
+```csharp
+    List <String> names = new List<String> { "Ali h", "Ahmed j", "Omar u" };
+    var res = names.SelectMany(n => n);
+    var res = names.SelectMany(n => n.ToCharArray());//
+    foreach (var item in res)
+    {
+        Console.WriteLine(item);// A, l, i, h, A, h, m, e, d, j, O, m, a, r, u
+    }
+    var res = names.SelectMany(n => n.Split(" "));//split the names by space
+```
+
+>[!example] Intersect vs Union vs Concat vs Except
+> - `Intersect` returns the common elements between 2 sequences
+> - `Union` returns the unique elements between 2 sequences (no duplicates)
+> - `Concat` returns the elements of 2 sequences
+> - `Except` returns the elements of the first sequence that are not in the second sequence
+```csharp
+var r1 = Enumerable.Range(1, 10);
+var r2 = Enumerable.Range(5, 10);
+var res = r1.Intersect(r2);//5,6,7,8,9,10
+foreach (var item in res)
+{
+    Console.WriteLine(item);//5,6,7,8,9,10
+}
+
+var res = r1.Union(r2);//1,2,3,4,5,6,7,8,9,10
+
+var res = r1.Concat(r2);//1,2,3,4,5,6,7,8,9,10,5,6,7,8,9,10
+
+var res = r1.Except(r2);//1,2,3,4
+//won't throw an exception if all the elements of the first sequence are in the second sequence
+```
+>[!tip] Quantifiers
+> - `Any` returns true if `any` element satisfies the condition
+> - `All` returns true if `all` elements satisfy the condition
+
+
+>[!example] zip operator
+> - `Zip` returns a sequence of tuples
+> - the first element of the first sequence is paired with the first element of the second sequence and so on
+```csharp
+var r1 = Enumerable.Range(1, 10);
+List<String> names = new List<String> { "Ali h", "Ahmed j", "Omar u" };
+var res = r1.Zip(names, (x, y) => new {id = x, name = y});
+
+```
+>[!important] Grouping
+> - `GroupBy` returns a sequence of groups
+> - each group has a key and a sequence of elements
+```csharp
+//Query Expression
+ var res  = from p in ProductList
+           group p by p.Category;
+foreach (var item in res)
+{
+    Console.WriteLine($"Category Name: {item.Key}");
+    foreach (var p in item)
+    {
+        Console.WriteLine($"Product Name: {p.ProductName}");
+    }
+}
+
+//Fluent Syntax
+var res = ProductList.GroupBy(p => p.Category);
+           
+```
+
+>[!warning] casting operators
+> - `ToArray` returns an array
+> - `ToList` returns a list
+
+---
+>[!done] #Linq-Lab1
+> - 8 pages 
+
+> [!danger] to get All notes (`.md` files)
+>
+> - link: [https://github.com/Muhammad-Ashraf9/PD](https://github.com/Muhammad-Ashraf9/PD)
