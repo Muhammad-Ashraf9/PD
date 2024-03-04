@@ -275,7 +275,7 @@ namespace Demo3
             SqlParameter parameter1 = new SqlParameter(){ParameterName = "@deptid", Value = 7, SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input};
             SqlParameter parameter2 = new SqlParameter(){ParameterName = "@deptname", Value = "OS", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input};
             SqlParameter parameter3 = new SqlParameter(){ParameterName = "@capacity", Value = 100, SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input};
-            SqlParameter parameter4 = new SqlParameter(){ParameterName = "@status", Value = true, SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input};
+            SqlParameter parameter4 = new SqlParameter(){ParameterName = "@status", Value = 1, SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input};
 
             sqlCommand.Parameters.Add(parameter1);
             sqlCommand.Parameters.Add(parameter2);
