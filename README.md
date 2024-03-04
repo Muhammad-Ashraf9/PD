@@ -2,26 +2,25 @@
 
 ## To Get The latest updates for lecture notes
 
-1. Install Git on local machine
+1. Install Git on local machine (If you don't have `Git` installed)
+	- Download [Git](https://git-scm.com/downloads)
+	- First time setup :
 
-- [Git](https://git-scm.com/downloads)
-- First time setup :
-
-  ```bash
-      git config --global user.name "Your Name"
-      git config --global user.email "email@email.com"
-    ```
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "email@email.com"
+```
 
 2. Clone the repository to local machine
 
 ```bash
-   git clone https://github.com/Muhammad-Ashraf9/PD.git
+git clone https://github.com/Muhammad-Ashraf9/PD.git
 ```
 
 3. Pull the latest changes every time before viewing the files
 
 ```bash
-   git pull
+git pull
 ```
 
 ### Files are in .md format (Obsidian)
@@ -29,9 +28,7 @@
 4.  Best way to view the files is to use [obsidian](https://obsidian.md/)
 
 5.  Open the folder in obsidian as vault
-
-![Alt text](image.png)
-
+![Open folder as vault](assets/open-folder-as-vault.png)
 6.  Open the file you want to view in obsidian
 
 - you can search in all files
@@ -39,15 +36,23 @@
 
 ### To Get latest updates for lectures notes Automatically
 
-7.  Install obsidian git plugin From Community plugins
+7.  Install  `Git`  plugin From Community plugins
 
-- settings -> community plugins -> turn off Restricted mode -> browse community plugins -> search for git -> install obsidian-git plugin -> enable plugin
-![Alt text](image-1.png)
+- settings => community plugins => turn off Restricted mode  
+![](assets/steps-community-plugins.png)
 
-- set obsidian-git plugin settings (auto pull x minutes)
+- Browse  community plugins
 
+![community plugins](assets/community-plugins.png)
+- search for  `Git`  => install  `Git` plugin -> enable plugin
 
-![Alt text](image-2.png)
+![](assets/search-git.png)
+- set `Git` plugin `options` 
+
+![](assets/obsidian-git-options.png)
+- auto pull X  ( up to you )  minutes
+
+![auto-pull-interval](assets/auto-pull-interval.png)
 
 ---
 
@@ -78,6 +83,12 @@
    git push origin <branch-name>
 ```
 
-6. Create a pull request from github website
+6. Create a pull request from `Github` website
 
 ---
+### Contributors
+
+<a href="https://github.com/Muhammad-Ashraf9/PD/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Muhammad-Ashraf9/PD" />
+</a>
+

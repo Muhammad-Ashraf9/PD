@@ -1278,7 +1278,7 @@ static void Main(string[] args)
 
 - data type like List => add in memory,file (search how to add in file)
 
-![[Pasted image 20240122094547.png]]
+![[csharp-lab7.png]]
 ```cs
 // class newList: List<string>
 

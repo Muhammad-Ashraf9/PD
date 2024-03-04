@@ -353,7 +353,7 @@ module.exports = (req, res, next) => {
 
   if (result.errors.length >= 1) {
     let errorMessages = result.errors.reduce(
-      (current, error) => current + error.msg + ""
+      (current, error) => current + error.msg + "",""
     );
     let error = new Error(errorMessages);
     error.statusCode = 422;
@@ -410,7 +410,7 @@ module.exports = router;
 > - we will use `JWT` for now
 >   Link: [JWT](https://jwt.io/)
 
-![[Pasted image 20240219101045.png]]
+![nodejs-auth-jwt](nodejs-auth-jwt.png)
 
 > [!danger] steps to create a token
 >
