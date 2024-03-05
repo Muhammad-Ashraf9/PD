@@ -275,7 +275,7 @@ namespace Demo3
             SqlParameter parameter1 = new SqlParameter(){ParameterName = "@deptid", Value = 7, SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input};
             SqlParameter parameter2 = new SqlParameter(){ParameterName = "@deptname", Value = "OS", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input};
             SqlParameter parameter3 = new SqlParameter(){ParameterName = "@capacity", Value = 100, SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Input};
-            SqlParameter parameter4 = new SqlParameter(){ParameterName = "@status", Value = true, SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input};
+            SqlParameter parameter4 = new SqlParameter(){ParameterName = "@status", Value = 1, SqlDbType = System.Data.SqlDbType.Bit, Direction = System.Data.ParameterDirection.Input};
 
             sqlCommand.Parameters.Add(parameter1);
             sqlCommand.Parameters.Add(parameter2);
@@ -395,7 +395,8 @@ namespace Demo3
 
             //create update, insert and delete commands for the data adapter
             SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(sqlDataAdapter);
-            sqlCommandBuilder.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();//returns the update command
+     
+sqlDataAdapter.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();//returns the update command
             Console.WriteLine(sqlCommandBuilder.GetUpdateCommand().CommandText);//update department set deptname = @p1, capacity = @p2, status = @p3 where deptid = @p4
 
             //create a data table object
