@@ -483,11 +483,10 @@ namespace DataAccessLayer
     {
 
         public static SqlConnection Connection;
-        Static DBManager()
+        static DBManager()
         {
             string ConnectionString = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build().GetSection("ConnectionString").Value;
             Connection = new SqlConnection(ConnectionString);
-            Connection.Open();
         }
         public static DataTable GetQueryResult(string cmdTxt)
         {
@@ -506,6 +505,14 @@ namespace DataAccessLayer
             return rowsAffected;
         }
         //scalar function => lab
+        public static object ExecuteScalar(string cmdTxt)
+        {
+            SqlCommand command = new SqlCommand(cmdTxt, Connection);
+            connection.Open();
+            object result = command.ExecuteScalar();
+            connection.Close();
+            return result;
+        }
     }
 }
 ```
@@ -559,14 +566,14 @@ namespace DataBusinessLayer
 //DepartmentList.cs in EntityLists folder
 namespace DataBusinessLayer
 {
-    public class DepartmentList
+    public class DepartmentList : List<Department>
     {
-        public List<Department> Departments { get; set; }
-        //overriding Add
+        //overriding Add (optional)
         public void Add(Department department)
         {
             base.Add(department);
         }
+
     }
 }
 ```
@@ -575,14 +582,9 @@ namespace DataBusinessLayer
 //StudentList.cs in EntityLists folder
 namespace DataBusinessLayer
 {
-    public class StudentList
+    public class StudentList : List<Student>
     {
-        public List<Student> Students { get; set; }
-        //overriding Add
-        public void Add(Student student)
-        {
-            base.Add(student);
-        }
+            
     }
 }
 ```
@@ -712,11 +714,8 @@ Console.WriteLine(department);
 > - CRUD on Department using Tiers (layers)
 > - student in gridview => department in combobox
 
-
 ---
 
 > [!danger] to get All notes (`.md` files)
 >
 > - link: [https://github.com/Muhammad-Ashraf9/PD](https://github.com/Muhammad-Ashraf9/PD)
-
-
