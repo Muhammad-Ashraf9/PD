@@ -424,7 +424,6 @@ public partial class Form5 : Form
     SqlCommand command;
     DataTable dataTable;
     SqlDataAdapter adapter;
-    de
     public Form5()
     {
         connectionString = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build().GetSection("ConnectionString").Value;
