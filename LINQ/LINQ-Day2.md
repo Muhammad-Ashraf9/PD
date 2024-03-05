@@ -395,7 +395,8 @@ namespace Demo3
 
             //create update, insert and delete commands for the data adapter
             SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(sqlDataAdapter);
-            sqlCommandBuilder.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();//returns the update command
+     
+sqlDataAdapter.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();//returns the update command
             Console.WriteLine(sqlCommandBuilder.GetUpdateCommand().CommandText);//update department set deptname = @p1, capacity = @p2, status = @p3 where deptid = @p4
 
             //create a data table object
