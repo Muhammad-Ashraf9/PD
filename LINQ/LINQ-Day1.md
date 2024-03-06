@@ -34,6 +34,7 @@
 >
 > - used to declare a variable of any type
 > - type is determined at compile time based on the value assigned to it
+> - Must be initialized in declaration
 >
 > ```csharp
 > var i = 10; // int
@@ -318,7 +319,7 @@ namespace Demo1
 >
 > - `system.linq` namespace
 > - contains all the linq methods
-> - like: `Where`, `Select`, `OrderBy`, `GroupBy`, `Join`, `Take`, `Skip`, `First`, `Last`, `Single`, `Count`, `Sum`, `Average`, `Max`, `Min`, `Aggregate`, `Contains`, `Any`, `All`, `Distinct`, `Concat`, `Union`, `Intersect`, `Except`, `Reverse`, `ElementAt`, `ElementAtOrDefault`, `DefaultIfEmpty`, `OfType`, `Cast
+> - like: `Where`, `Select`, `OrderBy`, `GroupBy`, `Join`, `Take`, `Skip`, `First`, `Last`, `Single`, `Count`, `Sum`, `Average`, `Max`, `Min`, `Aggregate`, `Contains`, `Any`, `All`, `Distinct`, `Concat`, `Union`, `Intersect`, `Except`, `Reverse`, `ElementAt`, `ElementAtOrDefault`, `DefaultIfEmpty`, `OfType`, `Cast`
 >   link:https://source.dot.net/#q=enumera
 
 > [!example] `Where` method
@@ -389,11 +390,10 @@ foreach (var item in res)
 List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 var res = from n in numbers
           where n > 5
-          select n;//any query has to end with select.
+          select n;//any query has to end with select or group by
 var res = from n in numbers
           where n > 5; //error
-          //any query has to end with select or group by
-
+          
 foreach (var item in res)
 {
     Console.WriteLine(item);//6,7,8,9,10
@@ -503,7 +503,7 @@ var res = ProductList.Where((p, index) => p.UnitsInStock > 0 && index >= 10 && i
 var res = ProductList.Where((p, index) => p.UnitsInStock > 0 && index > 10).Select((p, index) => new { p.ProductName, p.UnitPrice, index });
 ```
 
-> [!example] Neutral order operator
+> [!example] Natural order operator
 >
 > - `skip` and `take` methods
 > - `SkipWhile` and `TakeWhile` methods
@@ -652,7 +652,7 @@ var res = Enumerable.Empty<int>();//empty sequence
 >[!example] Intersect vs Union vs Concat vs Except
 > - `Intersect` returns the common elements between 2 sequences
 > - `Union` returns the unique elements between 2 sequences (no duplicates)
-> - `Concat` returns the elements of 2 sequences
+> - `Concat` returns the elements of 2 sequences(may have duplicates)
 > - `Except` returns the elements of the first sequence that are not in the second sequence
 ```csharp
 var r1 = Enumerable.Range(1, 10);

@@ -183,7 +183,7 @@ public partial class Form1 : Form
 }
 ```
 
-> [!warning] selectedItem vs selectedValue vs selectedIndex
+> [!warning] selectedItem vs selectedValue vs selectedIndex vs SelectedText
 >
 > - SelectedIndex returns the index of the selected item in the list box
 > - SelectedText returns the text of the selected item in the list box
@@ -559,9 +559,8 @@ namespace DataBusinessLayer
 //DepartmentList.cs in EntityLists folder
 namespace DataBusinessLayer
 {
-    public class DepartmentList
+    public class DepartmentList : List<Department>
     {
-        public List<Department> Departments { get; set; }
         //overriding Add
         public void Add(Department department)
         {
@@ -575,9 +574,8 @@ namespace DataBusinessLayer
 //StudentList.cs in EntityLists folder
 namespace DataBusinessLayer
 {
-    public class StudentList
+    public class StudentList : List<Student>
     {
-        public List<Student> Students { get; set; }
         //overriding Add
         public void Add(Student student)
         {
