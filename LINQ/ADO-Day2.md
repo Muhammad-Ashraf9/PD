@@ -424,7 +424,6 @@ public partial class Form5 : Form
     SqlCommand command;
     DataTable dataTable;
     SqlDataAdapter adapter;
-    de
     public Form5()
     {
         connectionString = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build().GetSection("ConnectionString").Value;
@@ -483,11 +482,10 @@ namespace DataAccessLayer
     {
 
         public static SqlConnection Connection;
-        Static DBManager()
+        static DBManager()
         {
             string ConnectionString = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build().GetSection("ConnectionString").Value;
             Connection = new SqlConnection(ConnectionString);
-            Connection.Open();
         }
         public static DataTable GetQueryResult(string cmdTxt)
         {
@@ -506,6 +504,14 @@ namespace DataAccessLayer
             return rowsAffected;
         }
         //scalar function => lab
+        public static object ExecuteScalar(string cmdTxt)
+        {
+            SqlCommand command = new SqlCommand(cmdTxt, Connection);
+            connection.Open();
+            object result = command.ExecuteScalar();
+            connection.Close();
+            return result;
+        }
     }
 }
 ```
@@ -561,11 +567,12 @@ namespace DataBusinessLayer
 {
     public class DepartmentList : List<Department>
     {
-        //overriding Add
+        //overriding Add (optional)
         public void Add(Department department)
         {
             base.Add(department);
         }
+
     }
 }
 ```
@@ -581,6 +588,7 @@ namespace DataBusinessLayer
         {
             base.Add(student);
         }
+
     }
 }
 ```
@@ -710,11 +718,8 @@ Console.WriteLine(department);
 > - CRUD on Department using Tiers (layers)
 > - student in gridview => department in combobox
 
-
 ---
 
 > [!danger] to get All notes (`.md` files)
 >
 > - link: [https://github.com/Muhammad-Ashraf9/PD](https://github.com/Muhammad-Ashraf9/PD)
-
-
