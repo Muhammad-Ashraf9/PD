@@ -57,7 +57,7 @@
 > >
 > > - easy to use. (right-click on the project, then select `Entity Framework` => `Reverse Engineer`)
 
-````csharp
+
 
 > [!example] `TestADOContext` class
 >
