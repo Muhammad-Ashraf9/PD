@@ -883,13 +883,13 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .HasOne(e => e.Student)
         .WithMany(e => e.StudentCourses)
         .HasForeignKey(e => e.StdId)
-        .HasConstraintName("FK_StudentCourse_Student");
+
 
     modelBuilder.Entity<StudentCourse>()
         .HasOne(e => e.Course)
         .WithMany(e => e.StudentCourses)
         .HasForeignKey(e => e.CrsId)
-        .HasConstraintName("FK_StudentCourse_Course");
+
 
     base.OnModelCreating(modelBuilder);
 }
