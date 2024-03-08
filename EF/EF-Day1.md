@@ -262,7 +262,6 @@ class Program
 > >
 > > - then we have to change the properties names in the new file.
 
-> [!tip]
 
 ---
 
@@ -310,7 +309,7 @@ namespace DemoCodeFirst.Models
         //specify the column name is required.
         [Required]//used to specify that the column is required.
         [StringLength(50)]//used to specify the length of the column instead of using the max length.
-        public string DeptName { get; set; }
+	        public string DeptName { get; set; }
 
         // public int Capacity { get; set; }//required by default.
         public int? Capacity { get; set; }//not required.
@@ -320,9 +319,6 @@ namespace DemoCodeFirst.Models
 }
 ```
 
-```csharp
-
-```
 
 ```csharp
 //ITIContext.cs
