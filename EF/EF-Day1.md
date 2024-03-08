@@ -509,10 +509,10 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         entity.Property(e => e.Age).IsRequired(false);//age is not required.
 
         entity.Property(e => e.DeptNo).HasColumnName("DeptNo");
-        entity.HasOne(d => d.DeptNoNavigation)
-            .WithMany(p => p.Students)
-            .HasForeignKey(d => d.DeptNo)
-            .HasConstraintName("FK__Students__Department");
+        entity.HasOne(s => s.DeptNoNavigation)
+            .WithMany(d => d.Students)
+            .HasForeignKey(s => s.DeptNo)
+
     });
 }
 ```
