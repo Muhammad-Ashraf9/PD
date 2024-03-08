@@ -93,12 +93,11 @@ public class TestADOContext : DbContext
         {
             entity.HasKey(e => e.DeptNo);
             entity.Property(e => e.DeptNo)
-                .HasMaxLength(4)
-                .IsUnicode(false);
+                .HasMaxLength(4);
+
 
             entity.Property(e => e.DeptName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<Student>(entity =>
@@ -107,15 +106,15 @@ public class TestADOContext : DbContext
 
             entity.Property(e => e.StudentNo)
                 .HasMaxLength(4)
-                .IsUnicode(false);
+
 
             entity.Property(e => e.DeptNo)
                 .HasMaxLength(4)
-                .IsUnicode(false);
+
 
             entity.Property(e => e.StudentName)
                 .HasMaxLength(50)
-                .IsUnicode(false);
+
 
             entity.HasOne(d => d.DeptNoNavigation)
                 .WithMany(p => p.Students)
@@ -138,8 +137,8 @@ class Program
     {
         TestADOContext db = new TestADOContext();
         var depts = db.Departments.ToList();//immediate execution.
-        var depts = db.Departments;//deferred execution.
-        //sql query is executed when we iterate through the collection.
+        var depts = db.Departments;//deferred execution: sql query is executed when we iterate through the collection.
+        
         foreach (var dept in depts)
         {
 
@@ -154,7 +153,7 @@ class Program
         Console.WriteLine(depts.ToQueryString());//SELECT [d].[DeptNo], [d].[DeptName] FROM [Departments] AS [d] WHERE [d].[Capacity] > 100
 
 
-        //projectionj
+        //projection
         var depts = db.Departments.Where(d => d.Capacity > 100).Select(d => new { d.DeptNo, d.DeptName }).ToList();
         Console.WriteLine(depts.ToQueryString());//SELECT [d].[DeptNo], [d].[DeptName] FROM [Departments] AS [d] WHERE [d].[Capacity] > 100
 
