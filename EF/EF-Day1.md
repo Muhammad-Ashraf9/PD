@@ -458,9 +458,9 @@ class Program
 
 > [!danger] ways to create tables in the database from code.
 >
-> - conventions: easy to use, but we can't specify the column names and other properties.
-> - annotations: higher priority than conventions. we can specify the column names and other properties.
-> - fluent api: higher priority than conventions and annotations, we can do anything with the table.
+> - `Convention`: easy to use, but we can't specify the column names and other properties.
+> - `Annotation`: higher priority than conventions. we can specify the column names and other properties.
+> - `Fluent API`: higher priority than conventions and annotations, we can do anything with the table.
 
 ```csharp
 //Student.cs
