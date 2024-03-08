@@ -599,7 +599,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 > [!warning] relationships
 >
-> - relationships between entities is unidirectional.
+> - relationship between entities is unidirectional.
 > - but in code ==bidirectional==
 > - we use `navigation properties` to specify the relationship between entities.
 
@@ -969,7 +969,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 > - object on both sides of the relationship.
 > - if it is nullable then it is not required.
 > - foriegn key in one of the tables.
-> - if one end is nullable and the other is not, then the foreign key will be in the nullable end.
+> - if one end is nullable and the other is not, then the foreign key will be in the not nullable end.
 
 > [!tip] self relationship
 >
@@ -1024,6 +1024,7 @@ Public class Student
 > - will call `down` method of `m5` , `m4`, `m3`
 > - we can't remove migration as the migration could be dependent on other migrations.
 > - good practice as intial migration with no tables and then add the tables in the next migrations.
+> - good practice to name migration after biggest change in it.
 
 ---
 
