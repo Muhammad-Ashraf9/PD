@@ -474,14 +474,13 @@ public static void Main(string[] args)
         // var res2 = db.Students.Select(s => MyFunc(s.Name, s.Age).contains("a"));//error
 
         //we have to get all data from the database and then apply the function
-        // ToList 
+        // ToList
         var res2 = db.Students.ToList().Where(s => MyFunc(s.Name, s.Age).Contains("a"));
     }
 }
 ```
 
 > [!done] it is better to use ==server== side evaluation
-
 
 ```csharp
 //main method
@@ -499,13 +498,14 @@ public static void Main(string[] args)
     }
 }
 ```
->[!example] `sql server profiler`
+
+> [!example] `sql server profiler`
 >
->```sql
->SELECT TOP(1) [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name]
->FROM [Students] AS [s]
->WHERE [s].[Id] = 1
->```
+> ```sql
+> SELECT TOP(1) [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name]
+> FROM [Students] AS [s]
+> WHERE [s].[Id] = 1
+> ```
 
 ```csharp
 //main method
@@ -520,16 +520,18 @@ public static void Main(string[] args)
     }
 }
 ```
->[!example] `sql server profiler`
->
->```sql
->SELECT TOP(1) [s].[Id], [s].[Name], [d].[DeptName]
->FROM [Students] AS [s]
->INNER JOIN [Departments] AS [d] ON [s].[DeptId] = [d].[Id]
->WHERE [s].[Id] = 1
->```
 
->[!done] Eagar loading
+> [!example] `sql server profiler`
+>
+> ```sql
+> SELECT TOP(1) [s].[Id], [s].[Name], [d].[DeptName]
+> FROM [Students] AS [s]
+> INNER JOIN [Departments] AS [d] ON [s].[DeptId] = [d].[Id]
+> WHERE [s].[Id] = 1
+> ```
+
+> [!done] Eagar loading
+>
 > - `Include` method is used to load the related data
 
 ```csharp
@@ -549,16 +551,17 @@ public static void Main(string[] args)
 }
 ```
 
->[!example] `sql server profiler`
+> [!example] `sql server profiler`
 >
->```sql
->SELECT TOP(1) [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name], [d].[Id], [d].[DeptName]
->FROM [Students] AS [s]
->INNER JOIN [Departments] AS [d] ON [s].[DeptId] = [d].[Id]
->WHERE [s].[Id] = 1
->```
+> ```sql
+> SELECT TOP(1) [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name], [d].[Id], [d].[DeptName]
+> FROM [Students] AS [s]
+> INNER JOIN [Departments] AS [d] ON [s].[DeptId] = [d].[Id]
+> WHERE [s].[Id] = 1
+> ```
 
->[!done] we can include multiple navigation properties
+> [!done] we can include multiple navigation properties
+
 ```csharp
 //main method
 public static void Main(string[] args)
@@ -585,6 +588,362 @@ public static void Main(string[] args)
     }
 }
 ```
+
+---
+
+# Break
+
+---
+
+> [!done] `Reference` method
+>
+> - `Reference` method is used to load the related data
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        var res = db.Students.FirstOrDefault(s => s.Id == 1);
+        //res.Department; //null
+        //this will get department data and set it to navigation property of the student Department
+        db.Entry<Student>(res).Reference(s => s.Department).Load();
+        //res.Department; //{Demo.Department} department data
+        Console.WriteLine(res.Name);//Sharkawy
+        Console.WriteLine(res.DeptId);//1
+        Console.WriteLine(res.Department.DeptName);//PD
+
+        //if it was list => we use Collection
+        var res2 = db.Departments.FirstOrDefault(d => d.Id == 1);//only department data
+        Console.WriteLine(res2.DeptName);//PD
+
+        //res2.Students.Count;//0 as it is not loaded we use Eagar loading
+
+        var res2 = db.Departments.Include(d => d.Students).FirstOrDefault(d => d.Id == 1);//1 query to get department data and students data (inner join)
+        //
+        //or we can use Collection
+        db.Entry<Department>(res2).Collection(d => d.Students).Load();//2 queries
+        foreach (var student in res2.Students)
+        {
+            Console.WriteLine(student.Name);
+        }
+
+
+
+    }
+}
+```
+
+> [!example] `sql server profiler`
+>
+> - `db.Entry<Student>(res).Reference(s => s.Department).Load();`
+> - 2 requests to the database
+>
+> ```sql
+> SELECT TOP(1) [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name]
+> FROM [Students] AS [s]
+> WHERE [s].[Id] = 1
+> ```
+>
+> ```sql
+> SELECT [d].[Id], [d].[DeptName]
+> FROM [Departments] AS [d]
+> WHERE [d].[Id] = 1
+> ```
+
+> [!example] Lazy loading
+>
+> - to load the related data when it is needed without using `Include` or `Reference` methods
+> - to enable lazy loading we need to install `Microsoft.EntityFrameworkCore.Proxies` package
+> - navigation properties ==MUST== be `virtual`
+
+```csharp
+//ITIContext.cs
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.UseSqlServer("Server=.;Database=ITI-EF-Day2;integrated security=true;trust server certificate=true");
+    optionsBuilder.UseLazyLoadingProxies();//to enable lazy loading
+    base.OnConfiguring(optionsBuilder);
+}
+```
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        var res = db.Departments.FirstOrDefault(d => d.Id == 1);
+        Console.WriteLine(res.DeptName);//PD
+        Console.WriteLine(res.Students.Count);//2
+        foreach (var student in res.Students)
+        {
+            Console.WriteLine(student.Name);//Sharkawy  Super
+        }
+    }
+}
+```
+
+> [!done] Eagar loading vs Lazy loading
+>
+> - in web applications we use Eagar loading to get all the data in one request
+> - in desktop applications we use Lazy loading to get the data when it is needed
+
+> [!example] `sql server profiler`
+>
+> - `var res = db.Departments.FirstOrDefault(d => d.Id == 1);`
+> - 1 request to the database
+>
+> ```sql
+> SELECT TOP(1) [d].[Id], [d].[DeptName]
+> FROM [Departments] AS [d]
+> WHERE [d].[Id] = 1
+> ```
+>
+> - `foreach (var student in res.Students)`
+> - 1 request to the database
+>
+> ```sql
+> SELECT [s].[Id], [s].[Age], [s].[DeptId], [s].[Grade], [s].[Name]
+> FROM [Students] AS [s]
+> WHERE [s].[DeptId] = 1
+> ```
+
+> [!error] Navigation properties MUST be `virtual` with `UseLazyLoadingProxies`
+>
+> - if we have a navigation property without `virtual` keyword we will get an error
+> - as proxy class will not be able to override the navigation property
+
+> [!danger] configuration file
+>
+> - doing configuration for all entities in `OnModelCreating` method is not a good practice
+> - better to create a configuration file for each entity
+>   > [!done] `StudentConfiguration` class
+>   >
+>   > - inherit from `IEntityTypeConfiguration<Student>` interface
+>   > - override `Configure` method
+
+```csharp
+//StudentConfiguration.cs
+public class StudentConfiguration : IEntityTypeConfiguration<Student>
+{
+    public void Configure(EntityTypeBuilder<Student> builder)
+    {
+        builder.HasKey(s => s.Id);
+        builder.Property(s => s.Id).ValueGeneratedNever();//to prevent auto increment
+        builder.Property(s => s.Name).HasMaxLength(50).IsRequired();
+        builder.Property(s => s.Age).IsRequired();
+        builder.Property(s => s.Grade).HasMaxLength(1).IsRequired();
+
+        //relationship
+        builder.HasOne(s => s.Department)
+        .WithMany(d => d.Students)
+        .HasForeignKey(s => s.DeptId)
+        .IsRequired();//default is true => used to prevent null values
+
+    }
+}
+```
+
+```csharp
+//ITIContext.cs
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.ApplyConfiguration(new StudentConfiguration());
+}
+```
+
+> [!done] `DepartmentConfiguration` class
+>
+> - same as `StudentConfiguration` class
+
+```csharp
+//DepartmentConfiguration.cs
+public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
+{
+    public void Configure(EntityTypeBuilder<Department> builder)
+    {
+        builder.HasKey(d => d.DeptId);
+        builder.Property(d => d.DeptName).HasMaxLength(50).IsRequired();
+
+        //no need to configure the relationship as it is one to many relationship and it is configured in the StudentConfiguration
+    }
+}
+```
+
+```csharp
+//ITIContext.cs
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.ApplyConfiguration(new StudentConfiguration());
+    modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+}
+```
+
+> [!done] `ApplyingConfigurationFromAssembly` method
+>
+> - to apply all the configurations from the assembly
+
+```csharp
+//ITIContext.cs
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    //we use any one of the following  (any class from the assembly ,only one is enough)
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentConfiguration).Assembly);//this will apply all the configurations from the assembly
+    // modelBuilder.ApplyConfigurationsFromAssembly(typeof(Program).Assembly);
+    // modelBuilder.ApplyConfigurationsFromAssembly(typeof(DepartmentConfiguration).Assembly);
+}
+```
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+  Console.WriteLine(typeof(StudentConfiguration).Assembly.FullName);//ITI-EF-Day2, Version=
+    Console.WriteLine(typeof(Program).Assembly.FullName);//ITI-EF-Day2, Version=
+    Console.WriteLine(typeof(DepartmentConfiguration).Assembly.FullName);//ITI-EF-Day2, Version=
+
+    //all the configurations are in the same assembly
+}
+```
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        //ew have to use $  or string.Format
+        var res = db.Students.FromSql($"select * from students");//to execute raw sql query
+        foreach (var student in res)
+        {
+            Console.WriteLine(student.Name);//Sharkawy Super Ash
+        }
+        //we can use  where clause
+        var res2 = db.Students.FromSql($"select * from students where age > 20").ToList();
+        // we can use parameters
+        int age = 20;
+        var res3 = db.Students.FromSql($"select * from students where age > {age}").ToList();
+        Console.WriteLine(res3.ToQueryString());//SELECT * FROM students WHERE age > 20
+        foreach (var student in res3)
+        {
+            Console.WriteLine(student.Name);//Super Ash
+        }
+
+        //we can't specify the return columns
+        // var res2 = db.Students.FromSql($"select Name, Age from students").ToList();Error
+        //as Student class has more than 2 properties
+        //we  can use  db.Database.SqlQuery<StudentView>
+        //we can create StudentView class with Name and Age properties
+    }
+}
+```
+
+```csharp
+//StudentView.cs
+public class StudentView
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+```
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        var res2 = db.Database.SqlQuery<StudentView>($"select Name, Age from students").ToList();
+        foreach (var student in res2)
+        {
+            Console.WriteLine(student.Name);//Sharkawy Super Ash
+        }
+    }
+}
+```
+
+> [!done] Stored Procedure
+>
+> - `FromSql` method is used to execute stored procedure
+> - `GetStudents` stored procedure
+>
+> - to get all the students
+
+```sql
+CREATE PROCEDURE GetStudents
+AS
+BEGIN
+    SELECT * FROM Students
+END
+```
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        var res = db.Students.FromSql("exec GetStudents").ToList();
+        foreach (var student in res)
+        {
+            Console.WriteLine(student.Name);//Sharkawy Super Ash
+        }
+
+        //if GetStudents returns part of the columns
+        //we use db.Database.SqlQuery<StudentView>
+        var res2 = db.Database.SqlQuery<StudentView>("exec GetStudents").ToList();
+    }
+}
+```
+
+> [!example] creating a stored procedure
+>
+> - `add-migration` to create a migration file
+> - in migration file
+
+```csharp
+//migration file
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+    String sp = @"CREATE PROCEDURE GetStudents
+    AS
+    BEGIN
+        SELECT * FROM Students
+    END";
+    migrationBuilder.Sql(sp);//this will execute the command in sp variable and create the stored procedure
+}
+
+//we can use down method to drop the stored procedure
+protected override void Down(MigrationBuilder migrationBuilder)
+{
+    String sp = @"DROP PROCEDURE GetStudents";
+    migrationBuilder.Sql(sp);//this will execute the command in sp variable and drop the stored procedure
+}
+```
+
+> [!done] `update-database` to update the database and create the stored procedure
+
+>[!example] we can use `db.Database.SqlQuery` when all the columns are returned from the stored procedure
+> - and instead of using view `StudentView` we can use `Student` class
+> - `db.Database.SqlQuery<Student>("exec GetStudents").ToList();`
+
+```csharp
+//main method
+public static void Main(string[] args)
+{
+    using (ITIContext db = new ITIContext())
+    {
+        var res = db.Database.SqlQuery<Student>("exec GetStudents").ToList();
+        foreach (var student in res)
+        {
+            Console.WriteLine(student.Name);//Sharkawy Super Ash
+        }
+    }
+}
+```
+
 ---
 # Break
 ---
