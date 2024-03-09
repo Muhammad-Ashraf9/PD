@@ -925,7 +925,8 @@ protected override void Down(MigrationBuilder migrationBuilder)
 
 > [!done] `update-database` to update the database and create the stored procedure
 
->[!example] we can use `db.Database.SqlQuery` when all the columns are returned from the stored procedure
+> [!example] we can use `db.Database.SqlQuery` when all the columns are returned from the stored procedure
+>
 > - and instead of using view `StudentView` we can use `Student` class
 > - `db.Database.SqlQuery<Student>("exec GetStudents").ToList();`
 
@@ -945,5 +946,138 @@ public static void Main(string[] args)
 ```
 
 ---
+
 # Break
+
 ---
+
+### Web Application
+
+> [!example] Web application vs Desktop application vs Console application vs Class library
+>
+> - class library: is a project that contains classes and interfaces that can be used in other projects can't run by itself but can be used by other projects
+> - console application: is a project that can run by itself (`Main` method)
+> - Desktop application: is a project that can run by itself has a user interface (`Main` method) event driven programming (users has to update the application to get the latest version) (responsive)
+>   > [!tip] Web application
+>   >
+>   > - Web application: has a user interface, event driven programming, different from desktop application as it is hosted on a server and accessed by a client through a web browser (users don't have to update the application to get the latest version)
+>   > - not as responsive as desktop application
+>   > - on clicking => round trip to the server => get the response
+>   > - uses http protocol to communicate between the client and the server
+>   > - client sends a request to the server using http protocol
+>   > - server has to have web server to host the web application like Apache,...etc
+>   > - cross platform => Kester
+>   > - web server: manages the requests and responses to and from the client and the web application
+>   > - all of the client and server and application has to be connected to Network and has IP address
+>   > - server has to be static IP address
+>   > - client can be dynamic IP address(using DHCP)
+>   > - Server uses the domain name (instead of using the IP address) `https://www.google.com`
+>   > - client uses DNS to resolve the domain name to IP address
+>   > - server can be used to host multiple web applications
+>   > - every web application has to have a unique port number `https://www.google.com:443`, `https://www.google.com:80`
+>   > - we don't have to use the port number in the url as by default http uses port 80 and https uses port 443
+>   > - we specify what to do using the url `https://www.facebook.com/login` => login page
+>   > - on logging in => it will send a request has the username and password to the server => server will check the username and password => if it is correct => it will send the response to the client => if it is not correct => it will send the response to the client
+>   > - we use `#` to specify the section of the page `https://www.facebook.com/login#section1`
+>   > - we use `?` to specify the parameters `https://www.facebook.com/login?username=ash&password=123`
+
+> [!example]
+>
+> - request from client
+> - `Content-Length: 35` => the length of the request body
+> - `Accept: image/gif, image/jpeg, */*` => the type of the response that the client can accept
+> - `Accept-Encoding: gzip, deflate` => the type of the response encoding that the client can accept
+> - `Accept-Language: en-US` => the language that the client can accept
+> - `Host: www.google.com` => the domain name
+> - `User-Agent: Mozilla/4.0` => the browser that the client is using
+
+![](Pasted%20image%2020240309134137.png)
+
+> [!example]
+>
+> - response from server
+> - `HTTP/1.1 200 OK` => the status code of the response: 200 => OK, 404 => Not Found, 500 => Internal Server Error
+>   ![](Pasted%20image%2020240309134856.png)
+> - `Server: Apache/2.2.14 (Win32)` => the server that the web server is using
+> - `Last-Modified: Mon, 22 Feb 2010 13:26:52 GMT` => the last time the page was modified
+> - `Connection: close` => the connection between the client and the server will be closed after the response
+> - `Content-Type: text/html` => the type of the response : tells the client how to interpret the response
+>   ![](Pasted%20image%2020240309134603.png)
+
+> [!warning] HTTP protocol
+>
+> - URL is case insensitive => `https://www.google.com` is the same as `https://www.GOOGLE.com`
+> - stateless protocol: every request is independent from the previous request
+> - to maintain the state we use `cookies` and `sessions`
+
+> [!bug] `Netwrok` in chrome dev tools
+>
+> - when we request `https://www.google.com` => 45 requests
+> - 1 request to get the html page
+> - 1 request to get the images, css, js, ...
+
+> [!done] the response from the server has to be HTML, CSS, JS, images, ... to be displayed in the browser
+
+> [!warning] making web page dynamic to change the content of the page depending on data
+>
+> - 1 HTML page for all products for example (only change the data)
+>   > [!done] ASP => Active Server Pages
+>   >
+>   > - build HTML page with data from the server and send it to the client
+>   > - ==ASP.NET Core MVC==
+>   > - other approaches: to build the View in the client side using JS or JS frameworks like Angular, React, Vue.js
+>   > - and get the data from the server using API (REST, GraphQL, ...) as JSON for example
+
+---
+
+> [!warning] Before .NET (2002)
+>
+> - creating web applications :
+> - ASP => 1 page has the HTML and the server side code (VBScript)
+> - ASP.NET Web Forms => code behind (C# or VB.NET) and the HTML page separate => OOP can be used - drag and drop controls (server side controls) - transfered to HTML (rendering)
+>   > [!error] ASP.NET Web Forms
+>   >
+>   > - no unit testing
+>   > - maintainability is hard
+>   > - extensibility is hard
+>
+> > [!done] ASP.NET MVC
+> >
+> > - using the MVC design pattern => Model, View, Controller
+> > - Model: the data
+> > - View: the UI
+> > - Controller: the logic (the middle) => get the data from the model and send it to the view
+> >   ![](Pasted%20image%2020240309142016.png)
+
+> [!tip] Ruby on Rails
+>
+> - using the MVC design pattern creating twitter (2003)
+> - php laravel uses the MVC design pattern as well
+> - Java Spring
+> - Microsoft used the MVC design pattern in ASP.NET MVC (2009) => (.NET Framework) => Windows only
+> - ==ASP.NET Core MVC (2016)== => (.NET Core) => cross platform
+
+> [!warning] .NET Framework vs .NET Core
+>
+> - .NET Framework: Windows only, has all the features of .NET
+> - .NET Core: cross platform, install the features that we need
+
+# ASP.NET Core MVC
+
+> [!example] `Kestrel` web server
+>
+> - cross platform web server
+> - can be used alone or with another web server
+> - to use features in other web server
+>   ![](Pasted%20image%2020240309142016.png)
+> - Controller: receives the request `/students` or `/students/1`
+> - Model: has the data(Entities,validations,...), Controller gets the data from the model and send it to the view
+> - View: has the UI (HTML, CSS, JS, Razor, ...)
+> - Razor: is a view engine that is used to build the view in ASP.NET Core MVC (C# and HTML)
+> - Controller recieves the request then send to the model to get the data then send it to the view to build the UI then send it to the client as a response
+> - controllers: are classes like `StudentsController` that manage the requests and responses that inherit from `Controller` class from `Microsoft.AspNetCore.Mvc` namespace
+
+---
+### #lab-EF-Day2
+> - try eager loading, lazy loading, ...
+> - has to be done before tommorow's lab or will fail in EF
