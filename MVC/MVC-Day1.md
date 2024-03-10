@@ -368,17 +368,382 @@ namespace MVC.Controllers
           <!-- this will display it as text -->
           <h1>xyz@numbers.length</h1>
           <!-- so we have to explicitly tell the razor engine that this is csharp code -->
-          <h1>xyz(@numbers.length)</h1>
+          <h1>xyz@(numbers.length)</h1>
 
           @foreach(var number in numbers) {
           <li>@number</li>
           }
         </ul>
       </body>
-    </html>
+    </html></int
+  ></int
+>
 ```
 
 > [!warning] Razor Engine will convert the csharp code to only html code
 >
 > - `@age` will be converted to `20`
-> - no if statement will be in the html code
+> - no `if` statement will be rendered in the html code
+
+> [!tip] `_ViewImports.cshtml`
+>
+> - contains the namespaces that are used in the views
+> - if we want to use the namespace in the view, we have to add it to the `_ViewImports.cshtml` file
+> - no need to add the namespace in every view
+
+```html
+@using Demo.Models
+```
+
+> [!done] now we can use the `Student` class in the view
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+ @{
+    layout = null;
+    int age = 20;
+    string name = "Ahmed";
+    List<int> numbers = new List<int> { 10, 20, 30, 40, 50 };
+    Student student = new Student { Id = 1, Name = "Ahmed" };
+    List<Student> students = new List<Student>
+    {
+        new Student { Id = 1, Name = "Ahmed" },
+        new Student { Id = 2, Name = "Ali" },
+        new Student { Id = 3, Name = "Mohamed" }
+    };
+ }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+    <!--
+        to use the bootstrap
+     -->
+     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+
+     <!--
+        we can use the site.css file to override the bootstrap styles
+      -->
+     <link rel="stylesheet" href="~/css/site.css">
+  </head>
+  <body>
+
+<h1>
+    @student
+    <!--
+        this will call the ToString method of the object
+        so we need to override the ToString method in the Student class
+     -->
+</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in students)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.Name</td>
+            </tr>
+        }
+    </tbody>
+</html>
+```
+
+---
+
+> [!bug] return types of the action methods
+>
+> - `ViewResult` - to return the view `View()`
+> - `ContentResult` - to return the text `Content()`
+> - `JsonResult` - to return the json `Json()`
+> - `NotFoundResult` - to return the 404 not found `NotFound()`
+> - `FileContentResult` - to return the file `File()`
+> - but we can use `IActionResult` as the return type of the action method to return any of the above return types
+
+> [!done] `IActionResult`
+>
+> - `IActionResult` is the base class of all the return types
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public ViewResult Show()
+        {
+            return View();
+            // return "Welcome to Student Controller";//this will throw an exception
+            return Content("Welcome to Student Controller");//this will throw an exception
+        }
+        public ContentResult Display()
+        {
+            return Content("Welcome to Student Controller");
+        }
+        //to return either ViewResult or ContentResult
+        //IAcctionResult is the base class of all the return types
+        public IActionResult Show(int id)
+        {
+            Department department = new Department { Id = 1, Name = "IT" };
+            //no we can return either ViewResult or ContentResult or JsonResult or any other return type
+            if(id == 10)
+            {
+                return View();
+            }
+            else if(id==20)
+            {
+                return Content("Welcome to Student Controller");
+            }
+            else if(id==2)
+            {
+                return Json(department);
+            }
+            else
+            {
+                // file("path", "content-type", "file-name-on-the-browser")
+                return File("/images/studentNames.txt", "text/plain", "studentNames.txt");
+                // return File("/images/hussien.jpg", "image/jpg", "hussien.jpg");
+                // return File("/images/hussien.pdf", "application/pdf", "hussien.pdf");
+                //other MIME types like application/zip, image/jpg
+            }
+        }
+    }
+}
+```
+
+---
+
+> [!note] `IISEXPRESS`
+>
+> - MIME types (Multipurpose Internet Mail Extensions):
+>   - `.pdf` => application/pdf
+> - `.zip` => application/zip
+>   - `.jpg` => image/jpg
+
+> [!note] `NotFoundResult`
+>
+> - to return the 404 not found `NotFound()`
+> - `StatusCodeResult` - to return the status code `StatusCode( 404 )`
+> - `RedirectResult` - to redirect to another url `Redirect( url )`
+> -
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show(int id)
+        {
+
+                return NotFound();
+                // return StatusCode(404);
+                // return Redirect("https://www.google.com");
+                // return RedirectPermanent("https://www.google.com"); // redirect one time only and the browser will cache the url and will not send the request to the server
+
+            // we can create content result
+            return new ContentResult
+            {
+                Content = <h1>Welcome to Student Controller</h1>,
+                ContentType = "text/html",
+                StatusCode = 200
+            };
+
+            // IT'S BETTER TO USE jUST Content
+            return Content("<h1>Welcome to Student Controller</h1>", "text/html");
+
+
+            return new JsonResult(new { Id = 1, Name = "IT" });
+
+            return new ViewResult
+            {
+                ViewName = "Show",//this will search for the view with the name "Show" in the  /Views/Student/ folder
+            };
+        }
+    }
+}
+```
+
+---
+
+> [!tip] Send data from the controller to the view
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+            Student student = new Student { Id = 1, Name = "Huissen" };
+            return View(student);//this will send the student object to the view and the view will have the data of the student in the Model property
+        }
+    }
+}
+```
+
+> [!tip] now view has the data of the student in the `Model` property
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+@model Demo.Models.Student
+<!-- 
+    this will tell the razor engine the type of the model
+    so we can use the properties of the model in the view
+    for the compiler can throw an exception if the property doesn't exist
+  -->
+
+@{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+  </head>
+  <body>
+    <h1>
+      @Model
+      <!-- 
+            this will call the ToString method of the object
+            so we need to override the ToString method in the Student class
+         -->
+
+      @(Model + 1)
+      <!-- 
+            will wait for the runtime to throw an exception
+            how to fix this?
+            we can use directive @model to tell the razor engine the type of the model
+          -->
+    </h1>
+    <h2>
+      Id: @Model.Deptname
+      <!-- 
+            the compiler will not throw an exception if the property doesn't exist as it is  dynamic
+            but it will throw an exception in the runtime
+         -->
+    </h2>
+    <h2>Name: @Model.Name</h2>
+  </body>
+</html>
+```
+
+> [!done] ` @model Demo.Models.Student`
+>
+> - now Model has the type of the `Student` class
+> - ==strongly typed view==
+>   > [!error] the compiler will throw an exception if another type is passed to the view
+
+> [!tip] `if we passed a string to the view the view will consider it as the name of the view`
+>
+> - `we can pass the view name to the view method and also the model`
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+            Student student = new Student { Id = 1, Name = "Huissen" };
+            return View("Show", student);
+        }
+    }
+}
+```
+
+> [!warning] `we can pass only one model to the view`
+>
+> - when creating razor page it creates it with type of the model `<TModel>`
+> - `@model` directive is used to tell the razor engine the type of the model
+>   > [!done] we can creat `ViewModel` to pass multiple models to the view
+>   >
+>   > - we can create view model for action method
+>   > - name has to end with `ViewModel` like `StudentViewModel`
+
+```csharp
+//// ShowViewModel.cs
+using Demo.Models;
+
+namespace Demo.ViewModels
+{
+    public class ShowViewModel
+    {
+        public Student Student { get; set; }
+        public Department Department { get; set; }
+    }
+}
+```
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+            Student student = new Student { Id = 1, Name = "Huissen" };
+
+            Department department = new Department { Id = 1, Name = "IT" };
+            ShowViewModel viewModel = new ShowViewModel
+            {
+                Student = student,
+                Department = department
+            };
+
+            return View(viewModel);
+        }
+    }
+}
+```
+
+> [!done] we add using statement for the `Demo.ViewModels` namespace in the `_ViewImports.cshtml` file
+>
+> - now we can use the `ShowViewModel` in the view
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+@model Demo.ViewModels.ShowViewModel @{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+  </head>
+  <body>
+    <h1>@Model.Student.Name</h1>
+    <h2>@Model.Department.Name</h2>
+  </body>
+</html>
+```
