@@ -335,3 +335,50 @@ namespace MVC.Controllers
 # Break
 
 ---
+
+> [!tip] any code in `.cshtml` file is html code and any code in `@{}` is csharp code
+>
+> - `@{}` - used to write the csharp code inside the html
+> - `@` - used to write the csharp code inside the html
+
+```html
+<!-- Show.cshtml -->
+
+@{ layout = null; } @{ int age = 20; string name = "Ahmed"; List<int>
+  numbers = new List<int>
+    { 10, 20, 30, 40, 50 }; }
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Show</title>
+      </head>
+      <body>
+        <h1>Welcome to Show View</h1>
+        <!-- we use @ to use csharp code inside the html -->
+        <h2>Age: @age</h2>
+        @if(age > 18) {
+        <h2>Adult</h2>
+        } else {
+        <h2>@age is less than 18</h2>
+        }
+        <ul>
+          <!-- this will display the length of the list -->
+          <h1>@numbers.length</h1>
+          <!-- this will display it as text -->
+          <h1>xyz@numbers.length</h1>
+          <!-- so we have to explicitly tell the razor engine that this is csharp code -->
+          <h1>xyz(@numbers.length)</h1>
+
+          @foreach(var number in numbers) {
+          <li>@number</li>
+          }
+        </ul>
+      </body>
+    </html>
+```
+
+> [!warning] Razor Engine will convert the csharp code to only html code
+>
+> - `@age` will be converted to `20`
+> - no if statement will be in the html code
