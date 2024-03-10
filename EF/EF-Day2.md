@@ -660,6 +660,11 @@ public static void Main(string[] args)
 
 ```csharp
 //ITIContext.cs
+//has to include
+using Microsoft.EntityFrameworkCore.Proxies;
+
+
+/// OnConfiguring
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder.UseSqlServer("Server=.;Database=ITI-EF-Day2;integrated security=true;trust server certificate=true");
