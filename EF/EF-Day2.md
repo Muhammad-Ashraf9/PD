@@ -971,7 +971,7 @@ public static void Main(string[] args)
 >   > - uses http protocol to communicate between the client and the server
 >   > - client sends a request to the server using http protocol
 >   > - server has to have web server to host the web application like Apache,...etc
->   > - cross platform => Kester
+>   > - cross platform => Kestrel web server
 >   > - web server: manages the requests and responses to and from the client and the web application
 >   > - all of the client and server and application has to be connected to Network and has IP address
 >   > - server has to be static IP address
