@@ -747,3 +747,548 @@ namespace MVC.Controllers
   </body>
 </html>
 ```
+
+---
+
+> [!tip] `ViewData`
+>
+> - `ViewData` is a dictionary that is used to pass the data from the controller to the view
+> - `ViewData` is a property of the `Controller` class
+> - `ViewData["key"] = value` value can be any type(object)
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+
+            ViewData["Id"] = 1;
+            ViewData["Name"] = "Ahmed";
+            ViewData["Age"] = 20;
+            ViewData["obj"] = new Student { Id = 1, Name = "Ahmed" };
+            return View();
+        }
+    }
+}
+```
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+@{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+  </head>
+  <body>
+    <h1>@ViewData["Id"]</h1>
+    <h1>@ViewData["Name"]</h1>
+    <h3>@ViewData["Age"]</h3>
+
+    <h1>
+      @(ViewData["Age"] + 10)
+      <!-- 
+            error as the ViewData["Age"] is of type object and we can't add 10 to it
+            so we have to cast it to int
+         -->
+      @((int)ViewData["Age"] + 10)
+    </h1>
+    <h1>
+      <!-- 
+            same in the case of the object
+            we have to cast it to Student to access the properties
+         -->
+      @((Student)ViewData["obj"] as Student).Name
+    </h1>
+  </body>
+</html>
+```
+
+> [!done] `ViewBag`
+>
+> - `ViewBag` is a dynamic property that is used to pass the data from the controller to the view
+> - `ViewBag` is a wrapper around `ViewData`
+> - any data that is added to the `ViewBag` is added to the `ViewData` dictionary
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+            ViewBag.Id = 1;
+            ViewBag.Name = "Ahmed";
+            ViewBag.Age = 20;
+            ViewBag.obj = new Student { Id = 1, Name = "Ahmed" };
+            return View();
+        }
+    }
+}
+```
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+@{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+  </head>
+  <body>
+    <h1>@ViewBag.Id</h1>
+    <h1>@ViewBag.Name</h1>
+    <h3>@ViewBag.Age</h3>
+
+    <h1>
+      @(ViewBag.Age + 10)
+      <!-- 
+            error as the ViewBag.Age is of type object and we can't add 10 to it
+            so we have to cast it to int
+         -->
+      @((int)ViewBag.Age + 10)
+    </h1>
+    <h1>@((Student)ViewBag.obj as Student).Name</h1>
+  </body>
+</html>
+```
+
+```csharp
+// StudentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class StudentController : Controller
+    {
+        public IActionResult Show()
+        {
+            ViewBag.Id = 1;
+            ViewData["Id"] = 9;//this will override the value of the ViewBag
+            return View();
+    }
+}
+```
+
+```html
+<!--
+    Show.cshtml
+ -->
+
+@{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show</title>
+  </head>
+  <body>
+    <h1></h1>
+    <h1>@((int)ViewData["Id"]+ 10)</h1>
+    <!-- 
+        this will render 19
+     -->
+  </body>
+</html>
+```
+
+---
+
+> [!example] DeparmentController
+>
+> - create a new controller `DepartmentController`
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+    }
+}
+```
+
+> [!done] create a new view for the `Create` action method
+>
+> - `Add` => `View` => `Create` => `Add` - this will create the view file `Create.cshtml` in the `Views/Department` folder
+
+````html
+<!--
+    Create.cshtml
+ -->
+
+@{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create</title>
+  </head>
+  <body>
+    <h1>Create Department</h1>
+    <form action="/Department/Create" method="post">
+      <!--
+            if action is not specified, the form will send the request to the same url as the url of the page
+            absolute path: /Department/Create
+            relative path: Department/Create =>relative to the current url
+
+            to choose different action method, we use the action attribute in the form tag
+            action="/Department/Add"
+         -->
+      <div>
+        <label for="deptId">Id</label>
+        <input type="text" id="deptId" name="deptId" />
+      </div>
+      <div>
+        <label for="deptName">Name</label>
+        <input type="text" id="deptName" name="deptName" />
+      </div>
+      <div>
+        <label for="capacity">Capacity</label>
+        <input type="text" id="capacity" name="capacity" />
+      </div>
+
+      <button type="submit">Create</button>
+    </form>
+
+    ``` >[!]
+  </body>
+</html>
+````
+
+> [!warning] has to specify the name of the input fields so it can be sent to the server
+>
+> - `<input type="text" id="deptId" name="deptId" />`
+
+> [!example] `Add` action method
+>
+> - to receive the data from the query string, we use the `Request` object
+> - `Request.Query["key"]` - to get the value of the key from the query string
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Add()
+        {
+            int id = int.Parse(Request.Query["deptId"].ToString());
+            string name = Request.Query["deptName"].ToString();
+            int capacity = int.Parse(Request.Query["capacity"]);
+
+            Department department = new Department
+            {
+                DeptId = id,
+                DeptName = name,
+                Capacity = capacity
+            };
+
+
+            return View(department);
+        }
+    }
+}
+```
+
+```html
+<!--
+    Add.cshtml
+ -->
+
+@model Department @{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add</title>
+  </head>
+  <body>
+    <h1>Department Added</h1>
+    <h2>Id: @Model.DeptId</h2>
+    <h2>Name: @Model.DeptName</h2>
+    <h2>Capacity: @Model.Capacity</h2>
+  </body>
+</html>
+```
+
+> [!bug] adding `method="post"` to the form tag
+>
+> - this will throw exception as the `Add` action method is not configured to receive the data from the ==form== tag as it is configured to receive the data from the ==query== string
+>   > [!done] to receive the data from the ==form== , we use the `Request.Form["key"]` to get the value of the key from the form tag
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Add()
+        {
+            int id = int.Parse(Request.Form["deptId"].ToString());
+            string name = Request.Form["deptName"].ToString();
+            int capacity = int.Parse(Request.Form["capacity"]);
+
+            Department department = new Department
+            {
+                DeptId = id,
+                DeptName = name,
+                Capacity = capacity
+            };
+```
+
+> [!tip] `model binder`
+>
+> - `model binder` is a component of the ASP.NET Core that is used to bind the data from the request to the action method parameters
+> - `model binder` is used to bind the data from the query string, form tag, route data, and the request body to the action method parameters
+> - `model binder` is used to bind the data to the action method parameters based on the name of the parameter
+
+```csharp
+// DepartmentController.cs
+
+// to receive the data from the form tag, query string, route data, and the request body
+public IActionResult Add(int deptId, string deptName, int capacity)
+{
+    Department department = new Department
+    {
+        DeptId = deptId,
+        DeptName = deptName,
+        Capacity = capacity
+    };
+    return View(department);
+}
+```
+
+> [!tip] `model binder` can recieve the date as an object, filling the properties of the object with the data from the request
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Add(Department department)
+        {
+            return View(department);
+        }
+    }
+}
+```
+
+> [!bug] if we send different property name or was missing in the form , the model binder will not be able to bind the data to the object and the properties will be default values
+>
+> - like it is expecting the property name to be `deptId` but we send the property name `id` so the `deptId` will be 0
+
+> [!tip] how to recieve 2 objects of same type in the same action method
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Add(Department department1, Department department2)
+        {
+            return View(department);
+        }
+
+    }
+}
+```
+
+> [!done] how to send 2 objects of same type in the same action method from the form
+>
+> - we can use the object name in the form tag to send the data to specific object
+
+```html
+
+<!--
+    Create.cshtml
+ -->
+
+@model Department
+ @{ layout = null; }
+
+<!DOCTYPE html>
+<head>
+    <title>Create</title>
+</head>
+<body>
+    <h1>Create Department</h1>
+    <form action="/Department/Create" method="post">
+        <div>
+            <label for="deptId">Id</label>
+            <input type="text" id="deptId" name="department1.deptId" />
+        </div>
+        <div>
+            <label for="deptName">Name</label>
+            <input type="text" id="deptName" name="department1.deptName" />
+        </div>
+        <div>
+            <label for="capacity">Capacity</label>
+            <input type="text" id="capacity" name="department1.capacity" />
+        </div>
+        <div>
+            <label for="deptId">Id</label>
+            <input type="text" id="deptId" name="department2.deptId" />
+        </div>
+        <div>
+            <label for="deptName">Name</label>
+            <input type="text" id="deptName" name="department2.deptName" />
+        </div>
+        <div>
+            <label for="capacity">Capacity</label>
+            <input type="text" id="capacity" name="department2.capacity" />
+        </div>
+        <button type="submit">Create</button>
+    </form>
+
+</body>
+</html>
+```
+
+---
+
+> [!example] `model binder` has priorities to bind the data to the action method parameters
+>
+> - `form data` has the highest priority
+> - `route data` has the second priority
+> - `query string` has the third priority
+> - `request body` has the lowest priority
+
+```HTML
+<!--
+    Create.cshtml
+ -->
+
+@model Department @{ layout = null; }
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create</title>
+  </head>
+  <body>
+    <h1>Create Department</h1>
+    <form action="/Department/Create/10?Id=20" method="post">
+      <div>
+        <label for="Id">Id</label>
+        <input type="text" id="Id" name="Id" />
+      </div>
+      <div>
+        <label for="deptName">Name</label>
+        <input type="text" id="deptName" name="deptName" />
+      </div>
+      <div>
+        <label for="capacity">Capacity</label>
+        <input type="text" id="capacity" name="capacity" />
+      </div>
+
+      <button type="submit">Create</button>
+    </form>
+  </body>
+```
+
+> [!done] the Id value in this example will be the one in the form tag as it has the highest priority
+
+> [!tip] we can determine the priority of the data to be bound to the action method parameters
+
+```csharp
+// DepartmentController.cs
+using Microsoft.AspNetCore.Mvc;
+using Demo.Models;
+
+namespace MVC.Controllers
+{
+    public class DepartmentController : Controller
+    {
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Add([FromQuery] int Id, [FromRoute] int Age, [FromBody] string Name)
+        //this will get Id from the query string, Age from the route data, and Name from the request body
+        {
+            return View();
+        }
+    }
+}
+```
+
+> [!done] ways to bind the data to the action method parameters according to specific source
+>
+> - `FromQuery` - to bind the data from the query string
+> - `FromRoute` - to bind the data from the route data
+> - `FromBody` - to bind the data from the request body
+> - `FromForm` - to bind the data from the form tag
+
+---
+
+### Lab
+
+> [!tip] #### #lab
+> File sponsored by: Ahmed Al-Sharkawy
+> - action to add 2 numbers
+> - return all types of the return types(Content, View, Json, File, NotFound, Redirect)
+> - insert new department and display in the view
+> - send list of students from the controller to the view
+> - ViewData and ViewBag and ViewModel
