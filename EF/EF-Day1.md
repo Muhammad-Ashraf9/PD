@@ -93,12 +93,11 @@ public class TestADOContext : DbContext
         {
             entity.HasKey(e => e.DeptNo);
             entity.Property(e => e.DeptNo)
-                .HasMaxLength(4)
-                .IsUnicode(false);
+                .HasMaxLength(4);
+
 
             entity.Property(e => e.DeptName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<Student>(entity =>
@@ -107,15 +106,15 @@ public class TestADOContext : DbContext
 
             entity.Property(e => e.StudentNo)
                 .HasMaxLength(4)
-                .IsUnicode(false);
+
 
             entity.Property(e => e.DeptNo)
                 .HasMaxLength(4)
-                .IsUnicode(false);
+
 
             entity.Property(e => e.StudentName)
                 .HasMaxLength(50)
-                .IsUnicode(false);
+
 
             entity.HasOne(d => d.DeptNoNavigation)
                 .WithMany(p => p.Students)
@@ -138,8 +137,8 @@ class Program
     {
         TestADOContext db = new TestADOContext();
         var depts = db.Departments.ToList();//immediate execution.
-        var depts = db.Departments;//deferred execution.
-        //sql query is executed when we iterate through the collection.
+        var depts = db.Departments;//deferred execution: sql query is executed when we iterate through the collection.
+        
         foreach (var dept in depts)
         {
 
@@ -154,7 +153,7 @@ class Program
         Console.WriteLine(depts.ToQueryString());//SELECT [d].[DeptNo], [d].[DeptName] FROM [Departments] AS [d] WHERE [d].[Capacity] > 100
 
 
-        //projectionj
+        //projection
         var depts = db.Departments.Where(d => d.Capacity > 100).Select(d => new { d.DeptNo, d.DeptName }).ToList();
         Console.WriteLine(depts.ToQueryString());//SELECT [d].[DeptNo], [d].[DeptName] FROM [Departments] AS [d] WHERE [d].[Capacity] > 100
 
@@ -263,7 +262,6 @@ class Program
 > >
 > > - then we have to change the properties names in the new file.
 
-> [!tip]
 
 ---
 
@@ -310,7 +308,7 @@ namespace DemoCodeFirst.Models
 
         [Required]//used to specify that the column is required.
         [StringLength(50)]//used to specify the length of the column instead of using the max length.
-        public string DeptName { get; set; }
+	        public string DeptName { get; set; }
 
         // public int Capacity { get; set; }//required by default.
         public int? Capacity { get; set; }//not required.
@@ -320,9 +318,6 @@ namespace DemoCodeFirst.Models
 }
 ```
 
-```csharp
-
-```
 
 ```csharp
 //ITIContext.cs
@@ -462,9 +457,9 @@ class Program
 
 > [!danger] ways to create tables in the database from code.
 >
-> - conventions: easy to use, but we can't specify the column names and other properties.
-> - annotations: higher priority than conventions. we can specify the column names and other properties.
-> - fluent api: higher priority than conventions and annotations, we can do anything with the table.
+> - `Convention`: easy to use, but we can't specify the column names and other properties.
+> - `Annotation`: higher priority than conventions. we can specify the column names and other properties.
+> - `Fluent API`: higher priority than conventions and annotations, we can do anything with the table.
 
 ```csharp
 //Student.cs
@@ -513,10 +508,10 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         entity.Property(e => e.Age).IsRequired(false);//age is not required.
 
         entity.Property(e => e.DeptNo).HasColumnName("DeptNo");
-        entity.HasOne(d => d.DeptNoNavigation)
-            .WithMany(p => p.Students)
-            .HasForeignKey(d => d.DeptNo)
-            .HasConstraintName("FK__Students__Department");
+        entity.HasOne(s => s.DeptNoNavigation)
+            .WithMany(d => d.Students)
+            .HasForeignKey(s => s.DeptNo)
+
     });
 }
 ```
