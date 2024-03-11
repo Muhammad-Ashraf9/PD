@@ -24,6 +24,7 @@
 
 > [!warning] POCO class
 >
+> - Plain Old CLR Object
 > - class without any data annotation
 
 ```csharp
