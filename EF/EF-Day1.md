@@ -351,8 +351,6 @@ namespace DemoCodeFirst.Data
                 entity.Property(e => e.Status).HasColumnName("Status");
             });
 
-            mode
-
         }
 
 
