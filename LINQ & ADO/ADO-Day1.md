@@ -123,7 +123,7 @@ namespace Demo3
 >
 > - make sure to set the `Copy to Output Directory` property to `Copy always` for the appSettings.json file so that it is copied to the output directory when the application is built
 > - read the connection string from the appSettings.json file
-> - install Microsoft.Extensions.Configuration.Json , Microsoft.Extensions.Configuration
+> - install `Microsoft.Extensions.Configuration.Json `, `Microsoft.Extensions.Configuration`
 > - use the IConfiguration interface to read the connection string from the appSettings.json file
 
 ```csharp
