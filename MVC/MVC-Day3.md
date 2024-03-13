@@ -710,8 +710,7 @@ public IActionResult Edit(Department dept)
         <a href="/Department/Create" class="btn btn-primary">Create</a>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!example] we can delete deptId input element and use the parameter in url to send the department id to the `Edit` action method
@@ -732,7 +731,6 @@ public IActionResult Edit(Department dept,int id)
     db.Departments.Update(dept);
     db.SaveChanges();
     return RedirectToAction("Index");
-
 }
 ```
 
