@@ -172,7 +172,7 @@ public class DeptCoursesController : Controller
     {
         //get courses in dept
         var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id);
-        var courses = dept.Courses;
+        var courses = dept.Courses.ToList();
 
         //get all courses
         var allCourses = db.Courses.ToList();
@@ -211,8 +211,8 @@ public class DeptCoursesController : Controller
 
 @{ 
 
-	Department dept = ViewBag.Dept as Department; List<Course>
-	notInDept = ViewBag.NotInDept as List<Course>;
+	Department dept = ViewBag.Dept as Department; 
+	List<Course> notInDept = ViewBag.NotInDept as List<Course>;
 	SelectList coursesInDept = new SelectList(dept.Courses, "CrsId",
     "CrsName"); 
     SelectList coursesNotInDept = new SelectList(notInDept, "CrsId",
