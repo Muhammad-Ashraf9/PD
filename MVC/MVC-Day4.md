@@ -108,7 +108,7 @@ public class DeptCoursesController : Controller
 > [!warning] `ShowCoursesByDept` View
 >
 > - right click on the `ShowCoursesByDept` method and select `Add View`
-> -
+
 
 ```html
 @model IEnumerable<Department>
@@ -141,8 +141,7 @@ public class DeptCoursesController : Controller
         }
       </table>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!tip] add link in `Index` view to navigate to `ShowCoursesByDept` view
@@ -169,7 +168,7 @@ public class DeptCoursesController : Controller
 
     [HttpGet]
 
-    public IActionResult ShowCoursesByDept(int id)
+    public IActionResult ManageDeptCourses(int id)
     {
         //get courses in dept
         var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id);
@@ -210,11 +209,15 @@ public class DeptCoursesController : Controller
 
  -->
 
-@{ Department dept = ViewBag.Dept as Department; List<Course>
-  notInDept = ViewBag.NotInDept as List<Course
-    >; SelectList coursesInDept = new SelectList(dept.Courses, "CrsId",
-    "CrsName"); SelectList coursesNotInDept = new SelectList(notInDept, "CrsId",
-    "CrsName"); }
+@{ 
+
+	Department dept = ViewBag.Dept as Department; List<Course>
+	notInDept = ViewBag.NotInDept as List<Course>;
+	SelectList coursesInDept = new SelectList(dept.Courses, "CrsId",
+    "CrsName"); 
+    SelectList coursesNotInDept = new SelectList(notInDept, "CrsId",
+    "CrsName"); 
+}
 
     <!DOCTYPE html>
 
@@ -249,8 +252,8 @@ public class DeptCoursesController : Controller
 
           <input type="submit" value="Change" />
         </form>
-      </body></html></Course
-></Course>
+      </body>
+      </html>
 ```
 
 > [!done] `ManageDeptCourses` method
