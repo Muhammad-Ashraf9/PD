@@ -440,7 +440,7 @@ public class Department
 
 > [!tip] html helper
 >
-> - `@Html.TextBoxFor` to create the input element for the property (strongly typed view)j
+> - `@Html.TextBoxFor` to create the input element for the property (strongly typed view)
 > - `@Html.TextBox` to create the input element for the property (weakly typed view)
 > - `@Html.TextBoxFor(model => model.DeptId)` , `@Html.TextBox("DeptId")`
 > - there are alot more html helpers like `@Html.DropDownList` ,...etc
@@ -559,8 +559,7 @@ public IActionResult Details(int? id)
         <a href="/Department/Create" class="btn btn-primary">Create</a>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!bug] we can send multiple parameters to the action method using `asp-route-` attribute
