@@ -568,7 +568,6 @@ public class Department
 
 > [!done] using `AJAX` to display department details in the `Index` view
 >
-> - on sharakawy
 > - create Method in the `Department` controller to get the department details `DetailsAjax`
 >   include the `jquery` library in the view before the script
 
