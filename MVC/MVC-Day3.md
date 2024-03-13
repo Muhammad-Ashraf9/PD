@@ -172,8 +172,7 @@ namespace Demo1.Controllers
         </table>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!bug] `app.MapControllerRoute` to map the controller to the route
