@@ -99,7 +99,7 @@ public class DeptCoursesController : Controller
     ITIContext db = new ITIContext();//we can use dependency injection to inject the context into the controller
     public IActionResult ShowCoursesByDept(int id)
     {
-        var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id).Courses;
+        var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id);
         return View(dept);
     }
 }
