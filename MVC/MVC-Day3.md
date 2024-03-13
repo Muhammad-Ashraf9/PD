@@ -104,7 +104,7 @@ namespace Demo1.Controllers
 
         public IActionResult Index()
         {
-            var departments = _db.Departments.ToList();
+            var departments = db.Departments.ToList();
             return View(departments);
         }
     }
