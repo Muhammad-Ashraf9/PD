@@ -98,7 +98,7 @@ public class DeptCoursesController : Controller
     ITIContext db = new ITIContext();//we can use dependency injection to inject the context into the controller
     public IActionResult ShowCoursesByDept(int id)
     {
-        var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id).Courses;
+        var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id);
         return View(dept);
     }
 }
@@ -140,8 +140,7 @@ public class DeptCoursesController : Controller
         }
       </table>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!tip] add link in `Index` view to navigate to `ShowCoursesByDept` view
@@ -168,11 +167,11 @@ public class DeptCoursesController : Controller
 
     [HttpGet]
 
-    public IActionResult ShowCoursesByDept(int id)
+    public IActionResult ManageDeptCourses(int id)
     {
         //get courses in dept
         var dept = db.Departments.Include(d => d.Courses).FirstOrDefault(d => d.DeptId == id);
-        var courses = dept.Courses;
+        var courses = dept.Courses.ToList();
 
         //get all courses
         var allCourses = db.Courses.ToList();
@@ -209,11 +208,15 @@ public class DeptCoursesController : Controller
 
  -->
 
-@{ Department dept = ViewBag.Dept as Department; List<Course>
-  notInDept = ViewBag.NotInDept as List<Course
-    >; SelectList coursesInDept = new SelectList(dept.Courses, "CrsId",
-    "CrsName"); SelectList coursesNotInDept = new SelectList(notInDept, "CrsId",
-    "CrsName"); }
+@{ 
+
+	Department dept = ViewBag.Dept as Department; 
+	List<Course> notInDept = ViewBag.NotInDept as List<Course>;
+	SelectList coursesInDept = new SelectList(dept.Courses, "CrsId",
+    "CrsName"); 
+    SelectList coursesNotInDept = new SelectList(notInDept, "CrsId",
+    "CrsName"); 
+}
 
     <!DOCTYPE html>
 
@@ -248,8 +251,8 @@ public class DeptCoursesController : Controller
 
           <input type="submit" value="Change" />
         </form>
-      </body></html></Course
-></Course>
+      </body>
+      </html>
 ```
 
 > [!done] `ManageDeptCourses` method
@@ -565,7 +568,6 @@ public class Department
 
 > [!done] using `AJAX` to display department details in the `Index` view
 >
-> - on sharakawy
 > - create Method in the `Department` controller to get the department details `DetailsAjax`
 >   include the `jquery` library in the view before the script
 

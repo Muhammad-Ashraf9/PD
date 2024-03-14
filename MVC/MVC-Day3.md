@@ -104,7 +104,7 @@ namespace Demo1.Controllers
 
         public IActionResult Index()
         {
-            var departments = _db.Departments.ToList();
+            var departments = db.Departments.ToList();
             return View(departments);
         }
     }
@@ -172,8 +172,7 @@ namespace Demo1.Controllers
         </table>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!bug] `app.MapControllerRoute` to map the controller to the route
@@ -441,7 +440,7 @@ public class Department
 
 > [!tip] html helper
 >
-> - `@Html.TextBoxFor` to create the input element for the property (strongly typed view)j
+> - `@Html.TextBoxFor` to create the input element for the property (strongly typed view)
 > - `@Html.TextBox` to create the input element for the property (weakly typed view)
 > - `@Html.TextBoxFor(model => model.DeptId)` , `@Html.TextBox("DeptId")`
 > - there are alot more html helpers like `@Html.DropDownList` ,...etc
@@ -560,8 +559,7 @@ public IActionResult Details(int? id)
         <a href="/Department/Create" class="btn btn-primary">Create</a>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!bug] we can send multiple parameters to the action method using `asp-route-` attribute
@@ -712,8 +710,7 @@ public IActionResult Edit(Department dept)
         <a href="/Department/Create" class="btn btn-primary">Create</a>
       </div>
     </body>
-  </html></Department
->
+  </html>
 ```
 
 > [!example] we can delete deptId input element and use the parameter in url to send the department id to the `Edit` action method
@@ -734,7 +731,6 @@ public IActionResult Edit(Department dept,int id)
     db.Departments.Update(dept);
     db.SaveChanges();
     return RedirectToAction("Index");
-
 }
 ```
 
