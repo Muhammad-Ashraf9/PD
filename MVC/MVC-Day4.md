@@ -1,4 +1,3 @@
-### Many To Many Relationships
 
 > [!tip] Course
 >
@@ -108,7 +107,7 @@ public class DeptCoursesController : Controller
 > [!warning] `ShowCoursesByDept` View
 >
 > - right click on the `ShowCoursesByDept` method and select `Add View`
-> -
+> 
 
 ```html
 @model IEnumerable<Department>
@@ -363,7 +362,7 @@ public class StudentCoursesController : Controller
 //Controllers/StudentCoursesController.cs
 [HttpPost]
 
-public IActionResult UpdateStudentDegrees(int deptId, int crsId, Dictionary<int, int> stdDegree)
+public IActionResult UpdateStudentDegrees(int deptId, int crsId, Dictionary<int, int> degrees)
 {
    foreach (var item in stdDegree)
    {
@@ -496,6 +495,7 @@ public IActionResult Create(Student student)
 > [!warning] we can change color of the validation message
 >
 > - by adding class `data-valmsg-for` to css file
+> - or by giving class to span
 
 ```css
 /* wwwroot/css/site.css */
