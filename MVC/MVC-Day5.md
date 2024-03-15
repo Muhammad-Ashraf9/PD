@@ -669,6 +669,21 @@ serviceLifetime: ServiceLifetime.Scoped);//get the connection string from the ap
 //other options: Singleton, Transient
 ```
 
+>[!error] 
+> change in lifetime  cause error
+ ```cs
+builder.Services.AddDbContext<ITIContext>();
+    builder.Services.AddSingleton<ICourseRepo, CourseRepo>(); 
+```
+ >[!done]
+ >
+ ```cs
+       builder.Services.AddDbContext<ITIContext>();
+
+      builder.Services.AddTransient<ICourseRepo, CourseRepo>();
+```
+
+
 ---
 
 # Lab
