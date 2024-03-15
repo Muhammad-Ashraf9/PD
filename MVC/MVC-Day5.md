@@ -632,8 +632,7 @@ public class StudentController : Controller
 ```
 
 > [!example] `ITIContext` send configuration to `ITIContext` in the injector
->
-> -
+
 
 ```csharp
 //ITIContext.cs
