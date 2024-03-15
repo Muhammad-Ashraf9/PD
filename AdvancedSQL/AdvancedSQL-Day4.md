@@ -232,7 +232,7 @@ getValues 'age', 'student';
 > - automatic firing
 > - implicit code
 
-> [!tip] any creadted object is defined in one of these levels (DB, schema, object[ table ])
+> [!tip] any created object is defined in one of these levels (DB, schema, object[ table ])
 >
 > - trigger can be defined in any of these levels
 
