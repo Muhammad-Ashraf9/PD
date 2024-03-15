@@ -670,13 +670,14 @@ serviceLifetime: ServiceLifetime.Scoped);//get the connection string from the ap
 ```
 
 >[!error] 
-> change in lifetime  cause error
+>[stackoverflow: lifetime type mismatch](https://stackoverflow.com/questions/59328439/error-while-validating-the-service-descriptor-servicetype-inewsrepository-life])
  ```cs
 builder.Services.AddDbContext<ITIContext>();
     builder.Services.AddSingleton<ICourseRepo, CourseRepo>(); 
 ```
- >[!done]
- >
+ >[!done] 
+ > - Since DbContext is scoped by default, you need to create scope to access it. It also allows you to handle its lifetime correctly - otherwise you'd keep instance of DbContext for a long time and this is not recommended.
+ > - [stackoverflow: use-dbcontext](https://stackoverflow.com/questions/36332239/use-dbcontext-in-asp-net-singleton-injected-class)
  ```cs
        builder.Services.AddDbContext<ITIContext>();
 
