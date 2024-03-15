@@ -77,7 +77,8 @@ git pull
 	   git checkout -b <branch-name>
 	```
 
-1. **Make changes to the files**
+1. **Make changes to the files** 
+	- use similar [Callouts Formatting](Callouts%20Formatting.md)
 1. **Add the changes to staging area**
 	
 	```bash
