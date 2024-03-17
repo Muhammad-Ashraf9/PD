@@ -172,10 +172,10 @@
 > - add `@RenderBody` to the layout to render the body of the page.
 > - add `@RenderSection` to the layout to render the scripts of the page.
 
-
 ---
 
->[!done] to create a new View from action in the controller.
+> [!done] to create a new View from action in the controller.
+>
 > - we can right click on the action and select `Add View`.
 > - we can select different Layout for the view.
 > - we can select the model for the view.
@@ -184,30 +184,28 @@
 
 ```html
 <!--  Student/Add.cshtml -->
-@{
-    Layout = "~/Views/Shared/_Layout3.cshtml";
-    ViewBag.Title = "Add";
-}
-
+@{ Layout = "~/Views/Shared/_Layout3.cshtml"; ViewBag.Title = "Add"; }
 ```
 
 > [!example] send file to the server.
+>
 > - student can upload his photo.
-> > [!done] 
-> > - form `method` to `post`.
-> > - `enctype` to `multipart/form-data`.
-> > - in controller, we can use `IFormFile` to get the file.
+>   > [!done]
+>   >
+>   > - form `method` to `post`.
+>   > - `enctype` to `multipart/form-data`.
+>   > - in controller, we can use `IFormFile` to get the file.
 
 ```html
 <!--  Student/Add.cshtml -->
 <form method="post" enctype="multipart/form-data">
-    <input type="file" name="stdImg" />
-    <input asp-for="Name" />
-    <input asp-for="Age" />
-    <input asp-for="Email" />
-    <select asp-for="DepartmentId" asp-items="ViewBag.Departments"></select>
+  <input type="file" name="stdImg" />
+  <input asp-for="Name" />
+  <input asp-for="Age" />
+  <input asp-for="Email" />
+  <select asp-for="DepartmentId" asp-items="ViewBag.Departments"></select>
 
-    <input type="submit" value="Save" />
+  <input type="submit" value="Save" />
 </form>
 ```
 
@@ -232,11 +230,215 @@ public async Task<IActionResult> Add(Student student, IFormFile stdImg)
 
 //    int await = 20;
    //on using async
-//    int await = 10;//this will throw an error 
+//    int await = 10;//this will throw an error
     return RedirectToAction("Index");
 }
 ```
 
 ---
+
 # Break
+
 ---
+
+> [!tip] add student stdImageName to the student model.
+
+```csharp
+//  Student.cs
+public string? stdImageName { get; set; }
+//we use ? to make it nullable we can add student without image.
+```
+
+```html
+<!--  Student/Create.cshtml -->
+<input type="file" name="stdImg" />
+```
+
+```csharp
+//  StudentRepo.cs
+public interface IStudentRepo
+{
+    void UpdateStudentImage(string stdImageName, int stdId);
+}
+public class StudentRepo : IStudentRepo
+{
+    public void UpdateStudentImage(string stdImageName, int stdId)
+    {
+        var std = db.Students.FirstOrDefault(s => s.Id == stdId);
+        std.stdImageName = stdImageName;
+        db.SaveChanges();
+    }
+}
+```
+
+```csharp
+//  StudentController.cs
+[HttpPost]
+public async Task<IActionResult> Create(Student student, IFormFile stdImg)
+{
+    if (ModelState.IsValid)
+    {
+        StudentRepo.Add(student);
+            string fileName = $"{student.Id}.{stdImg.FileName.Split(".").Last()}";
+            using (var fs = new FileStream("wwwroot/images/" + fileName, FileMode.CreateNew))
+            {
+                await stdImg.CopyToAsync(fs);
+                student.stdImageName = fileName;
+                StudentRepo.UpdateStudentImage(fileName, student.Id);
+            }
+            //or we can just add the student after updating the image.
+        return RedirectToAction("Index");
+    }
+    return View(student);
+
+
+}
+```
+
+> [!tip] `HttpContext`
+>
+> - every request creates a new `HttpContext`.
+> - it contains the request and the response
+> - we can add
+
+> [!example] Middlewares
+> ![Middlewares](Pasted%20image%2020240317114430.png)
+> - we can use middlewares to add functionality to the request and the response.
+> - each middleware sends `HttpContext` to the next middleware.
+> - on response, each middleware sends `HttpContext` to the previous middleware (processing the response).
+> - any middleware can stop this flow and send the response to the client. (short-circuiting)
+
+> [!example]
+>
+> - short-circuiting using `app.Run` (last middleware).
+> - `RequestDelegate` is a delegate that takes `HttpContext` and returns `Task`.
+
+```csharp
+//  Program.cs
+var app = builder.Build();
+app.Run(async context =>
+{
+    // we can get request information from the context.
+    Console.WriteLine(context.Request.Path);//this will print the path of the request.
+    //we can write to the response.
+    await context.Response.WriteAsync("First Middleware"); //this will stop the flow and send the response to the client.
+});
+
+
+
+```
+
+>[!bug] add another middleware.
+```csharp
+//  Program.cs
+app.Run(async context =>
+{
+.
+    await context.Response.WriteAsync("First Middleware"); //this will stop the flow and send the response to the client.
+});
+app.Run(async context =>
+{
+    
+    await context.Response.WriteAsync("Second Middleware"); //won't be executed as the first middleware will stop the flow.
+});
+```
+>[!done] to add another middleware we have to use `app.Use` instead of `app.Run`.
+```csharp
+//  Program.cs
+app.Use(async (context, next) =>
+{
+    await context.Response.WriteAsync("First Middleware\n");
+    await next.Invoke();//this will send the context to the next middleware.
+    await context.Response.WriteAsync("inside first middleware after return from second middleware next");
+});
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Second Middleware");//
+});
+
+//result:
+//First Middleware
+//Second Middleware
+//inside first middleware after return from second middleware next
+```
+>[!warning] `App.Map` to map the middleware to specific path.
+> - ==SEARCH==: `App.Map` 
+
+
+>[!tip] `app.UseExceptionHandler` to handle exceptions.
+> - we can use it to handle exceptions in the application.
+> - will show the detailed error page 
+> - has to be the ==first== middleware in the pipeline.
+> - as it will wait for result of all middlewares when the response is sent.
+
+```csharp
+//  Program.cs
+if(!app.Environment.IsDevelopment())
+{
+app.UseExceptionHandler("/Home/Error");
+}
+```
+
+>[!tip] `ASPNETCORE_ENVIRONMENT`
+> - Development: will show the detailed error page.
+> - Production: will show the generic error page.
+
+
+>[!warning] `app.UseStaticFiles` to serve static files.
+> - we have to add it before `app.UseRouting` to serve the static files.
+> - static files: images, css, js, ... etc. 
+> - all files in `wwwroot` will be served.
+> - we can configure it by passing `StaticFileOptions` to the method.
+
+```csharp
+//  Program.cs
+app.UseStaticFiles();
+```
+>[!done] we can use `app.UseRouting` to route the request to the correct controller and action.
+> - it will use the routing to find the correct controller and action.
+> - as the next middleware needs to know the controller and action to execute. `app.UseAuthorization` 
+
+>[!example] `app.UseAuthorization` to authorize the request.
+> - it will check if the user is authorized to access the resource.
+
+>[!done] `app.MapControllerRoute` 
+> - create object of the Controller.
+> - from the object, call the action.
+
+>[!tip] and now the pipeline is ready to handle the request.
+```csharp
+//  Program.cs
+//main  method
+
+  public static void Main(string[] args)
+  {
+      var builder = WebApplication.CreateBuilder(args);
+
+      var app = builder.Build();
+
+      // Configure the HTTP request pipeline.
+      if (!app.Environment.IsDevelopment())
+      {
+          app.UseExceptionHandler("/Home/Error");
+      
+      }
+      app.UseStaticFiles();
+
+      app.UseRouting();
+
+      app.UseAuthorization();
+
+      app.MapControllerRoute(
+          name: "default",
+          pattern: "{controller=Home}/{action=Index}/{id?}");
+
+      app.Run();
+  }
+```
+----
+
+## Lab
+
+>[!tip] #lab
+> - make the layout for the application.
+> - upload student image.
