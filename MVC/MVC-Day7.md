@@ -612,7 +612,6 @@ public static void Main(string[] args)
 > - when the user is not authenticated, the user will be redirected to the login page with the return url `?returnUrl=/Department/Create`
 > - after the user is authenticated, the user will be redirected to the return url
 
-````csharp
 
 
 >[!tip] create a login page
