@@ -58,32 +58,51 @@ git pull
 
 ## To Contribute
 
-1.  Create a new branch
+1. **Fork the repository** 
+	- Navigate to the repository on GitHub 
+	- Click on the `Fork` button in the top-right corner to create a copy in your GitHub account 
+1. **Clone your forked repository** 
+	- Copy the URL of your forked repository 
+	- Open your terminal and navigate to the desired directory 
+	- Run the following command: 
+	
+	```bash  
+	git clone <url-of-your-forked-repository>   
+	``` 
+	
 
-```bash
-   git checkout -b <branch-name>
-```
+1.  **Create a new branch**
+	
+	```bash
+	   git checkout -b <branch-name>
+	```
 
-2. Make changes to the files
-3. Add the changes to staging area
+1. **Make changes to the files** 
+	- use similar [Callouts Formatting](Callouts%20Formatting.md)
+1. **Add the changes to staging area**
+	
+	```bash
+	   git add .
+	```
 
-```bash
-   git add .
-```
+1. **Commit the changes**
+	
+	```bash
+	   git commit -m "commit message"
+	```
 
-4. Commit the changes
+1. **Push the changes to remote repository**
+	
+	```bash
+	   git push origin <branch-name>
+	```
 
-```bash
-   git commit -m "commit message"
-```
-
-5. Push the changes to remote repository
-
-```bash
-   git push origin <branch-name>
-```
-
-6. Create a pull request from `Github` website
+1. **Create a pull request from `Github` website**
+	- Navigate to the **original** repository on GitHub
+	- You should see a prompt to create a **pull request** from your forked repository
+	- Click on the **"Create Pull Request"** button and follow the instructions to create a **PR**
+	- Your **PR** will be reviewed
+	- Once approved, your **PR** will be merged into the main branch
 
 ---
 ### Contributors
