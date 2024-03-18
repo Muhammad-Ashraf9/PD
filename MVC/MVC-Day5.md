@@ -12,7 +12,6 @@ public IActionResult Create(Student student)
     if (ModelState.IsValid)
     {
         db.Students.Add(student);
-
         db.SaveChanges();
         return RedirectToAction("Index");
     }
@@ -125,7 +124,7 @@ public class StudentRepo
         catch (Exception ex)
         {
             throw;//this will throw the exception to the controller to specify the same line that caused the exception
-            //instead of throwing a new exception
+            //instead of throwing a new exception(it will be the line that thrown exception instead of the line caused it)
             // throw new Exception("Error in adding student");
             //we can throw exception inside exception
             throw new Exception("Error in adding student", ex);
@@ -272,14 +271,14 @@ public class DeptMockRepo
 > 1. Inversion of Control (IoC)
 >
 > - make Factory class to create the repository and return object from it instead of creating it in the controller(we can make the factory ==singleton==: create only one instance of the repository or ==Transient==: create new instance every time it is called)
-> - to solve the problem of returning different objects types we use Dependency Injection Principle (DIP)
+> - to solve the problem of returning different objects types we use Dependency Inversion Principle (DIP)
 >
-> 2. Dependency Injection Principle (DIP)
+> 2. Dependency Inversion Principle (DIP)
 >
 > - make the repository interface and make the repository class implement it
 > - now Factory class can return object of the interface type
 
-> [!example] Dependency Injection Principle (DIP)
+> [!example] Dependency Inversion Principle (DIP)
 >
 > - High-level modules should not depend on low-level modules. Both should depend on ==abstractions==.
 > - Abstractions should not depend on details. Details should depend on abstractions.
@@ -472,13 +471,9 @@ public class TestController : Controller
 >
 > - Case:`AddScoped` : create new instance every time the request is created(same request will have the same instance)
 
-> - ```csharp
->     //Program.cs
->   builder.Services.AddScoped<IStudentRepo, StudentRepo>();
->   ```
-
 ```csharp
-
+>   //Program.cs
+>   builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 ```
 
 > [!done] `TestController` to test the repository methods
@@ -632,8 +627,6 @@ public class StudentController : Controller
 ```
 
 > [!example] `ITIContext` send configuration to `ITIContext` in the injector
->
-> -
 
 ```csharp
 //ITIContext.cs
