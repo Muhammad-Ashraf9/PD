@@ -769,7 +769,7 @@ public IActionResult Create()
 
 > [!bug] now if the user is authenticated but does not have the role "Admin" the user will not be able to access the `Create` action method
 >
-> -
+
 
 > [!tip] add claim with the role to the user
 
