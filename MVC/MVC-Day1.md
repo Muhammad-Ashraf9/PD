@@ -159,7 +159,7 @@ namespace MVC.Controllers
         {
             return "Welcome to Student Controller";
         }
-        public int Add(x)
+        public int Add(int x)
         {
             return x + 10 ;
             // url localhost:5098/Student/Add?x=10
@@ -472,7 +472,7 @@ namespace MVC.Controllers
 
 > [!done] `IActionResult`
 >
-> - `IActionResult` is the base class of all the return types
+> - `IActionResult` is the base interface of all the return types
 
 ```csharp
 // StudentController.cs
@@ -537,7 +537,7 @@ namespace MVC.Controllers
 > - to return the 404 not found `NotFound()`
 > - `StatusCodeResult` - to return the status code `StatusCode( 404 )`
 > - `RedirectResult` - to redirect to another url `Redirect( url )`
-> -
+>
 
 ```csharp
 // StudentController.cs
@@ -680,7 +680,7 @@ namespace MVC.Controllers
 >
 > - when creating razor page it creates it with type of the model `<TModel>`
 > - `@model` directive is used to tell the razor engine the type of the model
->   > [!done] we can creat `ViewModel` to pass multiple models to the view
+>   > [!done] we can create `ViewModel` to pass multiple models to the view
 >   >
 >   > - we can create view model for action method
 >   > - name has to end with `ViewModel` like `StudentViewModel`
@@ -1101,7 +1101,7 @@ public IActionResult Add(int deptId, string deptName, int capacity)
 }
 ```
 
-> [!tip] `model binder` can recieve the date as an object, filling the properties of the object with the data from the request
+> [!tip] `model binder` can recieve the data as an object, filling the properties of the object with the data from the request
 
 ```csharp
 // DepartmentController.cs

@@ -80,7 +80,7 @@ insert into #temp (id, name) values (next value for mySequence, 'Ahmed') -- 4
 >
 > - 1 primary server and multiple secondary servers
 > - primary server sends the transaction log to secondary servers
-> - useing jobs:
+> - using jobs:
 > - Job Full backup, Job Transaction log
 >   -used shared storage to store the backup files
 > - secondary servers has copy jobs to copy the backup files from shared storage to local storage

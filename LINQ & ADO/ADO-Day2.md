@@ -1,3 +1,4 @@
+
 ### Transactions
 
 ```csharp
@@ -183,7 +184,7 @@ public partial class Form1 : Form
 }
 ```
 
-> [!warning] selectedItem vs selectedValue vs selectedIndex
+> [!warning] selectedItem vs selectedValue vs selectedIndex vs SelectedText
 >
 > - SelectedIndex returns the index of the selected item in the list box
 > - SelectedText returns the text of the selected item in the list box
@@ -567,7 +568,7 @@ namespace DataBusinessLayer
 {
     public class DepartmentList : List<Department>
     {
-        //overriding Add (optional)
+        //overriding Add
         public void Add(Department department)
         {
             base.Add(department);
@@ -583,7 +584,11 @@ namespace DataBusinessLayer
 {
     public class StudentList : List<Student>
     {
-            
+        //overriding Add
+        public void Add(Student student)
+        {
+            base.Add(student);
+        }
     }
 }
 ```

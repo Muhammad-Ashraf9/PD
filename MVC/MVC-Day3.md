@@ -240,8 +240,8 @@ public IActionResult Create()
 
 > [!danger] `Add` action method to add a new department to the database
 >
-> - depend on `modal binder` to bind the form data to the `Department` object
-> - more on `modal binder` in the previous session [MVC-Day1](MVC-Day1.md)
+> - depend on `model binder` to bind the form data to the `Department` object
+> - more on `model binder` in the previous session [MVC-Day1](MVC-Day1.md)
 
 ```csharp
 //DepartmentController.cs
@@ -364,7 +364,7 @@ public IActionResult Create(Department dept)
 
 > [!bug] `name` attribute in the form has to match the property name in the `Department` class
 >
-> - otherwise, the `modal binder` will not be able to bind the form data to the `Department` object
+> - otherwise, the `model binder` will not be able to bind the form data to the `Department` object
 > - `name="DeptId"` , `name="DeptName"` , `name="Capacity"`
 >   > [!done] we use tag helpers to create the form in the `Create` view
 >   >
@@ -743,7 +743,7 @@ public IActionResult Edit(Department dept,int id)
 >
 > - we use `id` parameter to get the department id from the URL
 > - `url` : `https://localhost:5001/Department/Delete/1`
-> - confirmaion message before deleting the department(JavaScript) #lab
+> - confirmation message before deleting the department(JavaScript) #lab
 
 ```csharp
 //DepartmentController.cs
@@ -759,7 +759,7 @@ public IActionResult Delete(int? id)
         return NotFound();
     }
     db.Departments.Remove(dept);
-
+	db.SaveChanges();
     return RedirectToAction("Index");
 }
 ```
@@ -850,7 +850,7 @@ public IActionResult Delete(int? id)
 > [!tip] make the `Delete` action method to handle the post request and one to handle the get request
 >
 > - to make a page that will show the details of the department and ask the user to confirm the deletion
-> -
+> 
 
 ```csharp
 //DepartmentController.cs
