@@ -173,12 +173,12 @@ public void ConfigureServices(IServiceCollection services)
 > - route is `/student/index` or `/student` as default behavior the `Index` page is loaded
 >   > [!warning] if we change the name of the page to `Show` then the route will be `/student/show` and `/student` will not work
 
-
->[!example] split the page into two files `Index.cshtml` and `Index.cshtml.cs`
+> [!example] split the page into two files `Index.cshtml` and `Index.cshtml.cs`
+>
 > - view file is `Index.cshtml`, controller file is `Index.cshtml.cs`
-> -  using `add razor page` option in the `Pages` folder
-> - add page named `Display` 
-> - we will have `DisplayModel`  that inherits from `PageModel` 
+> - using `add razor page` option in the `Pages` folder
+> - add page named `Display`
+> - we will have `DisplayModel` that inherits from `PageModel`
 > - `PageModel` is similar to `Controller` in MVC
 > - `OnGet` method is used to handle the get request
 > - `OnPost` method is used to handle the post request
@@ -202,24 +202,21 @@ public class DisplayModel : PageModel
 }
 
 
-``` 
-
-```html
-//Display.cshtml
-@page
-@model DisplayModel
-
-//display the value of X
-<h1>Display Page</h1>
-<p>Value of X is @Model.X</p>
-
 ```
 
->[!done] we can do everything that we do in MVC in Razor Pages
+```html
+//Display.cshtml @page @model DisplayModel //display the value of X
+<h1>Display Page</h1>
+<p>Value of X is @Model.X</p>
+```
+
+> [!done] we can do everything that we do in MVC in Razor Pages
+>
 > - Razor Pages has `ViewData`, `TempData`, `ViewBag` etc
 > - Razor Pages has `Tag Helpers` like `asp-action`, `asp-controller` etc
 
->[!tip] make post request to the page
+> [!tip] make post request to the page
+>
 > - add a form to the page
 
 ```html
@@ -227,12 +224,12 @@ public class DisplayModel : PageModel
     this will post the form to the same page in the URL
  -->
 <form method="post">
-    <input type="text" name="x"/>
-    <input type="submit" value="Submit"/>
+  <input type="text" name="x" />
+  <input type="submit" value="Submit" />
 </form>
 ```
 
->[!example] edit the method `OnPost` to get the value of `x` from the form
+> [!example] edit the method `OnPost` to get the value of `x` from the form
 
 ```csharp
 public IActionResult OnPost(int x)//model binding
@@ -241,11 +238,11 @@ public IActionResult OnPost(int x)//model binding
 }
 ```
 
->[!example] `[BindProperty]` attribute
+> [!example] `[BindProperty]` attribute
+>
 > - used to bind the property to the form
 > - by default support only post request
 > - to make it support get request we have to add `SupportsGet = true`
-
 
 ```csharp
 [BindProperty]
@@ -255,7 +252,7 @@ public IActionResult OnPost(int x)//model binding
 public int X { get; set; } = 10;
 ```
 
->[!tip] we can add other Properties to the model and bind them to the form
+> [!tip] we can add other Properties to the model and bind them to the form
 
 ```csharp
 [BindProperty]
@@ -264,13 +261,13 @@ public int Y { get; set; } = 20;
 
 ```html
 <form method="post">
-    <input type="text" name="x"/>
-    <input type="text" name="y"/>
-    <input type="submit" value="Submit"/>
+  <input type="text" name="x" />
+  <input type="text" name="y" />
+  <input type="submit" value="Submit" />
 </form>
 ```
 
->[!done] we can add binder for all the properties in the model
+> [!done] we can add binder for all the properties in the model
 
 ```csharp
 [BindProperties]
@@ -282,8 +279,7 @@ public class DisplayModel : PageModel
 }
 ```
 
->[!tip] we can return a `Page` or `RedirectToPage` 
-
+> [!tip] we can return a `Page` or `RedirectToPage`
 
 ```csharp
 //Display.cshtml.cs
@@ -301,32 +297,35 @@ public IActionResult OnPost(int x)
 }
 ```
 
-
->[!example] `[BindNever]` attribute
+> [!example] `[BindNever]` attribute
+>
 > - used to exclude the property from the model binding
 
-
->[!example] add models
-> - create a folder named `Models` 
-> - create a folder named `Repos`, or `Services` 
+> [!example] add models
+>
+> - create a folder named `Models`
+> - create a folder named `Repos`, or `Services`
 > - we can `reverse engineer` the database to create the models and the context from (PowerTools)
 > - generate the models and the context from the database
 > - we choose student and department tables
 
->[!tip] `[InverseProperty]` attribute
+> [!tip] `[InverseProperty]` attribute
+>
 > - used to define the relationship between the models when they 2 relationships between them
 > - used to define the navigation property in the other model
 > - `[InverseProperty("Students")]` in the `Student` model
 
->[!example] `partial class`
+> [!example] `partial class`
+>
 > - so we can add code like override methods to the model
 > - and on generating the models again the code will not be lost
 > - we can add partial class to the model and add the code to it
 
->[!done] metadata type
+> [!done] metadata type
+>
 > - used to add metadata to the model
 > - used to add validation to the model
-> -...etc
+>   -...etc
 
 ```csharp
 //StudentMetadata.cs
@@ -335,7 +334,7 @@ public IActionResult OnPost(int x)
 //now properties in the StudentMetadata will be applied to the Student model
 public partial class Student
 {
-  
+
 }
 public class StudentMetadata
 {
@@ -345,4 +344,194 @@ public class StudentMetadata
 }
 ```
 
+---
+
+# Break
+
+> [!TIP] using last lab repos
+>
+> - creating `Department` folder => it is the controller
+> - add razor page `Index` to the `Department` folder
+> - `Index.cshtml` and `Index.cshtml.cs` is view and action method
+
 ```csharp
+//Index.cshtml.cs
+public class IndexModel : PageModel
+{
+
+    public IDeptRepo deptRepo;
+    public IndexModel(IDeptRepo _deptRepo)
+    {
+        deptRepo = _deptRepo;
+    }
+    public List<Department> Departments { get; set; }
+    public void OnGet()
+    {
+        Departments = deptRepo.GetAll();
+    }
+
+}
+```
+
+```html
+//Index.cshtml @page @model IndexModel @{ }
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Capacity</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var dept in Model.Departments) {
+    <tr>
+      <td>@dept.DeptId</td>
+      <td>@dept.DeptName</td>
+      <td>@dept.Capacity</td>
+    </tr>
+    }
+  </tbody>
+</table>
+```
+
+> [!tip] add `Create` page
+>
+> - add `Create` page to the `Department` folder
+> - `Create.cshtml` and `Create.cshtml.cs` is view and action method
+
+```csharp
+//Create.cshtml.cs
+public class CreateModel : PageModel
+{
+    public IDeptRepo deptRepo;
+    public CreateModel(IDeptRepo _deptRepo)
+    {
+        deptRepo = _deptRepo;
+    }
+    [BindProperty]
+    public Department Department { get; set; }
+    public void OnGet()
+    {
+        Department = new Department();
+    }
+
+    public IActionResult OnPost()
+    {
+        if(!ModelState.IsValid)
+        {
+            return Page();
+        }
+        deptRepo.AddDepartment(Department);
+        return RedirectToPage("Index");
+    }
+}
+```
+
+```html
+//Create.cshtml @page @model CreateModel @{ }
+
+<!-- 
+    default will post to the same page
+ -->
+<form method="post">
+  <!-- 
+        we can specify the page to post to
+     -->
+  <!-- <form method="post" asp-page="Create"> -->
+  <div class="form-group">
+    <label asp-for="Department.DeptName"></label>
+    <input asp-for="Department.DeptName" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label asp-for="Department.Capacity"></label>
+    <input asp-for="Department.Capacity" class="form-control" />
+  </div>
+  <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+```
+
+> [!done] add `Details` page
+>
+> - add `Details` page to the `Department` folder
+> - `Details.cshtml` and `Details.cshtml.cs` is view and action method
+> - to force the page to take the id from the URL we have to add `@page "{id}"` to the `.cshtml` file
+
+```html
+//Details.cshtml
+<!-- @page "{id}"  -->
+@page "{id?}"
+<!-- to make the id optional -->
+
+@model DetailsModel @{ }
+
+<h1>Details Page</h1>
+<p>Id: @Model.Department.DeptId</p>
+<p>Name: @Model.Department.DeptName</p>
+<p>Capacity: @Model.Department.Capacity</p>
+```
+
+```csharp
+//Details.cshtml.cs
+
+public class DetailsModel : PageModel
+{
+    public IDeptRepo deptRepo;
+    public DetailsModel(IDeptRepo _deptRepo)
+    {
+        deptRepo = _deptRepo;
+    }
+    public Department Department { get; set; }
+    public void OnGet(int? id)
+    //as we added {id} to the page directive we have to add id to the method
+    //? to make it optional if it is not provided
+    {
+        if(id == null){
+            return BadRequest();
+        }
+
+        Department = deptRepo.GetById(id);
+        if(Department == null){
+            return NotFound();
+        }
+
+    }
+}
+```
+
+> [!done] add link to details page
+
+```html
+<!-- Index.cshtml -->
+<!-- rest of the code  -->
+@foreach (var dept in Model.Departments) {
+<tr>
+  <td>@dept.DeptId</td>
+  <td>@dept.DeptName</td>
+  <td>@dept.Capacity</td>
+  <td>
+    <a asp-page="Details" asp-route-id="@dept.DeptId">Details</a>
+  </td>
+</tr>
+}
+```
+
+> [!example] we can do everything we did in MVC in Razor Pages
+
+> [!TIP] we can use `Scaffold` to generate the Controller and the Views from the model (MVC)
+
+> [!tip] bind only specific properties from method parameters
+>
+> - `[Bind("DeptName, Capacity")] Department department`
+> - this will bind only `DeptName` and `Capacity` from the input to the `Department` object
+
+> [!warning] we use `Scaffold` to generate the pages in the Razor Pages
+
+---
+
+# lab
+
+> [!tip] #lab
+>
+> -
