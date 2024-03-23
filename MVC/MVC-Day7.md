@@ -17,7 +17,7 @@
 > [!warning] filters
 >
 > - some filters are executed ==before== the action method is called and some are executed ==after== the action method is called
-> - create a new Floder (CustomFilters) in the project
+> - create a new Folder (CustomFilters) in the project
 > - create class (ExceptionFilterTemp) in the folder
 > - inherit from `ActionFilterAttribute`
 > - override `OnActionExecuting`: this method is called ==before== the action method is called
@@ -677,7 +677,8 @@ public class AccountController : Controller
         if(user == null)
         {
             ModelState.AddModelError("", "Invalid email or password");//add an error to the model state
-            return View();
+                return View(model);
+
         }
         // HttpContext.User;//this is a ClaimsPrincipal
         // to create a claim for every part of the user
