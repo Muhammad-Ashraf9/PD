@@ -375,7 +375,7 @@ public class TestController : Controller
 ```csharp
 // Program.cs
 
-app.addSession(options =>
+builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);//this will change the duration of the session to 30 minutes
 
