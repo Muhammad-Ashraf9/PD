@@ -94,7 +94,7 @@ public class HomeController : Controller
 
 > [!done] to make it work for ==all== controllers ==(Globally)==
 >
-> -
+>
 
 > [!warning] create an Error View
 >
@@ -143,7 +143,7 @@ public class ExceptionFilterTemp : ExceptionFilterAttribute
 > - create a new class (AuthFilter) in the CustomFilters folder
 > - inherit from `ActionFilterAttribute`
 > - override `OnActionExecuting` method : this method is called before the action method is called
-> -
+> 
 
 ```csharp
 // AuthFilter.cs
@@ -182,7 +182,7 @@ public class AccountController : Controller
 > - this will redirect to the login page if the user is not authenticated
 
 ```csharp
-[AuthFilter]//to make the filter fol all action methods in the controller
+[AuthFilter]//to make the filter for all action methods in the controller
 public class DepartmentController : Controller
 {
 [AuthFilter]//this will only work for the index action method
@@ -375,7 +375,7 @@ public class TestController : Controller
 ```csharp
 // Program.cs
 
-app.addSession(options =>
+builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);//this will change the duration of the session to 30 minutes
 
@@ -714,7 +714,7 @@ public class AccountController : Controller
 > [!bug] make login || logout || Register links in the layout dynamically
 >
 > - `@User.Identity.Name` to get the user's name in the layout
-> - `User.Identity.IsAuthenticated` to check if the user is authenticated
+> - `@User.Identity.IsAuthenticated` to check if the user is authenticated
 
 ```html
 <!-- 
@@ -769,7 +769,7 @@ public IActionResult Create()
 
 > [!bug] now if the user is authenticated but does not have the role "Admin" the user will not be able to access the `Create` action method
 >
-
+> 
 
 > [!tip] add claim with the role to the user
 

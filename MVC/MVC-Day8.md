@@ -247,7 +247,7 @@ public IActionResult OnPost(int x)//model binding
 ```csharp
 [BindProperty]
 //this will make model binder to bind the value of x to the property X comming from the post request
-[BingProperty(SupportsGet = true)]
+[BindProperty(SupportsGet = true)]
 //this will support get request
 public int X { get; set; } = 10;
 ```
@@ -534,4 +534,4 @@ public class DetailsModel : PageModel
 
 > [!tip] #lab
 >
-> -
+> 

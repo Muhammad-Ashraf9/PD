@@ -154,7 +154,7 @@
 }
 ```
 
-> [!done]it is better to use `_ValidationScriptsPartial` View as we will use the same scripts in alot of pages.
+> [!done] it is better to use `_ValidationScriptsPartial` View as we will use the same scripts in alot of pages.
 
 ```cs
 // <!--  Departments/Create.cshtml -->
@@ -245,8 +245,7 @@ public async Task<IActionResult> Add(Student student, IFormFile stdImg)
 
 ```csharp
 //  Student.cs
-public string? stdImageName { get; set; }
-//we use ? to make it nullable we can add student without image.
+public string stdImageName { get; set; }
 ```
 
 ```html
@@ -323,9 +322,6 @@ app.Run(async context =>
     //we can write to the response.
     await context.Response.WriteAsync("First Middleware"); //this will stop the flow and send the response to the client.
 });
-
-
-
 ```
 
 >[!bug] add another middleware.
