@@ -201,7 +201,7 @@ public class StudentsController : ControllerBase
 >   > - add dbcontext to the `startup.cs` file
 
 ```csharp
-builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
 ```
 
 > [!tip] students controller
