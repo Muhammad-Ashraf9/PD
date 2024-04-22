@@ -147,7 +147,6 @@ options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoop
 > - `return Ok(student);`=> serialize student object with all the data and related data
 > - better to use DTO
 
-
 ```csharp
 //StudentsDTO.cs
 public class StudentsDTO
@@ -262,7 +261,7 @@ public class DepartmentsController : ControllerBase
                 Name = dept.Name,
                 Location = dept.Location,
                  StudentsNames = dept.Students.Select(s => s.Name).ToList()
-               
+
             };
             //or
 
@@ -273,17 +272,16 @@ public class DepartmentsController : ControllerBase
 
             return Ok(deptDTO);
         }
-    }   
+    }
 }
 ```
 
->[!tip] using DTO
+> [!tip] using DTO
+>
 > - we can create multiple DTOs for the same model each with different data
 > - no need to use `JsonIgnore` with DTO unless we want to ignore some data when it is null or default
 
-
-
->[!example] Pagination
+> [!example] Pagination
 >
 > - used when we have a lot of data
 > - to get data based on page number and page size
@@ -291,19 +289,22 @@ public class DepartmentsController : ControllerBase
 
 ![](Pasted%20image%2020240422102653.png)
 
->[!example] Attributes
+> [!example] Attributes
+>
 > - `[Consumes]`=> specify the content type that the action can accept
 > - `[Produces]`=> specify the content type that the action can produce
 > - `[HttpGet]`=> specify the action to be called when the request is GET
 
->[!warning] `[Consumes]` 
+> [!warning] `[Consumes]`
+>
 > - without `[Consumes]`=> the action can accept any content type (json/xml, text, bson,..)
 > - with `[Consumes]`=> the action can accept only the specified content type
-> -  this can for the controller or the action or the whole application
+> - this can for the controller or the action or the whole application
 > - client can specify the accept header in the request to specify the content type that it can accept
 > - but with `[Produces]`=> the action can produce only the specified content type
 
 ![](Pasted%20image%2020240422103731.png)
+
 ```csharp
 //StudentsController.cs
 
@@ -323,19 +324,368 @@ public ActionResult add(Student student)
 }
 ```
 
-
 ![](Pasted%20image%2020240422103809.png)
 
->[!tip] multiple routes
+> [!tip] multiple routes
+>
 > - we can have multiple routes for the same action
 > - we can specify the route in the action and in the controller
 
-
 ![](Pasted%20image%2020240422103826.png)
 
->[!done] 
+> [!done]
 
 ![](Pasted%20image%2020240422104248.png)
 
->[!warning] Scaffolding Controllers 
+> [!warning] Scaffolding Controllers
+>
 > - we can add controllers using scaffolding specifying the model and the context with all the actions
+
+---
+
+# Break
+
+---
+
+> [!tip] creating windwo form application to consume web api
+>
+> - api is hosted on iiS express (visual studio) it has to be running
+> - create new windows form application
+> - `Data Grid View` to display data
+> - `HTTP Client` class used to
+> - we need to install web api client package to use ReadAsAsync `Microsoft.AspNet.WebApi.Client`
+
+```csharp
+//Form1.cs
+//form load
+private void Form1_Load(object sender, EventArgs e)
+{
+    HttpClient client = new HttpClient();//create object of http client
+    HttpResponseMessage response = client.GetAsync("https://localhost:7280/api/students").Result;//get data from the api
+    // if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.NoContent)
+    //to check if the response is ok or no content
+
+    //or we can use response.IsSuccessStatusCode to check if the response is ok
+    if (response.IsSuccessStatusCode)
+    {
+        //Deserialization
+        List<StudentData> students = response.Content.ReadAsAsync<List<StudentData>>().Result;//deserialize the data (array of students) to list of student data
+
+        //add data to the data grid view
+        dataGridView1.DataSource = students;
+
+
+    }
+
+}
+```
+
+> [!warning] Deserialization
+>
+> - we need to deserialize the data to turn it to c# object
+> - deserialization problem => is adding info to json to be strong type
+> - we need a schema to use when deserializing
+> - we have to use the same properties and property names in the schema as in the json
+> - we can use help documentations (swagger) to get the schema
+> - install deserialization package:
+
+```csharp
+//StudentData.cs
+public class StudentData
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public string deptName { get; set; }
+}
+```
+
+> [!example] post data to the api
+>
+> - `PostAsJsonAsync` to post data to the api
+> - `PostAsJsonAsync("url",data)`=> post data to the api
+> - `client.PostAsJsonAsync("https://localhost:7280/api/students/{id}", student).Result;`=> post student object to the api
+> - we can send id in student object or in the url
+
+> [!tip] delete data from the api
+>
+> - `DeleteAsync` to delete data from the api
+
+---
+
+> [!tip] consuming web api using javascript
+>
+> - using `jQuery` to consume web api
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 
+        add jquery library to use ajax
+     -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
+      integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- 
+        use ajax to get data from the api
+     -->
+    <script>
+      $(function () {
+        $.ajax({
+          url: "https://localhost:7280/api/students",
+          type: "GET",
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Students</h1>
+  </body>
+</html>
+```
+
+> [!error] ==CORS== (Cross-Origin Resource Sharing)
+>
+> - error happens due to accessing resources from different origins (different domains)
+> - this is client side problem (ajax)
+> - browser blocks the request if the origin of the request is different from the origin of the resource
+> - this is used for security reasons to prevent accessing resources from different origins/domains unless it is allowed by this origin/domain
+> - to allow the request we have to enable CORS in the server side
+> - we can enable CORS for all the requests or for specific requests (methods, origins, headers,..)
+> - browser sends a preflight request (OPTIONS) to check if the request is allowed
+> - the server responds with the allowed methods, origins, headers,..
+> - depending on the response the browser will allow or block the request
+> - [MDN-CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#what_requests_use_cors)
+
+```csharp
+//startup.cs
+string txt = "";
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(txt,
+    //this will add cors policy with the configuration in txt
+        builder =>
+        {
+            builder
+            // .AllowAnyOrigin()//to allow requests from any origin
+            .WithOrigins("http://localhost:8080")//to allow requests from this origin
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
+
+
+//add middleware with the configuration in text
+app.UseCors(txt);
+```
+
+> [!done] now we can access the api from the client side and get the data
+
+> [!tip] using `ajax` to post data to the api
+
+```html
+<script>
+  $(function () {
+    $.ajax({
+      url: "https://localhost:7280/api/students",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        name: "Ahmed",
+        deptId: 1,
+      }),
+      success: function (data) {
+        console.log(data);
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  });
+</script>
+```
+
+> [!done] jQuery Revision on Github
+>
+> - Like, Share, Comment, Follow, subscribe
+> - [Github - PD Files](https://github.com/Muhammad-Ashraf9/PD)
+
+---
+
+# Documentation on ASP.NET Core Web API
+
+> [!tip] Swagger
+>
+> - used to document the web api
+> - OpenAPI specification: is a language-agnostic specification for describing REST APIs
+> - `NSwag` , `Swashbuckle` are used to generate swagger documentation
+> - we can install any of them
+> - we can edit swagger documentation
+
+![](Pasted%20image%2020240422124650.png)
+
+```csharp
+//startup.cs
+// builder.Services.AddSwaggerGen();
+//we can add options to the swagger documentation
+builder.Services.AddSwaggerGen(options =>
+options.SwaggerDoc("v1", new OpenApiInfo()
+{
+    Version = "v2",//version of the documentation
+    Title = "Web API Ash",//the title of the documentation
+    Description = "This is a web api for students and departments ",//description of the documentation
+    Contact = new OpenApiContact()
+    {
+        Name = "Ash",
+        Email = "muhammad.ashraf.tahaa@gmail.com",
+    },
+    TermsOfService = new Uri("https://www.google.com"),
+}));
+```
+
+> [!tip] we can add xml comments to the code to be added to the swagger documentation
+>
+> - to generate xml documentation file
+> - from project properties => build => output => check the xml documentation file
+> - specify the path of the xml file or just name of the file if it is in the same directory
+> - we have to make swagger to use the xml file
+
+![](Pasted%20image%2020240422124151.png)
+
+```csharp
+
+//StudentsController.cs
+
+/// <summary>
+/// get student by id
+/// </summary>
+/// <param name="id">id of the student</param>
+/// <returns>student object</returns>
+/// <remarks>
+/// request example:
+/// GET /api/students/1
+/// </remarks>
+[HttpGet("{id}")]
+public ActionResult getbyid(int id)
+{
+    //code
+}
+```
+
+```csharp
+//startup.cs
+builder.Services.AddSwaggerGen(options =>
+{
+    //to use the xml file
+    options.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v2",
+        Title = "Web API Ash",
+        Description = "This is a web api for students and departments ",
+        Contact = new OpenApiContact()
+        {
+            Name = "Ash",
+            Email = "
+        },
+    }
+    
+    options.IncludeXmlComments("WebAPIs.xml");
+    //it is better to make url cros platform by using Path.Combine
+    });
+});
+```
+
+> [!example] `[ProducesResponseType]`
+>
+> - we all possible responses for the action
+
+```csharp
+//StudentsController.cs
+[HttpGet("{id}")]
+[ProducesResponseType<List<Student>>(200)]
+[ProducesResponseType(404, Type = typeof(void))]//not found
+public ActionResult getbyid(int id)
+{
+    //code
+}
+```
+
+> [!tip] Swachbuckle Annotations
+>
+> - install package: `Swashbuckle.AspNetCore.Annotations`
+> - add `options.EnableAnnotations()` to the swagger documentation
+
+![](Pasted%20image%2020240422124043.png)
+
+```csharp
+//startup.cs
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v2",
+        Title = "Web API Ash",
+        Description = "This is a web api for students and departments ",
+        Contact = new OpenApiContact()
+        {
+            Name = "Ash",
+            Email = "
+        },
+        }
+    options.IncludeXmlComments("WebAPIs.xml");
+    options.EnableAnnotations();
+    });
+});
+```
+
+```csharp
+//StudentsController.cs
+[HttpGet("{id}")]
+[SwaggerOperation(Summary = "get student by id", Description = "get student by id")]
+//to add summary and description to the action
+[SwaggerResponse(200, "student object", typeof(Student))]
+// to add response type to the action
+
+```
+
+![](Pasted%20image%2020240422124012.png)
+
+> [!warning] Securing Swagger
+>
+> - instead of using `app.UseSwagger();` use `app.MapSwagger().RequireAuthorization();`
+> - we can add authorization to the swagger documentation
+
+```csharp
+//startup.cs
+// app.MapSwagger().RequireAuthorization();
+//to make it for admin only
+app.MapSwagger().RequireAuthorization(options =>
+{
+    options.RequireRole("Admin");
+});
+```
+
+
+
+
+
+---
+## Lab
+
+![](Pasted%20image%2020240422124534.png)
+
+![](Pasted%20image%2020240422124538.png)
