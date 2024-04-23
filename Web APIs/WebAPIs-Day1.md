@@ -113,7 +113,7 @@ EmployeeController : ControllerBase{
 > - not recommended to use this routing in WebAPI
 > - `api/{controller}/{id}` is the recommended routing in WebAPI
 > - no action in the routing as the action is mapped according to the HTTP method (GET, POST, PUT, DELETE)
-> -  thats why every method has to have a unique (URI + HTTP) method
+> -  that's why every method has to have a unique (URI + HTTP) method
 
 > [!done] HTTP Methods (verbs)
 >
@@ -123,7 +123,7 @@ EmployeeController : ControllerBase{
 > - `PUT` is used to update resources (data) on the server
 > - `DELETE` is used to delete resources (data) from the server
 >   > [!warning]
->> - but it is not mandatory as we can use `GET` to add resources to the server or `POST` to get resources from the server but it is ==not recommended==
+>> - but it is not mandatory as we can use `GET` to delete resources from the server or `POST` to get resources from the server but it is ==not recommended==
 
 > [!warning] head & body of the request
 >
@@ -143,7 +143,7 @@ EmployeeController : ControllerBase{
 
 > [!done] preflight request
 >
-> - is a request that is used to check if the server allows the client to send the request of the specific method (GET, POST, PUT, DELETE, ...) before sending the actual request
+> - is a request that is used to check if the server allows the client to send the request of the specific method (GET, POST, PUT, DELETE, ...) before sending the actual request(all verbs except Get, Post)
 
 > [!tip] create a WebAPI project
 >
@@ -209,7 +209,7 @@ builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder
 ```csharp
 //StudentsController.cs
 
-[Rout("api/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class StudentsController : ControllerBase
 {
@@ -240,8 +240,8 @@ public class StudentsController : ControllerBase
 
 > [!warning] Globalization vs Localization
 >
-> - localization: mini language based on the language of the user
-> - globalization: the process of designing and developing a software application that functions for multiple cultures ( having 2 buttons for example in the same page in different languages)
+> - localization: mini language based on the language of the user(chosen according to user settings like arabic language for user that selected arabic for his machine)
+> - globalization: the process of designing and developing a software application that functions for multiple cultures ( having 2 buttons for example in the same page in different languages)(have different options user can choose from like choosing site language intentionally)
 
 > [!error] need to edit project file to avoid globalization-invariant error
 >
@@ -251,6 +251,7 @@ public class StudentsController : ControllerBase
 >
 > - any response has a status code that indicates the status of the response
 > - to inform the client if the request was successful or not
+> - 1xx: Information responses
 > - 200: OK
 > - 201: Created
 > - 204: NoContent (successful but no data to return)
