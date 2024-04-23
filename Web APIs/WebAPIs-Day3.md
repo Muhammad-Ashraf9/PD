@@ -316,7 +316,7 @@ public class GenericRepository<TEntity> where TEntity : class
 }
 ```
 
->[!done] now we can use the generic repository in the controller
+> [!done] now we can use the generic repository in the controller
 
 ```csharp
 //StudentController.cs
@@ -350,7 +350,7 @@ public class DepartmentController : ControllerBase
 }
 ```
 
->[!done] now we need to register the generic repository in the `Program.cs`
+> [!done] now we need to register the generic repository in the `Program.cs`
 
 ```csharp
 //Program.cs
@@ -359,6 +359,206 @@ builder.Services.AddScoped<GenericRepository<Department>>();//this will inject t
 
 ```
 
->[!tip] we can create a new repository to extend the generic repository
+> [!tip] we can create a new repository to extend the generic repository
+>
 > - or create create a new repository with different methods
 > - and the controller can be dependent on multiple repositories for the same entity
+
+---
+
+# Break
+
+---
+
+> [!warning] onion pattern = repository pattern + dependency injection
+
+```csharp
+//StudentDepartmentController.cs
+[Route("api/[controller]")]
+[ApiController]
+public class StudentDepartmentController : ControllerBase
+{
+    GenericRepository<Student> studentRepository;
+    GenericRepository<Department> departmentRepository;
+    public StudentDepartmentController(GenericRepository<Student> studentRepository, GenericRepository<Department> departmentRepository)
+    {
+        this.studentRepository = studentRepository;
+        this.departmentRepository = departmentRepository;
+    }
+
+    [HttpPost]
+    public ActionResult add(Student student)
+    {
+        departmentRepository.Add(student.Dept);
+        studentRepository.Add(student);
+        //will this work?
+        //do they share the same dbcontext? => no they don't (every repository has its own dbcontext)
+        // so we need to save the changes for each repository using multiple transactions and we have to consider the order of the transactions
+        departmentRepository.Add(student.Dept);
+        departmentRepository.Save();
+        studentRepository.Add(student);
+        studentRepository.Save();
+        //this is the problem of having multiple repositories  in the controller
+        //solution: use unit of work pattern
+        return Ok();
+    }
+}
+```
+
+> [!tip] Unit of Work Pattern
+>
+> - adding extra layer between the controller and the repositories
+> - this ensures that all the repositories share the same dbcontext
+> - this is done by creating a new class that will handle all the repositories and the dbcontext (contains objects of all the repositories )
+> - and we can save all the changes at once as any change in any repository will be saved in the same transaction
+>   > [!warning] not recommended to make the dbcontext singleton
+
+```csharp
+//UnitOfWork.cs
+
+public class UnitOfWork
+{
+    ITIContext db;
+    GenericRepository<Student> studentRepository;
+    GenericRepository<Department> departmentRepository;
+    public UnitOfWork(ITIContext db)
+    {
+        this.db = db;
+        studentRepository = new GenericRepository<Student>(db);
+        departmentRepository = new GenericRepository<Department>(db);
+    }
+
+}
+```
+
+> [!tip] now we can use the unit of work in the controller instead of the repositories
+
+```csharp
+//StudentDepartmentController.cs
+[Route("api/[controller]")]
+[ApiController]
+public class StudentDepartmentController : ControllerBase
+{
+    UnitOfWork unitOfWork;
+    public StudentDepartmentController(UnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+
+public ActionResult add(Student student)
+{
+    unitOfWork.departmentRepository.Add(student.Dept);
+    unitOfWork.studentRepository.Add(student);
+    //do they share the same dbcontext? => yes they do
+    unitOfWork.Save();//now we can save all the changes at once
+    return Ok();
+}
+}
+```
+
+> [!warning] we can use it in the student controller and the department controller as well
+
+```csharp
+//StudentController.cs
+[Route("api/[controller]")]
+[ApiController]
+public class StudentController : ControllerBase
+{
+    UnitOfWork unitOfWork;
+    public StudentController(UnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+    //rest of the code
+}
+```
+
+> [!warning] what of we have many repositories
+>
+> - why use the unit of work in student controller and create object of all the repositories in the unit of work
+> - we just need the student repository in the student controller
+> - how to solve this problem
+> - we remove object creation from the unit of work constructor and make a property for each repository in the unit of work
+> - make getter for each repository and only create the object when it is needed and if it is not null return it
+
+```csharp
+//UnitOfWork.cs
+public class UnitOfWork
+{
+    ITIContext db;
+    //private fields for the repositories
+    GenericRepository<Student> studentRepository;
+    GenericRepository<Department> departmentRepository;
+    public UnitOfWork(ITIContext db)
+    {
+        this.db = db;
+    }
+    //public properties for the repositories (Getter only)
+    //can't set the value of the repository from outside the class
+    public GenericRepository<Student> StudentRepository
+    {
+        get
+        {
+            if (studentRepository == null)
+                studentRepository = new GenericRepository<Student>(db);
+            return studentRepository;
+        }
+    }
+    public GenericRepository<Department> DepartmentRepository
+    {
+        get
+        {
+            if (departmentRepository == null)
+                departmentRepository = new GenericRepository<Department>(db);
+            return departmentRepository;
+        }
+    }
+    public void Save()
+    {
+        db.SaveChanges();
+    }
+}
+
+```
+
+> [!done] remove registration of the repositories in the `Program.cs` and register the unit of work instead
+
+```csharp
+//Program.cs
+builder.Services.AddScoped<UnitOfWork>();//this will inject the UnitOfWork object in the controller when it needs an object of type UnitOfWork
+```
+
+> [!done] unit of work pattern
+>
+> - we have only dependency in the controller => the unit of work
+> - all repositories share the same dbcontext
+> - we can have multiple unit of works and make interface for the unit of work (IUnitOfWork) and use it in the controller to change the unit of work easily
+> - we dont use the dependency injection with the repositories as it will have the same problem as before not having the same dbcontext
+> - using dependency injection is an option we don't have to use it all the time
+
+>[!tip] we can have multiple constructors in the controller one using dependency injection and the other one using the unit of work object directly
+
+```csharp
+//StudentController.cs
+[Route("api/[controller]")]
+[ApiController]
+public class StudentController : ControllerBase
+{
+    UnitOfWork unitOfWork;
+    public StudentController(UnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+    public StudentController()
+    {
+        unitOfWork = new UnitOfWork(new ITIContext());
+    }
+    //rest of the code
+}
+```
+
+>[!example] Dependency Injection Types
+> - constructor injection
+> - property injection
+> - method injection
+> - ==Search==
