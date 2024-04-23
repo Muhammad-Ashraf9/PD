@@ -96,14 +96,8 @@ public class Student
 > - in `webapiContext` class add `UseLazyLoadingProxies()`
 
 ```csharp
-//webapiContext.cs
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("name=DefaultConnection");
-            }
-        }
+builder.Services.AddDbContext<ITIContext>(op=>op.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 ```
 
 ![](Pasted%20image%2020240422094006.png)
@@ -309,11 +303,15 @@ public class DepartmentsController : ControllerBase
 //StudentsController.cs
 
 [HttpPost]
-// [Consumes("application/json")]//now the action can accept only json content type
-[Cosumes("text/xml")]//now the action can accept only xml content type
+// [Consumes("application/json")]
+//now the action can accept only json content type
+
+[Cosumes("text/xml")]
+//now the action can accept only xml content type
 
 
-[Produces("application/json")]//now the action can produce only json content type
+[Produces("application/json")]
+//now the action can produce only json content type
 
 //this appears in the swagger documentation
 public ActionResult add(Student student)
@@ -387,7 +385,7 @@ private void Form1_Load(object sender, EventArgs e)
 > - we need a schema to use when deserializing
 > - we have to use the same properties and property names in the schema as in the json
 > - we can use help documentations (swagger) to get the schema
-> - install deserialization package:
+> - install deserialization package: 
 
 ```csharp
 //StudentData.cs
