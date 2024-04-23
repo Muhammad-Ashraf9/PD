@@ -473,7 +473,7 @@ public class StudentData
 string txt = "";
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(txt,
+    options.AddPolicy(txt,
     //this will add cors policy with the configuration in txt
         builder =>
         {
