@@ -46,6 +46,7 @@
 >   >
 >   > - some clients cannot deal with json/xml directly like Java so it needs to be converted to object
 >   > - deserialization is converting json/xml to object of client language ( java client-UI)
+>   > - deserialization is more difficult as you are converting from loosely typed to strictly typed you have to add data like data types...
 
 > [!example] `[JsonIgnore]` attribute
 >
@@ -55,7 +56,7 @@
 >   > [!tip] `JsonIgnoreCondition`
 >   >
 >   > - we can use `JsonIgnoreCondition` to ignore property based on condition
->   > - `JsonIgnoreCondition.WhenWritingDefault`=> ignore property if it has default value
+>   > - `JsonIgnoreCondition.WhenWritingDefault`=> ignore property if it has default value or Null.
 >   > - `JsonIgnoreCondition.WhenWritingNull`=> ignore property if it is null
 >   > - if not specified=> ignore property ==always==
 
@@ -210,7 +211,7 @@ public class DepartmentDTO
 
 ```csharp
 //DepartmentsController.cs
-[Rout("api/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class DepartmentsController : ControllerBase
 {
