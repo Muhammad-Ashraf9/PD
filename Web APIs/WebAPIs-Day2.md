@@ -346,13 +346,33 @@ public ActionResult add(Student student)
 
 ---
 
-> [!tip] creating windwo form application to consume web api
+> [!tip] creating windows form application to consume web api
 >
 > - api is hosted on iiS express (visual studio) it has to be running
 > - create new windows form application
 > - `Data Grid View` to display data
 > - `HTTP Client` class used to
 > - we need to install web api client package to use ReadAsAsync `Microsoft.AspNet.WebApi.Client`
+
+
+> [!warning] Deserialization
+>
+> - we need to deserialize the data to turn it to c# object
+> - deserialization problem => is adding info to json to be strong type
+> - we need a schema to use when deserializing
+> - we have to use the same properties and property names in the schema as in the json
+> - we can use help documentations (swagger) to get the schema
+
+
+```csharp
+//StudentData.cs
+public class StudentData
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public string deptName { get; set; }
+}
+```
 
 ```csharp
 //Form1.cs
@@ -379,24 +399,6 @@ private void Form1_Load(object sender, EventArgs e)
 }
 ```
 
-> [!warning] Deserialization
->
-> - we need to deserialize the data to turn it to c# object
-> - deserialization problem => is adding info to json to be strong type
-> - we need a schema to use when deserializing
-> - we have to use the same properties and property names in the schema as in the json
-> - we can use help documentations (swagger) to get the schema
-> - install deserialization package: 
-
-```csharp
-//StudentData.cs
-public class StudentData
-{
-    public int id { get; set; }
-    public string name { get; set; }
-    public string deptName { get; set; }
-}
-```
 
 > [!example] post data to the api
 >
