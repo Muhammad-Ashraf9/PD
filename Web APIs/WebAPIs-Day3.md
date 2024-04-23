@@ -413,6 +413,8 @@ public class StudentDepartmentController : ControllerBase
 > - and we can save all the changes at once as any change in any repository will be saved in the same transaction
 >   > [!warning] not recommended to make the dbcontext singleton
 
+![](Pasted%20image%2020240423122622.png)
+
 ```csharp
 //UnitOfWork.cs
 
@@ -536,7 +538,7 @@ builder.Services.AddScoped<UnitOfWork>();//this will inject the UnitOfWork objec
 > - we dont use the dependency injection with the repositories as it will have the same problem as before not having the same dbcontext
 > - using dependency injection is an option we don't have to use it all the time
 
->[!tip] we can have multiple constructors in the controller one using dependency injection and the other one using the unit of work object directly
+> [!tip] we can have multiple constructors in the controller one using dependency injection and the other one using the unit of work object directly
 
 ```csharp
 //StudentController.cs
@@ -557,8 +559,203 @@ public class StudentController : ControllerBase
 }
 ```
 
->[!example] Dependency Injection Types
+> [!example] Dependency Injection Types
+>
 > - constructor injection
 > - property injection
 > - method injection
 > - ==Search==
+
+---
+
+# Break
+
+---
+
+## Authentication and Authorization
+
+> [!tip] MVC vs Web API
+>
+> - Identity, ...
+> - in MVC: using cookies or sessions to authenticate the user
+> - those are not used with web APIs as they require alot of workarounds to make them work
+> - as there will be different clients
+> - it is better to respond with a token that the client will send with every request and client will be responsible for storing the token
+
+> [!tip] JWT (JSON Web Token)
+>
+> - used to authenticate the user in web APIs
+> - when user logs in the server will generate a token and send it to the client
+> - the client will send the token with every request
+> - this token consists of 3 parts: header, payload, signature
+> - header: type of the token and the hashing algorithm - using secret key to generate the token - the server will use the same secret key to validate the token
+>
+>   > [!warning] hashing vs encryption
+>   >
+>   > - hashing: one way function (can't be decrypted) - same input will have the same output - that's how we can compare them
+>   > - encryption: two way function (can be decrypted)
+>
+> - payload: contains claims (Key value pairs) + expiration date + issuer + audience + ...
+> - signature: is HASH value computed using the header, payload, and is passed to algorithm with the secret key
+> - the client is free to store the token however it wants (local storage, session storage, cookie, ...) depending on the type of the client (web, mobile, desktop, ...)
+> - but the client should send the token with every request to validate the user
+> - the server doesn't store the token it just validates it
+> - secret key is only known and saved by the server
+> - to create a valid token the we need to know 3 things: secret key, hashing algorithm, and the payload
+> - this is called stateless authentication as the server doesn't store the token (http is stateless)
+
+![](Pasted%20image%2020240423124239.png)
+![](Pasted%20image%2020240423124243.png)
+![](Pasted%20image%2020240423124248.png)
+
+---
+
+> [!tip] create `AccountController` to handle the login and register requests
+
+```csharp
+//userdataDTO.cs
+
+public record userdata(string username, string password);
+//this like a class but it is immutable (can't be changed)
+//with properties that can be accessed directly
+```
+
+> [!example] JWT
+>
+> - install the `Microsoft.AspNetCore.Authentication.JwtBearer` package
+> - isntall the `System.IdentityModel.Tokens.Jwt` package
+
+````csharp
+//AccountController.cs
+[Route("api/[controller]")]
+[ApiController]
+public class AccountController : ControllerBase
+{
+    [HttpPost]
+    public ActionResult Login(userdata user)
+    {
+        //check the username and password
+        if (user.username == "admin" && user.password == "123")
+        {
+            //generate the token
+
+            //header => type + algorithm
+            //payload => claims + expiration date
+            //signature => hash secret key + ...
+
+            //define claims
+            List<Claim> userData = new List<Claim>();
+            userData.Add(new Claim("name", user.username));//we can put any data we want
+            //we can use ClaimTypes
+            userData.Add(new Claim(ClaimTypes.MobilePhone, "01000000000"));//it will add schema
+
+            //signing credentials used to sign the token (secret key + hashing algorithm)
+            //secret key should't be string
+            string secretKey = "Nodejs JWT is better and easier than this";//we need strong secret key that is more than 256  as we are using HmacSha256 unless it will throw an exception
+
+            // var key = new SecretKey());//we have shouldn't use SecretKey directly
+            // we should use SymmetricSecurityKey which
+
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));//to send the secret key as bytes
+
+            var signCred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            //we can choose any hashing algorithm but we need to use the same algorithm to validate the token
+
+            var token = new JwtSecurityToken(
+                claims:userData,
+                expires:DateTime.Now.AddDays(1),
+                signingCredentials: signCred
+            );
+            var toke
+
+            >String = [!done] add the authentication middleware in the `Configure` method
+
+```csharp] new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
+
+            //we need the secret key to validate the token
+
+            return Ok();
+        }
+        else
+        {
+            return Unauthorized();
+        }
+    }
+
+}
+````
+
+```json
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+```
+
+> [!tip] generated token
+>
+> - it has 3 parts
+> - header: `{"alg":"HS256","typ":"JWT"}`
+> - payload: `{"name":"admin","mobilephone":"01000000000","exp":1620000000}` + Schema
+> - can not validate the token without the secret key
+
+> [!done] `[Authorize]` attribute to restrict access to the action
+
+```csharp
+//StudentController.cs
+[Route("api/[controller]")]
+[ApiController]
+
+public class StudentController : ControllerBase
+{
+    [Authorize]
+    [HttpGet]
+    public List<Student> Get()
+    {
+        return studentRepository.SelectAll();
+    }
+}
+```
+
+> [!tip] define the authentication scheme in the `Program.cs`
+
+```csharp
+//Program.cs
+
+//they have to be the same schema
+builder.Services.AddAuthentication(options =>
+options.DefaultAuthenticateScheme = "myschema")
+.AddJwtBearer("myschema", options =>
+{
+    //we have to use the same secret key and hashing algorithm used to generate the token
+    string secret = "Nodejs JWT is better and easier than this";
+    var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        //those are used if we are using server for the authentication
+        IssuerSigningKey = key,
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+
+```
+
+> [!done] we send the token in the header of the request
+>
+> - not the body of the request as there are some requests that don't have a body
+> - we can use the `Authorization` header to send the token
+> - `Bearer` is the type of the token
+> - javascript client:
+> - `Authorization: Bearer token` there is a space between the type and the token
+> - c# client: `client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);`
+> - we can validate in the action or we can validate in the middleware (outside the action)
+>   ![](Pasted%20image%2020240423133520.png)
+
+---
+
+### Lab
+
+> [!warning] Lab
+>
+> - part1 : apply the generic repository pattern + unit of work
+> - part2 : config jwt => UI - web "login" and use the token to access the action
