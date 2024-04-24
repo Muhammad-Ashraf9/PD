@@ -622,7 +622,7 @@ public record userdata(string username, string password);
 > - install the `Microsoft.AspNetCore.Authentication.JwtBearer` package
 > - isntall the `System.IdentityModel.Tokens.Jwt` package
 
-````csharp
+```csharp
 //AccountController.cs
 [Route("api/[controller]")]
 [ApiController]
@@ -663,15 +663,12 @@ public class AccountController : ControllerBase
                 expires:DateTime.Now.AddDays(1),
                 signingCredentials: signCred
             );
-            var toke
 
-            >String = [!done] add the authentication middleware in the `Configure` method
-
-```csharp] new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
+var sentToken = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
 
             //we need the secret key to validate the token
 
-            return Ok();
+            return Ok(sentToken);
         }
         else
         {
