@@ -515,10 +515,7 @@ public class UnitOfWork
             return departmentRepository;
         }
     }
-    public void Save()
-    {
-        db.SaveChanges();
-    }
+
 }
 
 ```
