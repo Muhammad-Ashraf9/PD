@@ -515,10 +515,7 @@ public class UnitOfWork
             return departmentRepository;
         }
     }
-    public void Save()
-    {
-        db.SaveChanges();
-    }
+
 }
 
 ```
@@ -668,6 +665,7 @@ public class AccountController : ControllerBase
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
             //we need the secret key to validate the token
             return Ok(tokenString);
+
         }
         else
         {
