@@ -598,7 +598,7 @@ public class StudentController : ControllerBase
 > - but the client should send the token with every request to validate the user
 > - the server doesn't store the token it just validates it
 > - secret key is only known and saved by the server
-> - to create a valid token the we need to know 3 things: secret key, hashing algorithm, and the payload
+> - to create a valid token we need to know 3 things: secret key, hashing algorithm, and the payload
 > - this is called stateless authentication as the server doesn't store the token (http is stateless)
 
 ![](Pasted%20image%2020240423124239.png)
@@ -620,7 +620,7 @@ public record userdata(string username, string password);
 > [!example] JWT
 >
 > - install the `Microsoft.AspNetCore.Authentication.JwtBearer` package
-> - isntall the `System.IdentityModel.Tokens.Jwt` package
+> - install the `System.IdentityModel.Tokens.Jwt` package
 
 ```csharp
 //AccountController.cs
@@ -652,7 +652,6 @@ public class AccountController : ControllerBase
 
             // var key = new SecretKey());//we have shouldn't use SecretKey directly
             // we should use SymmetricSecurityKey which
-
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));//to send the secret key as bytes
 
             var signCred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -663,12 +662,10 @@ public class AccountController : ControllerBase
                 expires:DateTime.Now.AddDays(1),
                 signingCredentials: signCred
             );
-
-var sentToken = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
-
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
             //we need the secret key to validate the token
+            return Ok(tokenString);
 
-            return Ok(sentToken);
         }
         else
         {
@@ -677,7 +674,7 @@ var sentToken = new JwtSecurityTokenHandler().WriteToken(token);//to convert the
     }
 
 }
-````
+```
 
 ```json
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
