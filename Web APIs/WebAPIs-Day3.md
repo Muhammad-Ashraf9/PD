@@ -515,10 +515,7 @@ public class UnitOfWork
             return departmentRepository;
         }
     }
-    public void Save()
-    {
-        db.SaveChanges();
-    }
+
 }
 
 ```
@@ -665,9 +662,12 @@ public class AccountController : ControllerBase
                 expires:DateTime.Now.AddDays(1),
                 signingCredentials: signCred
             );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
+
+var sentToken = new JwtSecurityTokenHandler().WriteToken(token);//to convert the token to string
+
             //we need the secret key to validate the token
-            return Ok(tokenString);
+
+            return Ok(sentToken);
         }
         else
         {
