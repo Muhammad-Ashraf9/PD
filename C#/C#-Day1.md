@@ -38,11 +38,12 @@
 > .net core is extension of .net framework that has different versions for different OSs
 
 > [!tip] JITing
-> JITing is the process of turning IL code into machine code at runtime. This is done by the JIT compiler, which is part of the .NET runtime (CLR). The JIT compiler is a part of the runtime, so it is not a separate component. The JIT compiler is responsible for compiling IL code to ma
+> JITing is the process of turning IL code into machine code at runtime. This is done by the JIT compiler, which is part of the .NET runtime (CLR). The JIT compiler is a part of the runtime, so it is not a separate component. The JIT compiler is responsible for compiling IL code to machine code 
 >
 > 1. per function, per function call: JIT only compiles the functions that are called
 > 2. Caching: JIT caches the compiled code so that it doesn't have to compile the same code again
->    > [!bug]Problem: Il file can be viewed using ILDASM so we need to protect the code
+>    > [!bug] Problem: Il file can be viewed using ILDASM so we need to protect the code
+>    
 >    > [!done] Solution: obfuscation: obfuscate the code so that it is not readable
 
 ---
