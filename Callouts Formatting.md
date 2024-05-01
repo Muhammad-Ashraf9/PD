@@ -37,7 +37,7 @@
 > > [!warning] `explicit operator int()` to only allow explicit casting
 
 <hr>
->[!tldr]+ tldr
+>[!tldr]- tldr
 	>tldr
 	> >[!info]+ info
 	>>info
@@ -73,3 +73,6 @@ console.log("Hello, World!");
 ```
 
 
+```cmd
+docker container run
+```
