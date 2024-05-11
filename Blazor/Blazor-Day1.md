@@ -7,6 +7,8 @@
 > [!faq] What is Blazor used for?
 >
 > - Blazor(Browser Razor) is a web framework designed to run client-side in the browser on a WebAssembly-based .NET runtime (Blazor WebAssembly) or server-side on an ASP.NET Core host (Blazor Server). It allows you to build interactive web UIs using C# and Razor syntax instead of JavaScript.
+
+
 > - Blazor is used for building interactive web UIs using C# instead of JavaScript.
 > - instead of using C# to write server-side only,
 > - Blazor used to create SPA (Single Page Application) - client side web application using C#.
