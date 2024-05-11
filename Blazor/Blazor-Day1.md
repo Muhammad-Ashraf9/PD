@@ -6,7 +6,9 @@
 
 > [!faq] What is Blazor used for?
 >
-> - Blazor is a web framework designed to run client-side in the browser on a WebAssembly-based .NET runtime (Blazor WebAssembly) or server-side on an ASP.NET Core host (Blazor Server). It allows you to build interactive web UIs using C# and Razor syntax instead of JavaScript.
+> - Blazor(Browser Razor) is a web framework designed to run client-side in the browser on a WebAssembly-based .NET runtime (Blazor WebAssembly) or server-side on an ASP.NET Core host (Blazor Server). It allows you to build interactive web UIs using C# and Razor syntax instead of JavaScript.
+
+
 > - Blazor is used for building interactive web UIs using C# instead of JavaScript.
 > - instead of using C# to write server-side only,
 > - Blazor used to create SPA (Single Page Application) - client side web application using C#.
@@ -49,7 +51,7 @@
 
 > [!warning] C#
 >
-> - to make c# croos-platform applications, compile C# => (dll/exe) - intermediate language (IL)
+> - to make c# cross-platform applications, compile C# => (dll/exe) - intermediate language (IL)
 > - SDK (Development Kit + Runtime)
 > - to be able to run this IL code on any platform, we need a runtime that can understand IL code and execute it.
 > - .NET runtime is available for Windows, Mac, and Linux.(chose a compatible runtime for the platform)
@@ -299,7 +301,7 @@ global using System.Net.Http;
  -->
 
 <button @onclick="ChangeMessage">Change Message</button>
-<input type="text" value="@Message" />
+<input type="text" value="@Message" /> // this is one way as it gets property value and display it.
 
 ```
 

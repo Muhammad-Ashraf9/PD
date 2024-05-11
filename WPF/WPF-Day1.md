@@ -16,7 +16,7 @@
 >
 > - XAML is a declarative markup language.
 > - XAML is used to create the UI of WPF applications.
-> - used as seperation of UI and business logic - code(C# / or other .NET languages)
+> - used as separation of UI and business logic - code(C# / or other .NET languages)
 > - allows to create UI without writing code.
 
 > [!danger] features of WPF
@@ -704,7 +704,7 @@ namespace WPFApp1
 > - used for responsive design.
 > - `ViewBox` is a control that scales the content to fit the available space.
 
-> [!tip] `label` vs ` `TextBlock`
+> [!tip] `label` vs  `TextBlock`
 >
 > - have similar UI but different in the properties
 
