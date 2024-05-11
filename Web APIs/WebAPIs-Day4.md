@@ -17,7 +17,7 @@
 >   >
 >   > - server is always on and available for the internet
 >   > - there are other services the internet can provide (like email, ...)
->   > - ip should be unique for each machine on the internet
+>   > - ip should be unique for each machine on the internet(Fixed IP)
 
 > [!tip] Real IP vs Virtual IP
 >
@@ -156,7 +156,7 @@ ipconfig
 > [!tip] Connection String
 >
 > - instead of `integrated security=true` we will use `user id=username;password=123456`
-> -
+> 
 > - `data source=.;initial catalog=dbname;user id=username ;password=123456; TrustServerCertificate=True;`
 > - make Visual Studio run as administrator
 > - right click on the project => publish => folder => create a new folder => next => next => finish

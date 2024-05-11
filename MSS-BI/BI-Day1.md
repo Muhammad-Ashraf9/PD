@@ -24,7 +24,7 @@
 >   > - it is a centralized database that is used to store the data from different sources (OLTP)
 >   > - to make analysis and reports on the data
 >
-> - trnsaction is done on the source system (OLTP) and then the data is transferred to the data warehouse (OLAP)
+> - transaction is done on the source system (OLTP) and then the data is transferred to the data warehouse (OLAP)
 
 > [!example] ETL (Extract, Transform, Load)
 >
@@ -37,7 +37,7 @@
 >
 > - it is a temporary storage area that is used to store the data before loading it into the data warehouse
 >
-> 1. ==extract== the data from the source systems (OLTP) - not a backup but transfering the tables as they are to the staging area
+> 1. ==extract== the data from the source systems (OLTP) - not a backup but transferring the tables as they are to the staging area
 >
 > - the tables could have different structures and different columns (like: date(yyyy-mm-dd), date(dd-mm-yyyy), ...)
 > - so we need to handle different formats of the data
@@ -49,7 +49,7 @@
 >
 > 3. ==Load== the data into the data warehouse (OLAP)
 >
-> - scheduel the ETL process (daily, weekly, monthly, ...)
+> - schedule the ETL process (daily, weekly, monthly, ...)
 > - it is like jobs that run on the server
 > - it depends on the business requirements
 > - in our tool => XML file
@@ -164,7 +164,7 @@
 > - `ReadOnlyVariables: User::counter` to read the value of the counter
 > - edit script
 > - to show the value of the counter in the message box
-> - we use Dts (Data Transference Service) to access the variables
+> - we use DTS (Data Transference Service) to access the variables
 >
 > ```csharp
 > MessageBox.Show(Dts.Variables["counter"].Value.ToString());// as message box only accepts string
@@ -172,7 +172,7 @@
 
 > [!example] Bulk Insert from text file to database
 >
-> -
+>
 > - `Excute SQL Task` from toolbox to truncate the table
 > - `SqlStatement: truncate table students` : to delete all the data from the table
 > - `Bulk Insert Task` from toolbox to control flow
