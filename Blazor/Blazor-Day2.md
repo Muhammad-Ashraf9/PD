@@ -305,6 +305,9 @@
 > - `OnParametersSet` - called when parameters are changed instead of calling destructor and constructor to create new object (called several times)
 > - all has async versions (OnInitializedAsync, SetParametersAsync, etc)
 
+
+![](Pasted%20image%2020240508121346.png)
+
 ```csharp
 // LifeCycle.razor
 
