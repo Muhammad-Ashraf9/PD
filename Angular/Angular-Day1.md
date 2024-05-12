@@ -128,3 +128,212 @@
 # Break
 
 ---
+
+> [!tip] to run the commands we have to be in the project folder.
+
+> [!note] `Angular.json`
+>
+> - Angular.json is the configuration file for the Angular project.
+> - `styles` array in `angular.json` is used to add global styles to the project. (like bootstrap, or import bootstrap in styles.css)
+> - `scripts` array in `angular.json` is used to add global scripts to the project.
+> - `index.html` is the main HTML file for the project.
+> - `main.ts` is the entry point for the project.
+
+> [!danger] `ng serve`
+>
+> - `ng serve` to run the project.
+> - `ng serve --open` to run the project and open the browser.
+>   -app is loaded in the browser with the URL `http://localhost:4200/`.
+> - HTML page will have scripts used to change the DOM in `<app-root>` tag.
+
+> [!bug] `main.ts`
+>
+> - `main.ts` is the entry point for the project.
+> - `main.ts` has the code to bootstrap the Angular application with app component and configuration in `appConfig`
+
+> [!warning] `app.component.ts`
+>
+> - `app.component.ts` is the root component for the project. (bootstrap component)
+> - has the code to define the component.
+> - has the code to define the template, styles, and data for the component.
+>   > [!bug] not preferred to change `index.html` file. but the component specified `<app-root>`
+
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  //used to define the class as a component
+  selector: "app-root",
+  standalone: true,
+  imports: [RouterModule], //this like using in C# => import to use
+  templateUrl: "./app.component.html", //is HTML file used to render the view.
+  styleUrls: ["./app.component.css"], //is CSS file used to style the view.
+})
+export class AppComponent {
+  title = "angular-day1";
+}
+```
+
+> [!done] `ng generate component componentName`
+>
+> - used to generate a new component.
+> - will create a folder with the component name.(Kebeb case - lowercase with hyphen between words)
+> - will create 4 files (componentName.component.ts, componentName.component.html, componentName.component.css, componentName.component.spec.ts) (pascal case `ComponentName`)
+
+```bash
+ng generate component home
+```
+
+```typescript
+// home.component.ts
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-home", //prefix app is used to avoid conflicts,
+  //selector is used to specify the custom html tag used to render the component in the view. (like <app-home></app-home>)
+  standalone: true, //doest not need to be in a module. - false => error as it is not in a module.
+  imports: [],
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"],
+})
+export class HomeComponent {
+  //postfix Component is used to specify the class as a component.
+}
+```
+
+> [!done] to display the component in the view, we add it to the `index.html` file.
+
+```html
+<!-- app.component.html -->
+<app-home></app-home>
+<!-- error as it is not in a module.
+we have to add it to the imports array in the app.component.ts file. -->
+```
+
+> [!done] `app.component.ts`
+
+```typescript
+import { Component } from "@angular/core";
+import { HomeComponent } from "./home/home.component";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [RouterModule, HomeComponent], //add the component to the imports array.
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
+})
+export class AppComponent {
+  title = "angular-day1";
+}
+```
+
+> [!tip] selector can be class, attribute, or element.
+>
+> - element: `app-root` => `<app-root></app-root>`
+> - class: `.app-root` => `<div class="app-root"></div>`
+> - attribute: `[app-root]` => `<div app-root></div>`
+
+> [!tip] `templateUrl` vs `template`
+>
+> - `templateUrl` is used to specify the HTML file used to render the view.
+> - `template` is used to specify the HTML code directly in the component file. (not recommended unless the HTML is small)
+> - `template` pri
+
+```typescript
+// home.component.ts
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-home",
+  standalone: true,
+  imports: [],
+  template: `<h1>Home Component</h1>`, //HTML code directly in the component file.
+  styleUrls: ["./home.component.css"],
+})
+export class HomeComponent {}
+```
+
+> [!done] `stylesUrls` vs `styles` vs `style` vs `styleUrl`
+>
+> - local style will only be applied to the component.
+> - `stylesUrls` is used to specify the CSS files used to style the view could be multiple files.
+> - `styleUrl` is used to specify the CSS file used to style the view.
+> - `styles` is used to specify the CSS code directly in the component file. (not recommended unless the CSS is small)
+> - `style` is used to specify the CSS code directly in the component file. (not recommended unless the CSS is small)
+> - for style to be global, we use `styles.css`
+> - ==search== for how to write global styles in components.
+
+> [!tip] create a new component without CLI
+>
+> - create a new folder with the component name.
+> - create `componentName.component.ts` file.
+
+> [!danger] install `Angular essentials` extension in VSCode for Angular snippets.
+
+```typescript
+// about.component.ts
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "iti-about",
+  standalone: true,
+  imports: [],
+  template: `<h1>About Component</h1>`,
+})
+export class AboutComponent {}
+```
+
+```typescript
+// app.component.ts
+import { Component } from "@angular/core";
+import { HomeComponent } from "./home/home.component";
+import { AboutComponent } from "./about/about.component";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [RouterModule, HomeComponent, AboutComponent],
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
+})
+export class AppComponent {
+  title = "angular-day1";
+}
+```
+
+```html
+<!-- app.component.html -->
+<app-home></app-home>
+<iti-about></iti-about>
+```
+
+> [!bug] to add it in the Home component, we have to add it to the `home.component.ts` file.
+
+```typescript
+import { Component } from "@angular/core";
+import { AboutComponent } from "../about/about.component";
+
+@Component({
+  selector: "app-home",
+  standalone: true,
+  imports: [AboutComponent],
+  template: `<h1>Home Component</h1>`,
+  styleUrls: ["./home.component.css"],
+})
+export class HomeComponent {}
+```
+
+```html
+<!-- home.component.html -->
+<iti-about></iti-about>
+```
+
+> [!tip] Check (Angular documentation)[https://angular.io/docs] & (Angular dev)[https://angular.dev]
+
+---
+
+# Lab
+
+- Create component (manully + CLI)
+- make styles global + local
