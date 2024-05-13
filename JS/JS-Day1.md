@@ -4,9 +4,11 @@
 > Loosely typed Language : not strongly typed like C++
 > ==Looosely typed== : variable type will be determined according to the value assigned to it
 >
-> > [!Example] > > `var a;` // a is undefined
-> > `var a = 5;` // a is number
-> > `var a = "hello";` // a is string
+> > [!Example] Dynamic Typing
+> >
+> > - `var a;` // a is undefined
+> > - `var a = 5;` // a is number
+> > - `var a = "hello";` // a is string
 
 ## JavaScript Type System
 
@@ -40,11 +42,11 @@
 >   Null and Undefined can not
 
 > [!error] Interpreter
-> line1
-> line2
-> line3:Erorr
+>  - line1 : run
+>  - line2 : run
+>  - line3:Error
 >
-> > [!success] line1 and line2 will be executed
+> > [!success] line1 and line2 will be executed before the error
 
 ### Where to write JavaScript and why
 
@@ -86,7 +88,7 @@
     <script>
         var myVar;//undefined
         //typeof operator
-        typeof myVar;//'undefined'=> undefined but string
+        typeof myVar;//'undefined'=> undefined but in quotes (string)
 
         //console
         console.log("myVar is " + myVar + " and its type is " + typeof myVar);//myVar is undefined and its type is undefined
@@ -117,7 +119,7 @@
    //myvar2 => Number object
     //myvar2.valueOf() => 5
 
-    var myVar3 =  new Number(5);// myVar3 => Number object //same state but different identity
+    var myVar3 =  new Number(5);// myVar3 => Number object //same state but different identity (address in the heap)
     myVar3 == myVar2;//false //different identity
     myVar3 = myVar2;//myVar3
     myVar3 == myVar2;//true //both are pointing to the same object
@@ -128,9 +130,9 @@
     arr1 == arr2;//false
     arr1[0] == arr2[0];//true
     arr1[0] = 5;
-    arr1[0] == arr2[0];//false every array has its own (identity)
+    arr1[0] == arr2[0];//false 
     arr1 = arr2;//arr1 is pointing to the same object as arr2
-    arr1[0] = 100;
+    arr1[0] = 100;// will affect arr2
     arr1[0] == arr2[0];//true affect the other
     //thats not the case  with stack variables
     var a = 5;
@@ -163,7 +165,7 @@ var a = 5;
 
 //2- function scope(local scope): use var keyword to declare a variable inside a function
 
-//in ES5 we dont have block scope
+//in ES5 we didn't have block scope (js before 2015)
 var testGlobal = 5;
 function test() {
   console.log(testGlobal);
@@ -294,14 +296,16 @@ Number.isFinite(5); //true
 Number.isFinite(10 / 0); //false
 ```
 
->[!success]+ `Number.isFinite()` is the best way to check if a value is a Number.
->>[!bug] `Number.isNaN()` doesn't exclude infinity 
->>`Number.isNaN(10/0);` => false so we use `isFinite` instead.
->>`Number.isFinite('20');` => false => it is not a number
+> [!success]+ `Number.isFinite()` is the best way to check if a value is a Number.
+>
+> > [!bug] `Number.isNaN()` doesn't exclude infinity
+> > `Number.isNaN(10/0);` => false so we use `isFinite` instead.
+> > `Number.isFinite('20');` => false => it is not a number
 
->[!cite] in modern JS we use `Number` object like  `Number.isNaN()`
->to add namespace although we can use them as global functions
->`parseInt, isNaN, isFinite`
+> [!cite] in modern JS we use `Number` object like `Number.isNaN()`
+> to add namespace although we can use them as global functions
+> `parseInt, isNaN, isFinite`
+
 ### Type Coercion
 
 > [!tip] Type Coercion
@@ -468,5 +472,3 @@ for(var i = 0; i < arr.length; i++){
 ```
 
 ### #lab-js1
-
-   
