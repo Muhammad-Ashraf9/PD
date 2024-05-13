@@ -45,7 +45,7 @@
 
 > [!tip] Components
 >
-> -The application is divided into components.
+> - The application is divided into components.
 >
 > - Components are the basic building blocks of Angular applications.
 > - Any Component has its own HTML, CSS, and TypeScript file.
@@ -191,7 +191,7 @@ import { Component } from "@angular/core";
 @Component({
   selector: "app-home", //prefix app is used to avoid conflicts,
   //selector is used to specify the custom html tag used to render the component in the view. (like <app-home></app-home>)
-  standalone: true, //doest not need to be in a module. - false => error as it is not in a module.
+  standalone: true, //does not need to be in a module. - false => error as it is not in a module.
   imports: [],
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
@@ -238,7 +238,7 @@ export class AppComponent {
 >
 > - `templateUrl` is used to specify the HTML file used to render the view.
 > - `template` is used to specify the HTML code directly in the component file. (not recommended unless the HTML is small)
-> - `template` pri
+
 
 ```typescript
 // home.component.ts
@@ -262,6 +262,7 @@ export class HomeComponent {}
 > - `styles` is used to specify the CSS code directly in the component file. (not recommended unless the CSS is small)
 > - `style` is used to specify the CSS code directly in the component file. (not recommended unless the CSS is small)
 > - for style to be global, we use `styles.css`
+> - `styleUrl` has higher priority over `style`.
 > - ==search== for how to write global styles in components.
 
 > [!tip] create a new component without CLI
