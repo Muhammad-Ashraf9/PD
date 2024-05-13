@@ -217,21 +217,21 @@ namespace CSharp_Day3
 > > ```
 
 > [!NOTE] Boxing
-> take value type from stack and convert it to object in heap and reference it
-> update reference in stack when changing
-> avoid boxing as it affects performance
-> used in function parameters to accept any data type
+>
+> - take value type from stack and convert it to object in heap and reference it
+> - update reference in stack when changing
+> - avoid boxing as it affects performance
+> - used in function parameters to accept any data type
 
 ---
 
 > [!danger] Unboxing
-> take object from heap and convert it to value type in stack
-> `int x = (int)o;` if o is not int it will throw an exception otherwise it will work fine
-> if o is float and we want to convert it to int
-> `int x = (int)((float)o);` this will work fine
-> avoid unboxing as it affects performance
-
----
+>
+> - take object from heap and convert it to value type in stack
+> - `int x = (int)o;` if o is not int it will throw an exception otherwise it will work fine
+> - if o is float and we want to convert it to int
+> - `int x = (int)((float)o);` this will work fine
+> - avoid unboxing as it affects performance
 
 ---
 
@@ -281,9 +281,9 @@ namespace CSharp_Day3
 > > DayOfWeek d = (DayOfWeek)Enum.Parse(typeof(DayOfWeek),Console.ReadLine());//returns object so we have to cast it to DayOfWeek
 > > ```
 > >
-> > [!danger] input case sensitive
-> > friday will throw an exception
-> > Friday will work fine
+> > > [!danger] input case sensitive
+> > > friday will throw an exception
+> > > Friday will work fine
 
 ---
 
@@ -302,7 +302,7 @@ namespace CSharp_Day3
 > >
 > > ```cs
 > > Gender g1 = Gender.Female;//4 bytes
-> > g1  =(Gender) Enum.Parse
+> > g1  =(Gender) Enum.Parse(typeof(Gender),"Male")
 > > ```
 
 > [!done] how to know the Names of enum
@@ -312,8 +312,9 @@ namespace CSharp_Day3
 ```cs
 Gender g1 = Gender.Female;
 g1 = 0;//works fine
-g1 = 1;//Error : int value to Gender
-g1 = (Gender) 10;
+g1 = 1;//compilation error
+g1 = (Gender) 1;//female
+g1 = (Gender) 10;//10
 var z = Enum.GetNames(typeof(Gender));
 foreach (var item in z)
 {
@@ -381,31 +382,33 @@ foreach (var item in z)
 > > we can use array [Read,Write,Execute,Modify]
 > > binary representation Read _ 2^0 + Write _ 2^1 + Execute _ 2^2 + Modify _ 2^3
 > >
-> > p2 = [1,0,0,0] => Read,no Write,no Execute,no Modify => decimal value = 1
-> > p3 = [0,1,0,0] => no Read,Write,no Execute,no Modify => decimal value = 2
-> > p4 = [0,0,1,0] => no Read,no Write,Execute,no Modify => decimal value = 4
-> > p5 = [0,0,0,1] => no Read,no Write,no Execute,Modify => decimal value = 8
-> > if we have read and we want to give him write permission we XOR p2 with p3
+> > - p2 = [1,0,0,0] => Read,no Write,no Execute,no Modify => decimal value = 1
+> > - p3 = [0,1,0,0] => no Read,Write,no Execute,no Modify => decimal value = 2
+> > - p4 = [0,0,1,0] => no Read,no Write,Execute,no Modify => decimal value = 4
+> > - p5 = [0,0,0,1] => no Read,no Write,no Execute,Modify => decimal value = 8
+> >   if we have read and we want to give him write permission we XOR p2 with p3
 > >
 > > ```cs
 > > FilePermissions fp = FilePermissions.Read;
 > > fp = FilePermissions.Write;
 > > Console.WriteLine($"{fp}");//Write
-> > // we want to add read permission or remove it
+> > // we want to add read permission or remove it we use XOR operator (^)
 > > fp^=FilePermissions.Read;
 > > Console.WriteLine($"{fp}");//Write,Read using [Flags]
 > > Console.WriteLine($"{(int)fp}");//3
-> > fp^=FilePermissions.Write;
+> > fp^=FilePermissions.Write; //remove write permission
 > > Console.WriteLine($"{fp}");//Read
+> > //we can use OR operator (|) to add permission
 > > fp |= FilePermissions.Write;//add write permission
 > > ```
 
 ---
 
 > [!tip] Reference
-> Reference: is a variable that holds the address of an object in memory
-> reference is in stack and object itself is in heap
-> object can have reference to other object
+>
+> - Reference: is a variable that holds the address of an object in memory
+> - reference is in stack and object itself is in heap
+> - object can have reference to other object
 
 > [!example] Struct
 > Complex number
@@ -413,11 +416,11 @@ foreach (var item in z)
 > ```cs
 > struct Complex
 > {
->    public int real;
->    public int imaginary;
-> //setters and getters when making it private
+>    //public int real;
+>    //public int imaginary;
 > private int real;
 > private int imaginary;
+> //setters and getters when making it private
 >   public void setReal(int _real){
 > //this.real = real;//this is not pointer it is reference it is the object itself
 > real = _real;//this is the parameter
@@ -432,7 +435,7 @@ foreach (var item in z)
 >   public int getImaginary(){
 > return imaginary;
 >   }
->   public print(){
+>   public void print(){
 > if(imaginary>0)
 >   Console.WriteLine($"{real}+{imaginary}i");
 >   else if(imaginary<0)
@@ -459,9 +462,10 @@ foreach (var item in z)
 >
 > > [!bug] Struct is value type
 > > always in stack not in heap even if we use new
-> > [Warning] Struct can't inherit or be inherited from
+>
+> > [!Warning] Struct can't inherit or be inherited from
 > >
-> > > [!done] use class instead of struct
+> > > [!done] But `class` can
 
 > [!NOTE] expression bodied method
 > used when we have one line of code
@@ -536,7 +540,7 @@ foreach (var item in z)
 >    public Complex():this(0,0)
 > //this calls the 2 parameter constructor first then the default constructor
 >    {
->        this(0,0);//error: cannot use this keyword in struct
+>       // this(0,0);//error: cannot use this keyword in struct
 > Console.WriteLine("default constructor");
 >    }
 >    public Complex(int _real):this(_real,0)
@@ -584,14 +588,14 @@ foreach (var item in z)
 > public int Imaginary{
 > get{
 > return imaginary;
-> //return Imaginary; //error: Stack overflow will call itself
+> //return Imaginary; //error: Stack overflow will call itself as we used the property not the field
 > }
 > set{
 > imaginary = value;
 > }
->//we can make it private
->//can't make both private as property public and has to have at least one accessor but the property itself can be private
->private set{
+> //we can make it private
+> //can't make both private as property public and has to have at least one accessor but the property itself can be private
+> private set{
 > imaginary = value;
 > }
 > }
@@ -605,20 +609,22 @@ foreach (var item in z)
 > Console.WriteLine($"{c1.Imaginary}");//30
 > ```
 
->[!danger] property access modifiers
->we can make property private / protected /public
->we can make setter private / protected /public
->we can make getter private / protected /public
->but at least one of them has to match the property access modifier
->Also, inner access modifiers should be higher security or equal with outer. 
->```cs
+> [!danger] property access modifiers
+>
+> - `property` can `private` / `protected` / `public`
+> - `setter` can `private` / `protected` / `public`
+> - `getter` can `private` / `protected` / `public`
+>   but at least one of them has to ==match== the ==property== ==access modifier==
+>   Also, ==inner== access modifiers should be ==higher== security or ==equal== with ==outer==.
+>
+> ```cs
 > public int Real {get=>real;private set=>real = value;}
->```
+> ```
 
-
->[!done] override ToString()
->we have to override ToString() in any created class or struct.
->```cs
+> [!done] override ToString()
+> we have to override ToString() in any created class or struct.
+>
+> ```cs
 > public override string ToString()
 > {
 >    if (imaginary > 0)
@@ -628,9 +634,10 @@ foreach (var item in z)
 >    else
 >        return $"{real}";
 > }
->```
+> ```
 
 ---
 
 ### #Lab-3
- - word document
+
+- word document
