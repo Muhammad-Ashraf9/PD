@@ -855,7 +855,7 @@ export class TestComponent {
 > ```
 >
 > - add bootstrap to `styles.css`
->   using `@import` syntax an
+>   using `@import` syntax and the path to the bootstrap css file
 
 > [!done] or better use tailwindcss
 >
