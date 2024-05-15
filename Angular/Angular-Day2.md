@@ -123,7 +123,7 @@ myfunction(a: number, b: number): number {
 > [!tip] Property binding
 >
 > - used to set the property of an element
-> - used to set the attribute of an element
+
 
 ```html
 <!-- 
@@ -165,7 +165,6 @@ export class TestComponent {
  <!-- 
     this will set the src attribute of the image to the value of the name property 
   -->
-```
 
 > [!warning] Attribute binding vs property binding
 >
@@ -859,7 +858,7 @@ export class TestComponent {
 
 > [!done] or better use tailwindcss
 >
-> - (https://tailwindcss.com/docs/installation)[https://tailwindcss.com/docs/installation]
+> - (https://tailwindcss.com/docs/installation)
 
 ---
 
