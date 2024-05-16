@@ -508,7 +508,7 @@ export class StudentDetailsComponent implements OnInit, OnDestroy {
       //subscribe takes a callback function that will be called when the route changes(return object of type subscription)
       //every time we press the details link a new subscription will be created - and the old one will still be there (memory leak)
       //we need to free the resources when the component is destroyed
-      const id = params.id;
+      const id = params["id"];
       this.std = this.studentService.getStudentById(+id);
     });
   }
