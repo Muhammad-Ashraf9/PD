@@ -1,6 +1,5 @@
 ## Pipes
 
->
 
 > [!tip] Pipes
 > create pipe `ng generate pipe <pipe-name>`
