@@ -356,7 +356,7 @@ export class Component1Component {
 >   > - is a design principle in which the control of object creation is transferred to outside of the class (factory, )
 >   > - then ask the factory to create the object for us or return the object that is already created
 >
-> > [!done] DI (Dependency Injection)
+> > [!done] DI (Dependency Inversion Principle)
 > >
 > > - High-level modules should not depend on low-level modules. Both should depend on abstractions.
 > > - Abstractions should not depend on details. Details should depend on abstractions.
