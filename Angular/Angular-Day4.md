@@ -4,7 +4,7 @@
 >
 > - we can use the lifecycle ==hooks== to do some actions when the component is created, updated, or destroyed.
 > - component is class so it has a constructor.
-> - `ngOnChanges`: run with the first time the constructor is called and every time the data decorated with `@Input` is changed.
+> - `ngOnChanges`: revery time the data decorated with `@Input` is changed.
 > - can be used for validation.
 > - `ngOnInit`: run after the constructor and ngOnChanges( if exists) - run once.
 > - used to initialize the component.
@@ -300,7 +300,7 @@ export class StudentListComponent implements OnInit {
 > [!done] route with code
 >
 > - using DI to inject the router in the component.
-> - `provideRoute
+
 
 ```html
 <!-- student-list.component.html -->
