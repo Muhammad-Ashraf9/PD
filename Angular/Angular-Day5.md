@@ -759,5 +759,3 @@ this will not work as Test2Component is not exported in the module
 
 ---
 ### Lab
-
-- 
