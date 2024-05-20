@@ -238,9 +238,6 @@ class Program
         db.Departments.Remove(dept);
         Console.WriteLine(db.Entry<Department>(dept).State);//(Deleted)
         db.SaveChanges();//this will delete the department from the database.
-
-
-
     }
 }
 ```
