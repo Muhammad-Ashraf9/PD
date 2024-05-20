@@ -73,7 +73,8 @@ public class ITIContext : DbContext
 >
 > - `add-migration` command is used to create a migration file
 >   > [!warning] it has only people table despite the fact that we have 3 classes and 2 inherites from the person class
->
+
+
 > [!done] `Remove-Migration` command
 >
 > - `Remove-Migration` command is used to remove the last migration file
