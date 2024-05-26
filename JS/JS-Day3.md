@@ -592,7 +592,6 @@ function stopSlideShow() {
 > [!tip] Location Object
 > is a property of window object
 
->
 
 ```js
 //location object
