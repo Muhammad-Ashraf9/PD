@@ -166,7 +166,7 @@ mufunc(){
 
 ---
 
-#### Function expression
+## Function expression
 
 ```js
 // function expression
@@ -327,6 +327,7 @@ student.print(); //Hello World
 > `window.alert("")` is a method of window object
 >
 > > [!error] `Alert()` is not a function in window object
+
 
 ```js
 function Alert() {
