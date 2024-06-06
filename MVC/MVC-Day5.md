@@ -471,15 +471,11 @@ public class TestController : Controller
 >
 > - Case:`AddScoped` : create new instance every time the request is created(same request will have the same instance)
 
-> - ```csharp
+> [!tip]
+>```csharp
 >     //Program.cs
 >   builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 >   ```
-
-```csharp
-
-```
-
 
 > [!done] `TestController` to test the repository methods
 >
