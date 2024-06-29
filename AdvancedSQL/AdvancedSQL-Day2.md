@@ -1,6 +1,6 @@
 ## Variables and Functions
 
-### Variables
+## Variables
 
 > [!bug] we can not declare global variable or assign value to it in SQL Server
 >
