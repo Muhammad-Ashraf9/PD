@@ -154,6 +154,8 @@ export class TestComponent {
 }
 ```
 
+```html
+
 <input [disabled]="!isActivated" type="text" [value]="name" />
 
 <!--
@@ -247,10 +249,11 @@ export class TestComponent {
 <!-- 
     we can send only the event target or value on the event target
  -->
-```
+
 
 <input (click)="show($event.target)" value="show" />
 <input (click)="show($event.target.value)" value="show" />
+```
 
 ```typescript
 export class TestComponent {
