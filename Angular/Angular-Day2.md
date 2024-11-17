@@ -725,7 +725,7 @@ export class TestComponent {
          -->
 ```
 
-> [!tip] Angular API Reference (https://angular.io/api)[https://angular.io/api]
+> [!tip]  [Angular API Reference](https://angular.io/api)
 >
 > - to check the available pipes and their options
 > - has everything (decorators, directives, pipes, ...) in Angular
@@ -735,8 +735,7 @@ export class TestComponent {
 > [!done] can use multiple pipes
 
 ```html
-<!-- 
-    test.component.html
+<!--     test.component.html
  -->
 <p>{{today | date: "dd/MM/yyyy" | uppercase}}</p>
 <!-- 
@@ -862,7 +861,7 @@ export class TestComponent {
 
 > [!done] or better use tailwindcss
 >
-> - (https://tailwindcss.com/docs/installation)[https://tailwindcss.com/docs/installation]
+> - [Tailwindcss - Installation](https://tailwindcss.com/docs/installation)
 
 ---
 

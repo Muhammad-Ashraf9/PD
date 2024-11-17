@@ -45,7 +45,7 @@
 
 > [!tip] Components
 >
-> -The application is divided into components.
+> - The application is divided into components.
 >
 > - Components are the basic building blocks of Angular applications.
 > - Any Component has its own HTML, CSS, and TypeScript file.
@@ -238,7 +238,6 @@ export class AppComponent {
 >
 > - `templateUrl` is used to specify the HTML file used to render the view.
 > - `template` is used to specify the HTML code directly in the component file. (not recommended unless the HTML is small)
-> - `template` pri
 
 ```typescript
 // home.component.ts
@@ -329,7 +328,9 @@ export class HomeComponent {}
 <iti-about></iti-about>
 ```
 
-> [!tip] Check (Angular documentation)[https://angular.io/docs] & (Angular dev)[https://angular.dev]
+> [!tip] Check
+>  [Angular documentation](https://angular.io/docs) 
+>   [Angular dev](https://angular.dev)
 
 ---
 

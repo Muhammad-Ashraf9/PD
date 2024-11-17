@@ -662,11 +662,11 @@ export class AccountService {
 > - in template-driven forms, the code that manages the form is in the template
 > - in reactive forms, the code that manages the form is in the component(ts)
 > - Reactive forms are more flexible than template-driven forms
-> - this could be found in the official documentation of Angular (https://angular.io/guide/forms-overview)[https://angular.io/guide/forms-overview]
+> - this could be found in the official documentation of Angular [https://angular.io/guide/forms-overview](https://angular.io/guide/forms-overview)
 
 > [!warning] PrimeNG
 >
-> - (primeNG)[https://www.primeng.org/primeng/]
+> - [primeNG](https://www.primeng.org/primeng/)
 > - a library that provides a lot of components that could be used in Angular (like Calendar, etc.)
 > - how to use it in both template-driven and reactive forms
 > - for installation and usage, check the official documentation: (https://primeng.org/installation)[https://primeng.org/installation]

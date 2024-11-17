@@ -51,14 +51,23 @@ import { PowerPipe } from "./pipes/power.pipe";
 
 ```
 
-> [!note] Pure and Impure Pipes
+> [!example] Pure and Impure Pipes
 >
-> - ==Search for pure and impure pipes==
-> - `pure: false` makes the pipe impure - true => pure
+> - Search for ==pure== and ==impure== pipes
+> >[!done]  [Change detection with pipes](https://angular.dev/guide/templates/pipes#change-detection-with-pipes)
+> >- By default, all pipes are considered `pure`, which means that it only executes when a primitive input value (such as a `String`, `Number`, `Boolean`, or `Symbol`) or a changed object reference (such as `Array`, `Object`, `Function`, or `Date`). Pure pipes offer a performance advantage because Angular can avoid calling the transformation function if the passed value has not changed.
+> >- As a result, this means that mutations to object properties or array items are not detected unless the entire object or array reference is replaced with a different instance. If you want this level of change detection, refer to [detecting changes within arrays or objects](https://angular.dev/guide/templates/pipes#detecting-change-within-arrays-or-objects).
+
+>[!warning]  [Pipes - Detecting change within arrays or objects](https://angular.dev/guide/templates/pipes#detecting-change-within-arrays-or-objects)
+> - When you want a pipe to detect changes within arrays or objects, it must be marked as an impure function by passing the `pure` flag with a value of `false`.
+> - Avoid creating impure pipes unless absolutely necessary, as they can incur a significant performance penalty if used without care.
+> - Angular developers often adopt the convention of including `Impure` in the pipe `name` and class name to indicate the potential performance pitfall to other developers.
+
 
 ---
+## parent-child communication
 
-> [!tip] parent-child communication
+> [!tip] parent to child
 >
 > - make components reusable send data from parent to child
 > - `@Input()`: decorator to receive data from parent
@@ -168,10 +177,13 @@ export class ChildComponent {
 
 > [!faq] How to pass data from child to parent component when data is changed in child component?
 >
-> - to notify parent component about the change in child component we define an event in child component and emit it to parent component `EventEmitter<string>` will send string data to parent component
-> - bind the event to the parent component and call a function in parent component to update the data `<app-child (onNameChange)="updateData($event)"></app-child>` will receive the data in `$event` and call `updateData` function in parent component
-> - use `@Output()` on the event and can use alias name for the event `@Output("onNameChange") EventEmitter<string> = new EventEmitter<string>();`
-> - `@Output() onNameChange EventEmitter<string> = new EventEmitter<string>();`
+> - to notify parent component about the change in child component we define an event in child component and emit it to parent component 
+> - `EventEmitter<string>`: will send string data to parent component
+> - bind the event to the parent component and call a function in parent component to update the data 
+> - `<app-child (onNameChange)="updateData($event)"></app-child>` will receive the data in `$event` and call `updateData` function in parent component
+> - use `@Output()` on the event and can use alias name for the event 
+> - `@Output('onNameChange') nameChange = new EventEmitter<string>();`
+> - `@Output() onNameChange = new EventEmitter<string>();`
 
 ```typescript
 // child.component.ts
@@ -246,6 +258,11 @@ export class ParentComponent {
 >   > [!warning] This is complicated
 >
 > > [!done] Services
+
+
+>[!done] Signals Approach
+>-  [Angular Signal Components: input, output (Complete Guide) (angular-university.io)](https://blog.angular-university.io/angular-signal-components/)
+
 
 ---
 
@@ -351,12 +368,13 @@ export class Component1Component {
 > - bad maintainability => if we change the service we have to change all the components
 > - Testing => testing creation of the service with the functionality of the component
 > - components using different instances of the service
+> 
 >   > [!done] IOC (Inversion of Control)
 >   >
 >   > - is a design principle in which the control of object creation is transferred to outside of the class (factory, )
 >   > - then ask the factory to create the object for us or return the object that is already created
 >
-> > [!done] DI (Dependency Injection)
+> > [!done] DI (Dependency Inversion)
 > >
 > > - High-level modules should not depend on low-level modules. Both should depend on abstractions.
 > > - Abstractions should not depend on details. Details should depend on abstractions.
@@ -407,7 +425,9 @@ export class Component1Component {
 > - has a table
 > - row => (token: name of the class, class: instance of the class)
 > - `providers: [{provide: LoggerService, useClass: LoggerService}]` => if the token and class are the same we can use shorthand `providers: [LoggerService]`
-> - `useClass` => class has to be of the same type as the token (or a subclass)
+> - `useClass`: don't have to be of type `provide` = no inheritance needed
+> - [Defining dependency providers](https://v17.angular.io/guide/dependency-injection-providers "A provider factory function is a plain function that Angular can call to create a dependency.")
+> 
 
 > [!done] to register the service in the root module
 >
@@ -415,11 +435,9 @@ export class Component1Component {
 > - as it if it is not used it will be rendered anyway
 > - better to use `@Injectable({ providedIn: "root" })` in the service
 > - `@Injectable({ providedIn: "platform" })` => to make the service available to the multiple applications
-> - `@Injectable()` => will throw an error as no container is provided
+> - `@Injectable()` 
+> -  [providedIn](https://v17.angular.io/api/core/Injectable#providedin)
 
-```typescript
-
-```
 
 > [!warning] register on app component vs root
 >

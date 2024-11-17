@@ -1,16 +1,21 @@
 ### Component Lifecycle
 
-> [!tip] Components lifecycle
+> [!tip] [Component lifecycle](https://v17.angular.io/guide/lifecycle-hooks "Angular calls lifecycle hook methods on directives and components as it creates, changes, and destroys them.")
 >
 > - we can use the lifecycle ==hooks== to do some actions when the component is created, updated, or destroyed.
 > - component is class so it has a constructor.
-> - `ngOnChanges`: revery time the data decorated with `@Input` is changed.
+> - `ngOnChanges`: run every time the data decorated with `@Input` is changed after the constructor (if exists)
 > - can be used for validation.
-> - `ngOnInit`: run after the constructor and ngOnChanges( if exists) - run once.
+> - `ngOnInit`: run after the constructor and ngOnChanges( if exists)
+> - run once.
 > - used to initialize the component.
-> - convention: Constructor -> Dependency Injection
-> - `ngDoCheck`: run after any change in the component. - not recommended to use as it will affect the performance.
-> - `ngOnDestroy`: run when the component is destroyed. - component is removed from the DOM. - can be used to confirm the user before leaving the page.
+> - convention: Constructor -> Dependency Injection & and initialization properties with simple values
+> - `ngDoCheck`: Called immediately after `ngOnChanges()` on every change detection run, and immediately after `ngOnInit()` on the first run.
+> - used to detect and act upon changes that Angular can't or won't detect on its own. See details and example in [Defining custom change detection](https://v17.angular.io/guide/lifecycle-hooks#docheck) in this document.
+> - not recommended to use as it will affect the performance.
+> - `ngOnDestroy`: run when the component is destroyed. 
+> - component is removed from the DOM. 
+> - can be used to confirm the user before leaving the page.
 
 ```typescript
 //test.component.ts
@@ -47,7 +52,8 @@ export class TestComponent {
 
 > [!tip] The output will be `Ali` as the `ngOnInit` will be called after the constructor and will change the value of the name to `Ali`.
 >
-> - `constructor called` > `ngOnInit called`
+> - `constructor called` 
+> - `ngOnInit called`
 
 > [!bug] Implement the `ngOnInit` lifecycle hook in the `test.component.ts`
 
@@ -113,6 +119,33 @@ export class TestComponent implements OnInit, OnChanges, OnDestroy {
 }
 ```
 
+
+>[!done] - [Lifecycle event sequence](https://v17.angular.io/guide/lifecycle-hooks#lifecycle-event-sequence)
+
+>[!faq] [Call it in `ngOnInit()`](https://v17.angular.io/tutorial/tour-of-heroes/toh-pt4#call-it-in-ngoninit "Link to this heading")
+>- While you could call `getHeroes()` in the constructor, that's not the best practice.
+>- Reserve the constructor for minimal initialization such as wiring constructor parameters to properties. 
+>- The constructor shouldn't _do anything_. It certainly shouldn't call a function that makes HTTP requests to a remote server as a _real_ data service would.
+>- Instead, call `getHeroes()` inside the [_ngOnInit lifecycle hook_](https://v17.angular.io/guide/lifecycle-hooks) and let Angular call `ngOnInit()` at an appropriate time _after_ constructing a `HeroesComponent` instance.
+>- `ngOnInit(): void {   this.getHeroes(); }`
+
+>[!error] `ngOnChanges`
+> - if `@Input` is present but not used by parent `ngOnChanges` won't be called 
+> - if 2 are present but only one is used it will be the only one in `SimpleChanges` hash table
+
+
+
+>[!faq] order
+> - parent constructor
+> - child constructor
+> - parent `ngOnInit`
+> - parent `ngDoCheck`
+> - child `ngOnChanges`
+> - Child `ngOnInit` 
+> - Child `ngDoCheck` 
+> - Parent `ngDoCheck `
+> - Child `ngDoCheck`
+
 ---
 
 ## Routing
@@ -124,7 +157,8 @@ export class TestComponent implements OnInit, OnChanges, OnDestroy {
 > - `/about` => `AboutComponent`
 > - `/students/add` => `AddStudentComponent`
 > - `/students` => `StudentListComponent`
-> - `/students/3` => `StudentDetailsComponent` - show the details of the student with id 3 and this will be dynamic based on the id.
+> - `/students/3` => `StudentDetailsComponent` 
+> - show the details of the student with id 3 and this will be dynamic based on the id.
 > - client: the routing is done on the client-side.
 > - partial refresh - no need to refresh the whole page.
 > - history - save the history of the pages visited.
@@ -554,7 +588,7 @@ export const appRoutes: Routes = [
   {
     path: "students",
     loadChildren: () =>
-      import("./students/students.module").then((m) => m.studentsRoutes),
+      import("./students/students.routes").then((m) => m.studentsRoutes),
   },
 
   { path: "", redirectTo: "/home", pathMatch: "full" },
