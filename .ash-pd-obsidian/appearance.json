@@ -1,0 +1,10 @@
+{
+  "accentColor": "",
+  "cssTheme": "AnuPpuccin",
+  "baseFontSize": 18,
+  "nativeMenus": false,
+  "baseFontSizeAction": true,
+  "enabledCssSnippets": [
+    "extended-colorschemes"
+  ]
+}

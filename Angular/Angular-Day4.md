@@ -110,7 +110,6 @@ export class TestComponent implements OnInit, OnChanges, OnDestroy {
     //when the age is changed it will be called again.
     //{previousValue: 25, currentValue: 30, firstChange: false, isFirstChange: ƒ}
     console.log("ngOnChanges called"); //will be called after the constructor and before ngOnInit
-    // when the age is changed it will be called again.
   }
 
   ngOnDestroy() {

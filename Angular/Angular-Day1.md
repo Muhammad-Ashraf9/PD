@@ -65,7 +65,7 @@
 >
 > - class
 > - Directives are TypeScript classes that are used to manipulate the DOM easily.
-> - Structural Directives: used to add or remove elements from the DOM based on a condition.
+> 1. Structural Directives: used to add or remove elements from the DOM based on a condition.
 > - like `*ngFor`: add or remove elements from the DOM based on data in component class.
 > - like `*ngIf`: add or remove elements from the DOM based on a condition.
 > - like `*ngSwitch`:

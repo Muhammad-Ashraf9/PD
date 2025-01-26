@@ -1,0 +1,404 @@
+{
+  "main": {
+    "id": "639bc50a35bf3a31",
+    "type": "split",
+    "children": [
+      {
+        "id": "3ea98c4632ad9d4d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1baf54b7025f49a2",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular-Day1.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular-Day1"
+            }
+          },
+          {
+            "id": "a53ea25e7c6d851e",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular-Day2.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular-Day2"
+            }
+          },
+          {
+            "id": "82f50af339ac978a",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular-Day3.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular-Day3"
+            }
+          },
+          {
+            "id": "5032846f1561778a",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular-Day4.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular-Day4"
+            }
+          },
+          {
+            "id": "318f70215ca9b823",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular-Day5.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular-Day5"
+            }
+          },
+          {
+            "id": "8742de46d2f3214d",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Angular/Angular Forms.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "Angular Forms"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "492d9526055e013e",
+    "type": "split",
+    "children": [
+      {
+        "id": "e290b6d7cda5d5ed",
+        "type": "tabs",
+        "dimension": 68.60282574568289,
+        "children": [
+          {
+            "id": "5a6af7a33d1203d3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byCreatedTime"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "20a411743505f33c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          }
+        ]
+      },
+      {
+        "id": "9eb7e599735f7cf8",
+        "type": "tabs",
+        "dimension": 31.39717425431711,
+        "children": [
+          {
+            "id": "9a90c4d456b23246",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          },
+          {
+            "id": "71334383e18ce9f8",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 346.5
+  },
+  "right": {
+    "id": "caddd971fea14f07",
+    "type": "split",
+    "children": [
+      {
+        "id": "a969ed5cda78307e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c625a8136103bbe6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Study/SQL Server.md",
+                "collapseAll": false,
+                "extraContext": true,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for SQL Server"
+            }
+          },
+          {
+            "id": "32de3d99310893c8",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Link-Dev/MOEI/PCF.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from PCF"
+            }
+          },
+          {
+            "id": "edc96fc338cbfa9f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e2b4ad5beecb92df",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Link-Dev/MOEI/PCF.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of PCF"
+            }
+          },
+          {
+            "id": "fd4aeece46735c7a",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
+          },
+          {
+            "id": "2ec1bd56100f11d2",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "b350358a433ad0a6",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "d19fd17e4e4a34ff",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
+            "id": "27990ce8bf4d1018",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          }
+        ],
+        "currentTab": 6
+      },
+      {
+        "id": "c8da3e65aa8852cf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "53f24d2f0048c14c",
+            "type": "leaf",
+            "state": {
+              "type": "planner-timeline",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Timeline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 416.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "daily-notes:Open today's daily note": false,
+      "switcher:Open quick switcher": false,
+      "canvas:Create new canvas": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false,
+      "templater-obsidian:Templater": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "obsidian-git:Open Git source control": false,
+      "obsidian-kanban:Create new board": false,
+      "obsidian-day-planner:Open Timeline": false,
+      "obsidian-day-planner:Open Multi-Day View": false,
+      "graph:Open graph view": false,
+      "markdown-importer:Open format converter": false,
+      "audio-recorder:Start/stop recording": false,
+      "publish:Publish changes...": false,
+      "random-note:Open random note": false,
+      "zk-prefixer:Create new unique note": false,
+      "workspaces:Manage workspace layouts": false,
+      "periodic-notes:Open this week": false
+    }
+  },
+  "active": "1baf54b7025f49a2",
+  "lastOpenFiles": [
+    "Angular/Angular Forms.md",
+    "Angular/Angular-Day5.md",
+    "Angular/Angular-Day3.md",
+    "Angular/Angular-Day4.md",
+    "Angular/Angular-Day2.md",
+    "Angular/Angular-Day1.md",
+    "Daily Notes/2025/01-January/2025-01-25-Saturday.md",
+    "AnuPpuccin Theme.md",
+    "202501251414.md",
+    "202501251413.md",
+    "202501251412.md",
+    "202501251411.md",
+    "Study/JS.md",
+    "202501251410.md",
+    "Study/SQL Server.md",
+    "Study/Grokking Algorithms.md",
+    "Link-Dev/MOEI/PCF.md",
+    "Link-Dev/MOEI/Custom Page Demo.md",
+    "Link-Dev/MOEI/Custom Page.md",
+    "Link-Dev/MOEI/Custom API.md",
+    "Study/ASP.NET Core.md",
+    "Daily Notes/2025/01-January/Untitled.md",
+    "Study/CSharp.md",
+    "Link-Dev/PL-400/gg.md",
+    "Link-Dev/PL-400/Exam-Topics.md",
+    "Daily Notes/2025/01-January/2025-01-24-Friday.md",
+    "Link-Dev/MOEI/attachments/Pasted image 20250124014552.png",
+    "{{[Daily Notes]/YYYY/MM-MMMM",
+    "{{[Daily Notes]/YYYY",
+    "{{[Daily Notes]",
+    "19ami1/19/20252025 ADot00/2025/19-019",
+    "19ami1/19/20252025 ADot00/2025",
+    "19ami1/19/20252025 ADot00",
+    "19ami1/19",
+    "19ami1",
+    "{{Daily Notes/gggg/DD-DDDD",
+    "{{Daily Notes/gggg",
+    "Link-Dev/MOEI/attachments/Pasted image 20250119225834.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20250119224753.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20250119224256.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241224151825.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241224151749.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241224151737.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241224151713.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241204112533.png",
+    "Link-Dev/MOEI/attachments/Pasted image 20241204112442.png",
+    "Untitled.canvas",
+    "can.canvas",
+    "Untitled 1.canvas",
+    "Untitled/Untitled.canvas"
+  ]
+}
