@@ -103,7 +103,8 @@
               "title": "Angular Forms"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -348,14 +349,14 @@
       "periodic-notes:Open this week": false
     }
   },
-  "active": "1baf54b7025f49a2",
+  "active": "a53ea25e7c6d851e",
   "lastOpenFiles": [
+    "Angular/Angular-Day1.md",
     "Angular/Angular Forms.md",
     "Angular/Angular-Day5.md",
     "Angular/Angular-Day3.md",
     "Angular/Angular-Day4.md",
     "Angular/Angular-Day2.md",
-    "Angular/Angular-Day1.md",
     "Daily Notes/2025/01-January/2025-01-25-Saturday.md",
     "AnuPpuccin Theme.md",
     "202501251414.md",

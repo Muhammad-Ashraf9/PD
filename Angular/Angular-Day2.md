@@ -11,12 +11,13 @@
 > - is a way to define communication between the component and the view. It is a technique to output data from a component and to accept user inputs.
 > - ==one-way== data binding: data flows from the component to the template (view) or from the template to the component.
 > - from component to template:
->   - Interpolation: {{expression}}
->   - Property binding: [property]="expression"
->   - Attribute binding: [attr.attributeName]="expression"
+>   - Interpolation: `{{expression}}`
+>   - Property binding: `[property]="expression"`
+>   - Attribute binding:`[attr.attributeName]="expression"`
 > - from template to component:
->   - Event binding: (event)="expression"
->   - Two-way binding: [(ngModel)]="expression"
+>   - Event binding: `(event)="expression"`
+>   
+>- Two-way binding: `[(ngModel)]="expression"`
 
 > [!tip] Create test component using Angular CLI
 >
