@@ -63,15 +63,18 @@
 
 > [!danger] Directives
 >
-> - class
-> - Directives are TypeScript classes that are used to manipulate the DOM easily.
+> 
+> - Directives are used to manipulate the DOM, add custom behavior, or modify the appearance of elements.
 > 1. Structural Directives: used to add or remove elements from the DOM based on a condition.
 > - like `*ngFor`: add or remove elements from the DOM based on data in component class.
 > - like `*ngIf`: add or remove elements from the DOM based on a condition.
 > - like `*ngSwitch`:
-> - Attribute Directives: used to change the appearance or behavior of an element, component, or another directive.
+> 2. Attribute Directives: used to change the appearance or behavior of an element, component, or another directive.
 > - like `ngStyle`: to change the style of an element.
 > - like `ngClass`: to add or remove classes from an element.
+> 3.  Components
+> - Components are directives with a template. They are the most common type of directive in Angular.
+> - Example: `@Component` decorator.
 
 > [!tip] Angular 17
 >
@@ -79,12 +82,10 @@
 
 > [!tip] Pipes
 >
-> - class
 > - Pipes are used to format data before displaying it in the view.
 
 > [!bug] Services
 >
-> - class
 > - Having a common functionality or data that used in multiple components.
 > - it is better to create a service (class) that has that functionality or data.
 > - to use a service in a component, we create an instance of the service in the component class.
