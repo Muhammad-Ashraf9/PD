@@ -104,7 +104,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -124,7 +124,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "byCreatedTime"
+                "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -349,14 +349,17 @@
       "periodic-notes:Open this week": false
     }
   },
-  "active": "a53ea25e7c6d851e",
+  "active": "5a6af7a33d1203d3",
   "lastOpenFiles": [
+    "Angular/Angular-Day3.md",
+    "2025/01-January/2025-01-29-Wednesday.md",
+    "2025/01-January",
+    "2025",
+    "Angular/Angular-Day2.md",
     "Angular/Angular-Day1.md",
     "Angular/Angular Forms.md",
     "Angular/Angular-Day5.md",
-    "Angular/Angular-Day3.md",
     "Angular/Angular-Day4.md",
-    "Angular/Angular-Day2.md",
     "Daily Notes/2025/01-January/2025-01-25-Saturday.md",
     "AnuPpuccin Theme.md",
     "202501251414.md",
@@ -376,7 +379,6 @@
     "Study/CSharp.md",
     "Link-Dev/PL-400/gg.md",
     "Link-Dev/PL-400/Exam-Topics.md",
-    "Daily Notes/2025/01-January/2025-01-24-Friday.md",
     "Link-Dev/MOEI/attachments/Pasted image 20250124014552.png",
     "{{[Daily Notes]/YYYY/MM-MMMM",
     "{{[Daily Notes]/YYYY",
@@ -386,8 +388,6 @@
     "19ami1/19/20252025 ADot00",
     "19ami1/19",
     "19ami1",
-    "{{Daily Notes/gggg/DD-DDDD",
-    "{{Daily Notes/gggg",
     "Link-Dev/MOEI/attachments/Pasted image 20250119225834.png",
     "Link-Dev/MOEI/attachments/Pasted image 20250119224753.png",
     "Link-Dev/MOEI/attachments/Pasted image 20250119224256.png",
