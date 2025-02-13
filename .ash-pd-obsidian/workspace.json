@@ -8,22 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "1baf54b7025f49a2",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Angular/Angular-Day1.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "Angular-Day1"
-            }
-          },
-          {
             "id": "a53ea25e7c6d851e",
             "type": "leaf",
             "pinned": true,
@@ -104,21 +88,23 @@
             }
           },
           {
-            "id": "141a19a201f08587",
+            "id": "44f94584932ba7eb",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LINQ & ADO/ADO-Day1.md",
+                "file": "C#/C#-Day7.md",
                 "mode": "source",
                 "source": false
               },
+              "pinned": true,
               "icon": "lucide-file",
-              "title": "ADO-Day1"
+              "title": "C#-Day7"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -151,7 +137,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "ICompar",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -162,7 +148,8 @@
               "title": "Search"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "9eb7e599735f7cf8",
@@ -193,7 +180,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 346.5
+    "width": 243
   },
   "right": {
     "id": "caddd971fea14f07",
@@ -360,11 +347,24 @@
       "publish:Publish changes...": false,
       "random-note:Open random note": false,
       "zk-prefixer:Create new unique note": false,
-      "workspaces:Manage workspace layouts": false
+      "workspaces:Manage workspace layouts": false,
+      "periodic-notes:Open this week": false
     }
   },
-  "active": "141a19a201f08587",
+  "active": "44f94584932ba7eb",
   "lastOpenFiles": [
+    "C#/C#-Day11.md",
+    "C#/C#-Day10.md",
+    "C#/C#-Day9.md",
+    "C#/C#-Day8.md",
+    "C#/C#-Day7.md",
+    "C#/C#-Day6.md",
+    "C#/C#-Day5.md",
+    "C#/C#-Day4.md",
+    "C#/C#-Day3.md",
+    "C#/C#-Day2.md",
+    "C#/C#-Day1.md",
+    "LINQ & ADO/ADO-Day1.md",
     "Angular/Angular Forms.md",
     "2025/01-January/2025-01-29-Wednesday.md",
     "Angular/Angular-Day3.md",
@@ -381,18 +381,6 @@
     "202501251412.md",
     "202501251411.md",
     "Study/JS.md",
-    "202501251410.md",
-    "Study/SQL Server.md",
-    "Study/Grokking Algorithms.md",
-    "Link-Dev/MOEI/PCF.md",
-    "Link-Dev/MOEI/Custom Page Demo.md",
-    "Link-Dev/MOEI/Custom Page.md",
-    "Link-Dev/MOEI/Custom API.md",
-    "Study/ASP.NET Core.md",
-    "Daily Notes/2025/01-January/Untitled.md",
-    "Study/CSharp.md",
-    "Link-Dev/PL-400/gg.md",
-    "Link-Dev/PL-400/Exam-Topics.md",
     "Link-Dev/MOEI/attachments/Pasted image 20250124014552.png",
     "{{[Daily Notes]/YYYY/MM-MMMM",
     "{{[Daily Notes]/YYYY",
