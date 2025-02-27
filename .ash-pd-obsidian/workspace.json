@@ -102,21 +102,9 @@
               "icon": "lucide-file",
               "title": "C#-Day7"
             }
-          },
-          {
-            "id": "445c270a64f7eb56",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.8.7"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.7"
-            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -362,7 +350,7 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "445c270a64f7eb56",
+  "active": "44f94584932ba7eb",
   "lastOpenFiles": [
     "C#/C#-Day11.md",
     "C#/C#-Day10.md",
