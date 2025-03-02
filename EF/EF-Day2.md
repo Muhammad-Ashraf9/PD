@@ -782,7 +782,7 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 ```csharp
 //ITIContext.cs
 protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
+{//if order matters
     modelBuilder.ApplyConfiguration(new StudentConfiguration());
     modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
 }
@@ -795,7 +795,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```csharp
 //ITIContext.cs
 protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
+{ // use this if order of config does not matter
     //we use any one of the following  (any class from the assembly ,only one is enough)
     modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentConfiguration).Assembly);//this will apply all the configurations from the assembly
     // modelBuilder.ApplyConfigurationsFromAssembly(typeof(Program).Assembly);
