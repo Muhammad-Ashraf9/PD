@@ -436,8 +436,7 @@
       "publish:Publish changes...": false,
       "random-note:Open random note": false,
       "zk-prefixer:Create new unique note": false,
-      "workspaces:Manage workspace layouts": false,
-      "periodic-notes:Open this week": false
+      "workspaces:Manage workspace layouts": false
     }
   },
   "active": "0a66d6aef9b62925",
