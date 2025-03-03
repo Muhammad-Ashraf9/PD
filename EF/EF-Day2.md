@@ -914,7 +914,7 @@ public static void Main(string[] args)
 //migration file
 protected override void Up(MigrationBuilder migrationBuilder)
 {
-    String sp = @"CREATE PROCEDURE GetStudents
+    string sp = @"CREATE PROCEDURE GetStudents
     AS
     BEGIN
         SELECT * FROM Students
@@ -925,7 +925,7 @@ protected override void Up(MigrationBuilder migrationBuilder)
 //we can use down method to drop the stored procedure
 protected override void Down(MigrationBuilder migrationBuilder)
 {
-    String sp = @"DROP PROCEDURE GetStudents";
+    string sp = @"DROP PROCEDURE GetStudents";
     migrationBuilder.Sql(sp);//this will execute the command in sp variable and drop the stored procedure
 }
 ```
