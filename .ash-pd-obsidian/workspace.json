@@ -102,9 +102,23 @@
               "icon": "lucide-file",
               "title": "C#-Day7"
             }
+          },
+          {
+            "id": "83bffc7d498aaf46",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025/03-March/2025-03-11-Tuesday.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-03-11-Tuesday"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -137,7 +151,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "ICompar",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -148,8 +162,7 @@
               "title": "Search"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "9eb7e599735f7cf8",
@@ -347,16 +360,20 @@
       "publish:Publish changes...": false,
       "random-note:Open random note": false,
       "zk-prefixer:Create new unique note": false,
-      "workspaces:Manage workspace layouts": false
+      "workspaces:Manage workspace layouts": false,
+      "periodic-notes:Open this week": false
     }
   },
-  "active": "44f94584932ba7eb",
+  "active": "5a6af7a33d1203d3",
   "lastOpenFiles": [
+    "C#/C#-Day7.md",
+    "2025/03-March/2025-03-11-Tuesday.md",
+    "2025/03-March",
+    "2025",
     "C#/C#-Day11.md",
     "C#/C#-Day10.md",
     "C#/C#-Day9.md",
     "C#/C#-Day8.md",
-    "C#/C#-Day7.md",
     "C#/C#-Day6.md",
     "C#/C#-Day5.md",
     "C#/C#-Day4.md",
@@ -368,7 +385,6 @@
     "2025/01-January/2025-01-29-Wednesday.md",
     "Angular/Angular-Day3.md",
     "2025/01-January",
-    "2025",
     "Angular/Angular-Day2.md",
     "Angular/Angular-Day1.md",
     "Angular/Angular-Day5.md",
@@ -379,7 +395,6 @@
     "202501251413.md",
     "202501251412.md",
     "202501251411.md",
-    "Study/JS.md",
     "Link-Dev/MOEI/attachments/Pasted image 20250124014552.png",
     "{{[Daily Notes]/YYYY/MM-MMMM",
     "{{[Daily Notes]/YYYY",
@@ -388,7 +403,6 @@
     "19ami1/19/20252025 ADot00/2025",
     "19ami1/19/20252025 ADot00",
     "19ami1/19",
-    "19ami1",
     "Link-Dev/MOEI/attachments/Pasted image 20250119225834.png",
     "Link-Dev/MOEI/attachments/Pasted image 20250119224753.png",
     "Link-Dev/MOEI/attachments/Pasted image 20250119224256.png",
