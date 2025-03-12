@@ -344,11 +344,14 @@
       "publish:Publish changes...": false,
       "random-note:Open random note": false,
       "zk-prefixer:Create new unique note": false,
-      "workspaces:Manage workspace layouts": false
+      "workspaces:Manage workspace layouts": false,
+      "periodic-notes:Open this week": false
     }
   },
-  "active": "3010bf6761c5b076",
+  "active": "5a6af7a33d1203d3",
   "lastOpenFiles": [
+    "JS/Advanced-JS-Day2.md",
+    "conflict-files-obsidian-git.md",
     "JS/Advanced-JS-Day1.md",
     "JS/JS-Day3.md",
     "JS/JS-Day1.md",
@@ -376,8 +379,6 @@
     "Angular/Angular-Day5.md",
     "Angular/Angular-Day4.md",
     "Daily Notes/2025/01-January/2025-01-25-Saturday.md",
-    "AnuPpuccin Theme.md",
-    "202501251414.md",
     "Link-Dev/MOEI/attachments/Pasted image 20250124014552.png",
     "{{[Daily Notes]/YYYY/MM-MMMM",
     "{{[Daily Notes]/YYYY",

@@ -83,7 +83,7 @@ public class TestADOContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=TestADO;integrated security=true;trustservercertificate=true;");
+	            optionsBuilder.UseSqlServer("Server=.;Database=TestADO;integrated security=true;trustservercertificate=true;");
         }
     }
 
