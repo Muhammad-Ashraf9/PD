@@ -135,7 +135,7 @@ ipconfig
 > - Download .NET 8.0 only the runtime (not the SDK)
 > - ASP.NET Core 8.0 runtime
 > - or we can download .NET Hosting Bundle (integration of .NET runtime and IIS)
-> - [Download .NET Hosting Bundle]([https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/hosting-bundle?view=aspnetcore-8.0)
+> - [Download .NET Hosting Bundle](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/hosting-bundle?view=aspnetcore-8.0)
 > - this is used to run the .NET application on IIS
 > - from control panel => programs => turn windows features on or off => check on IIS(Internet Information Services) => world wide web services => application development features => check on .NET Extensibility 4.8, ASP.NET 4.8, ISAPI Extensions, ISAPI Filters
 > - make it first before installing hosting bundle to restart only once
