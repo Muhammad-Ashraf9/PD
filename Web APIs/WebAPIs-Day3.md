@@ -62,9 +62,9 @@ public class StudentRepository
 public class StudentController : ControllerBase
 {
     StudentRepository studentRepository;
-    public StudentController(StudentRepository studentRepository)
+    public StudentController()
     {
-        this.studentRepository = studentRepository;
+        this.studentRepository = new StudentRepository();
     }
 [HttpGet]
 public List<Student> Get()
@@ -91,8 +91,6 @@ public void Put(Student student)
 public void Delete(int id)
 {
     studentRepository.Remove(id);
-}
-
 }
 ```
 
